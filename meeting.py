@@ -1,5 +1,4 @@
 from os import system
-import json
 
 class Meeting:
 
@@ -8,7 +7,7 @@ class Meeting:
         self.id = id
         self.password = password
         self.day = day
-        #self.startTime = startTime
+        self.startTime = startTime
         self.endTime = endTime
     
     def open(self):
