@@ -33,15 +33,15 @@ def run():
 
     for m in meetings:
         
-        if (day != int(m["day"])):
-            print("Wrong Day!\n")
+        if (day != m["day"]):
+            print("Wrong Day! ({:s})\n".format(Meeting.print(m)))
             continue
 
-        if (int(m.endTime) - endTime < timeout):
+        if (m["endTime"] - endTime < timeout):
             print("Expired!\n")
             continue
 
-        m.open()
+        Meeting.open(m)
         break
 
 def test():

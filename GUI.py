@@ -1,6 +1,5 @@
 from tkinter import *
 from tkinter import ttk
-from typing import Collection
 
 from meeting import Meeting
 
@@ -46,7 +45,7 @@ def addNewMeeting(meetings):
         et = int(endTime.get())
         et = (et // 100) * 60 + (et % 60)
 
-        meetings.append(Meeting(name.get(), id.get(), password.get(), day.get(), st, et))
+        meetings.append(Meeting(name.get(), id.get(), password.get(), int(day.get()), st, et))
 
         name.delete(0, END)
         id.delete(0, END)
