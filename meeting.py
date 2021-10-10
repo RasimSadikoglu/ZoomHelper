@@ -1,16 +1,18 @@
 from os import system
+import json
 
 class Meeting:
 
-    def __init__(self, id, password, day, hour, minute):
+    def __init__(self, name, id, password, day, startTime, endTime):
+        self.name = name
         self.id = id
         self.password = password
         self.day = day
-        self.hour = hour
-        self.minute = minute
+        #self.startTime = startTime
+        self.endTime = endTime
     
     def open(self):
         system("%APPDATA%/Zoom/bin/Zoom.exe \"-url=zoommtg://zoom.us/join?action=join&confno={:s}&pwd={:s}\"".format(self.id, self.password))
 
     def print(self):
-        return str(self.id) + " " + str(self.password) + " " + str(self.day) + " " + str(self.hour) + " " + str(self.minute) + "\n"
+        return str(self.id) + " " + str(self.password) + " " + str(self.day) + " " + str(self.endTime) + " " + "\n"

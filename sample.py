@@ -1,43 +1,49 @@
+from typing import DefaultDict
 from meeting import Meeting
 import datetime
 import sys
 import json
+from tkinter import *
 
-meetings = []
 timeout = 30
 
 def read():
-    data = open("data.txt", "r")
-
-    ms = data.read().split("\n")
-    ms.pop()
-
-    for i in range(len(ms)):
-        ms[i] = ms[i].split(" ")
-        meetings.append(Meeting(ms[i][0], ms[i][1], ms[i][2], ms[i][3], ms[i][4]))
-
-    print(ms)
+    with open("data.json", "r") as data:
+        global meetings
+        meetings = json.load(data)
 
 def save():
-    data = open("data.txt", "w")
-
-    for m in meetings:
-        data.write(m.print())
-
-    data.close()
-
-#def sort():
+    with open("data.json", "w") as data:
+        json.dump(meetings, data, default=lambda o: o.__dict__, indent=4)
     
 def config():
     read()
 
-    op = input("1. ADD: ")
+    root = Tk()
 
-    while (op == "1"):
-        meetings.append(Meeting(input("ID: "), input("PASSWORD: "), input("DAY: "), input("HOUR: "), input("MINUTE: ")))
-        op = input("1. ADD: ")
+    nameInput = Entry(root, width=40)
+    idInput = Entry(root, width=40)
+    passwordInput = Entry(root, width=40)
+    dayInput = Entry(root, width=10)
+    starTimeInput = Entry(root, width=15)
+    endTimeInput = Entry(root, width=15)
 
-    #sort()
+    def addMeeting():
+        meetings.append(Meeting(nameInput.get(), idInput.get(), passwordInput.get(), dayInput.get(), starTimeInput.get(), endTimeInput.get()))
+
+    addButton = Button(root, text="ADD", padx=15, pady=5, command=addMeeting)
+    exitButton = Button(root, text="EXIT", padx=15, pady=5, command=root.destroy)
+    
+    nameInput.grid(row=0, columnspan=3)
+    idInput.grid(row=1, columnspan=3)
+    passwordInput.grid(row=2, columnspan=3)
+    dayInput.grid(row=3, column=0)
+    starTimeInput.grid(row=3, column=1)
+    endTimeInput.grid(row=3, column=2)
+    addButton.grid(row=4, column=0)
+    exitButton.grid(row=4, column=2)
+    root.mainloop()
+
     save()
 
 def run():
@@ -46,26 +52,27 @@ def run():
     time = datetime.datetime.now()
 
     day = time.weekday()
-    hour = time.hour
-    minute = time.minute
-
-    print("DOW: " + str(day) + "Hour: " + str(hour) + "Minute: " + str(minute))
+    endTime = time.hour * 100 + time.minute
 
     for m in meetings:
-        print("\nM: " + m.print())
-
-        if (day > int(m.day)):
+        
+        if (day != int(m["day"])):
             print("Wrong Day!\n")
             continue
 
-        if (day == int(m.day) and (int(m.hour) - hour) * 60 + (int(m.minute) - minute) < timeout):
+        if (int(m.endTime) - endTime < timeout):
             print("Expired!\n")
             continue
 
         m.open()
         break
 
+def test():
+    return
+
 if (len(sys.argv) > 1 and (sys.argv[1] == "-config" or sys.argv[1] == "-c")):
     config()
+elif (len(sys.argv) > 1 and sys.argv[1] == "-test"):
+    test()
 else:
     run()
