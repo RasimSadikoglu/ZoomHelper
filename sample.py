@@ -42,7 +42,7 @@ def run():
             continue
 
         Meeting.open(m)
-        break
+        exit
 
 def test():
     GUI.addNewMeeting()
