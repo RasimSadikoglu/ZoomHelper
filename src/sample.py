@@ -19,9 +19,9 @@ def config():
     try:
         meetings = read()
     except:
-        pass
+        meetings = []
     
-    meetings = GUI.addNewMeeting()
+    meetings.extend(GUI.addNewMeeting())
 
     save(meetings)
 
