@@ -20,7 +20,7 @@ After running the command this ~~terrible~~ simple GUI greets you. You can add y
 * **ID** and **Password** are self-explanatory. They are needed.
 * **Day** is 0 to 6. (0 means Monday and 6 means Sunday)
 * **StartTime** is not necessary. The program only checks for **endTime**.
-* Time format is in 24H and only numbers. (exp. 1230)
+* Time format is 24H and only numbers. (exp. 1230)
 
 ---
 # How does it work?
