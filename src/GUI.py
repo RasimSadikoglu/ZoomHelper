@@ -6,7 +6,8 @@ from meeting import Meeting
 def main():
     return
 
-def addNewMeeting(meetings):
+def addNewMeeting():
+    meetings = []
 
     root = Tk()
     root.title("ZoomHelper")
