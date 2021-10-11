@@ -16,16 +16,20 @@ def save(meetings):
         json.dump(meetings, data, default=lambda o: o.__dict__, indent=4)
     
 def config():
-
-    meetings = read()
-
-    meetings = GUI.addNewMeeting(meetings)
+    try:
+        meetings = read()
+    except:
+        pass
+    
+    meetings = GUI.addNewMeeting()
 
     save(meetings)
 
 def run():
-    meetings = read()
-
+    try:
+        meetings = read()
+    except:
+        meetings = []
     time = datetime.datetime.now()
 
     day = time.weekday()
@@ -34,7 +38,7 @@ def run():
     for m in meetings:
         
         if (day != m["day"]):
-            print("Wrong Day! ({:s})\n".format(Meeting.print(m)))
+            print(f"Wrong Day! ({Meeting.print(m)})\n")
             continue
 
         if (m["endTime"] - endTime < timeout):
@@ -50,7 +54,7 @@ def test():
 
 if (len(sys.argv) > 1 and (sys.argv[1] == "--config" or sys.argv[1] == "-c")):
     config()
-elif (len(sys.argv) > 1 and sys.argv[1] == "-test"):
+elif (len(sys.argv) > 1 and sys.argv[1] == "--test"):
     test()
 else:
     run()
