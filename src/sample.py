@@ -48,7 +48,7 @@ def test():
     GUI.addNewMeeting()
     return
 
-if (len(sys.argv) > 1 and (sys.argv[1] == "-config" or sys.argv[1] == "-c")):
+if (len(sys.argv) > 1 and (sys.argv[1] == "--config" or sys.argv[1] == "-c")):
     config()
 elif (len(sys.argv) > 1 and sys.argv[1] == "-test"):
     test()
