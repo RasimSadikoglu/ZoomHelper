@@ -23,13 +23,18 @@ def config():
     
     meetings.extend(GUI.addNewMeeting())
 
+    sorted(meetings, key=lambda m: m["endTime"])
+    sorted(meetings, key=lambda m: m["day"])
+
     save(meetings)
 
 def run():
     try:
         meetings = read()
     except:
-        meetings = []
+        print("No data file!\n")
+        exit
+
     time = datetime.datetime.now()
 
     day = time.weekday()
@@ -49,7 +54,7 @@ def run():
         exit
 
 def test():
-    GUI.addNewMeeting()
+    sorted(read(), key=lambda m: m["day"])
     return
 
 if (len(sys.argv) > 1 and (sys.argv[1] == "--config" or sys.argv[1] == "-c")):
