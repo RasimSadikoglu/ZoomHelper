@@ -4,6 +4,7 @@ import sys
 import json
 from tkinter import *
 import GUI
+from functools import cmp_to_key
 
 timeout = 30
 
@@ -14,6 +15,12 @@ def read():
 def save(meetings):
     with open("data.json", "w") as data:
         json.dump(meetings, data, default=lambda o: o.__dict__, indent=4)
+
+def compare(m1, m2):
+    if (m1["day"] != m2["day"]):
+        return m1["day"] - m2["day"]
+
+    return m1["endTime"] - m2["endTime"]
     
 def config():
     try:
@@ -23,8 +30,7 @@ def config():
     
     meetings.extend(GUI.addNewMeeting())
 
-    sorted(meetings, key=lambda m: m["endTime"])
-    sorted(meetings, key=lambda m: m["day"])
+    meetings = sorted(meetings, key=cmp_to_key(compare))
 
     save(meetings)
 
@@ -54,7 +60,7 @@ def run():
         exit
 
 def test():
-    sorted(read(), key=lambda m: m["day"])
+    sorted(read(), key=cmp_to_key(compare))
     return
 
 if (len(sys.argv) > 1 and (sys.argv[1] == "--config" or sys.argv[1] == "-c")):
