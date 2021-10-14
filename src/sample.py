@@ -53,7 +53,7 @@ def run():
             continue
 
         if (m["endTime"] - endTime < timeout):
-            print("Expired!\n")
+            print(f"Expired! ({Meeting.print(m)})\n")
             continue
 
         Meeting.open(m)

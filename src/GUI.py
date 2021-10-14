@@ -44,7 +44,7 @@ def addNewMeeting():
         st = (st // 100) * 60 + (st % 100)
 
         et = int(endTime.get())
-        et = (et // 100) * 60 + (et % 60)
+        et = (et // 100) * 60 + (et % 100)
 
         meetings.append({"name": name.get(), "id": id.get(), "password": password.get(), "day": int(day.get()), "startTime": st, "endTime": et})
 

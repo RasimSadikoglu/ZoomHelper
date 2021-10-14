@@ -5,7 +5,7 @@
         "password": "975426",
         "day": 0,
         "startTime": 570,
-        "endTime": 700
+        "endTime": 680
     },
     {
         "name": "CSE3033",
@@ -21,7 +21,7 @@
         "password": "085528",
         "day": 1,
         "startTime": 570,
-        "endTime": 600
+        "endTime": 620
     },
     {
         "name": "CSE3015",
@@ -41,11 +41,19 @@
     },
     {
         "name": "CSE3033.2",
-        "id": "92576711789",
-        "password": "915030",
+        "id": "96371001006",
+        "password": "879007",
         "day": 2,
         "startTime": 840,
         "endTime": 950
+    },
+    {
+        "name": "CSE3015.1",
+        "id": "95384959605",
+        "password": "349145",
+        "day": 2,
+        "startTime": 960,
+        "endTime": 1070
     },
     {
         "name": "CSE3015",
@@ -53,7 +61,15 @@
         "password": "840997",
         "day": 3,
         "startTime": 570,
-        "endTime": 600
+        "endTime": 620
+    },
+    {
+        "name": "IE3081",
+        "id": "91740880571",
+        "password": "308121",
+        "day": 3,
+        "startTime": 630,
+        "endTime": 740
     },
     {
         "name": "IE3081",
@@ -61,7 +77,7 @@
         "password": "308121",
         "day": 4,
         "startTime": 570,
-        "endTime": 600
+        "endTime": 620
     },
     {
         "name": "CSE3033",
