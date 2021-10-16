@@ -147,16 +147,16 @@ class ZoomHelper(tk.Frame):
     def save(self):
         self.meetings = sorted(self.meetings, key=cmp_to_key(compare))
 
-        with open(f'{sys.path[0]}\data.json', "w") as data:
+        with open(f'{sys.path[0]}/data.json', "w") as data:
             json.dump(self.meetings, data, default=lambda o: o.__dict__, indent=4)
 
 def read():
-        try:
-            with open(f'{sys.path[0]}\data.json', "r") as data:
-                return json.load(data)
-        except:
-            print('No JSON file found!')
-            return []
+    try:
+        with open(f'{sys.path[0]}/data.json', "r") as data:
+            return json.load(data)
+    except:
+        print('No JSON file found!')
+        return []
 
 def compare(m1, m2):
     if (m1["day"] != m2["day"]):
