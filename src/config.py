@@ -13,6 +13,8 @@ class ZoomHelper(tk.Frame):
         super().__init__(tk.Tk())
         self.master.title("ZoomHelper")
 
+        self.meetings = read()
+
         self.calendar()
         
         self.mainloop()
@@ -26,12 +28,10 @@ class ZoomHelper(tk.Frame):
             tk.Label(self.calendarFrame, text=weekDays[x], borderwidth=2, relief="solid",
             width=15, height=2, padx=2, pady=2).grid(row=0, column=x)
 
-        self.meetings = read()
         self.labels = []
 
         def deleteMeeting(index):
             self.meetings.remove(self.meetings[index])
-            self.save()
             self.reset()
 
         count = [1, 1, 1, 1, 1, 1, 1]
@@ -47,7 +47,8 @@ class ZoomHelper(tk.Frame):
             self.labels[-1].bind("<Button-3>", lambda e, index=i: deleteMeeting(index))
             count[weekDay] += 1
 
-        tk.Button(self.calendarFrame, text="ADD", command=lambda: self.meetingInfo(-1, "Add New Meeting")).grid(row=max(count) + 1, column=0)
+        tk.Button(self.calendarFrame, text="Add", command=lambda: self.meetingInfo(-1, "Add New Meeting")).grid(row=max(count) + 1, column=0)
+        tk.Button(self.calendarFrame, text="Save", command=self.save).grid(row=max(count) + 1, column=6)
 
     def meetingInfo(self, index, windowTitle):
         meetingInfoWindow = tk.Toplevel()
@@ -113,7 +114,8 @@ class ZoomHelper(tk.Frame):
             endTimeEntry.delete(0, tk.END)
 
             self.meetings.append(meeting)
-            self.save()
+
+            self.meetings = sorted(self.meetings, key=cmp_to_key(compare))
 
         def update(delete):
             if (delete):
@@ -126,7 +128,8 @@ class ZoomHelper(tk.Frame):
                 self.meetings[index]["startTime"] = mt.timeTranslate(int(startTimeEntry.get()), 60)
                 self.meetings[index]["endTime"] = mt.timeTranslate(int(endTimeEntry.get()), 60)
 
-            self.save()
+            self.meetings = sorted(self.meetings, key=cmp_to_key(compare))
+
             self.reset(meetingInfoWindow)
 
         if (index == -1):
@@ -145,7 +148,7 @@ class ZoomHelper(tk.Frame):
         self.calendar()
 
     def save(self):
-        self.meetings = sorted(self.meetings, key=cmp_to_key(compare))
+        # self.meetings = sorted(self.meetings, key=cmp_to_key(compare))
 
         with open(f'{sys.path[0]}/data.json', "w") as data:
             json.dump(self.meetings, data, default=lambda o: o.__dict__, indent=4)
