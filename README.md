@@ -1,4 +1,4 @@
-# ZoomHelper v0.4.0
+# ZoomHelper v0.4.1
 
 ## What is it for?
 
@@ -28,8 +28,9 @@ The way program works is firstly it compares the day if they are equal it checks
 
 ---
 ## Future Plans
-* Calendar like GUI
-* Delete meetings via GUI
+* Calendar like GUI ✔
+* Delete meetings via GUI ✔
+* Good looking UI
 * Add non-repetitive meetings
 * Support for other meeting apps
 * Auto-open when the meeting is close without any click. (It will run in the background, will constantly check the time)
