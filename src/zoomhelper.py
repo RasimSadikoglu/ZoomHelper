@@ -1,13 +1,13 @@
-from meeting import Meeting
+import config as cnf
+import meeting as meeting
+
 import datetime
 import sys
-from tkinter import *
-from config import *
 
 timeout = 30
 
 def run():
-    meetings = read()
+    meetings = cnf.read()
 
     time = datetime.datetime.now()
 
@@ -17,18 +17,18 @@ def run():
     for m in meetings:
         
         if (day != m["day"]):
-            print(f"Wrong Day! ({Meeting.print(m)})\n")
+            print(f"Wrong Day! ({meeting.Meeting.print(m)})\n")
             continue
 
         if (m["endTime"] - endTime < timeout):
-            print(f"Expired! ({Meeting.print(m)})\n")
+            print(f"Expired! ({meeting.Meeting.print(m)})\n")
             continue
 
-        Meeting.open(m)
+        meeting.Meeting.open(m)
         exit
 
 def config():
-    ZoomHelper()
+    cnf.ZoomHelper()
 
 def test():
     return
