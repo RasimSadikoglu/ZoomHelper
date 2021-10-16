@@ -1,45 +1,13 @@
 from meeting import Meeting
 import datetime
 import sys
-import json
 from tkinter import *
-import GUI
-from functools import cmp_to_key
+from config import *
 
 timeout = 30
 
-def read():
-    with open("data.json", "r") as data:
-        return json.load(data)
-
-def save(meetings):
-    with open("data.json", "w") as data:
-        json.dump(meetings, data, default=lambda o: o.__dict__, indent=4)
-
-def compare(m1, m2):
-    if (m1["day"] != m2["day"]):
-        return m1["day"] - m2["day"]
-
-    return m1["endTime"] - m2["endTime"]
-    
-def config():
-    try:
-        meetings = read()
-    except:
-        meetings = []
-    
-    meetings.extend(GUI.addNewMeeting())
-
-    meetings = sorted(meetings, key=cmp_to_key(compare))
-
-    save(meetings)
-
 def run():
-    try:
-        meetings = read()
-    except:
-        print("No data file!\n")
-        exit
+    meetings = read()
 
     time = datetime.datetime.now()
 
@@ -59,8 +27,10 @@ def run():
         Meeting.open(m)
         exit
 
+def config():
+    ZoomHelper()
+
 def test():
-    sorted(read(), key=cmp_to_key(compare))
     return
 
 if (len(sys.argv) > 1 and (sys.argv[1] == "--config" or sys.argv[1] == "-c")):
