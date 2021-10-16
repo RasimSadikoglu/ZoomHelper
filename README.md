@@ -8,6 +8,8 @@ This program is for joining meetings easily with one click without entering any 
 ## Usage
 The usage is simple just run the python file and it is done. Firstly you need to enter your meetings info into the program via GUI or directly to JSON file.
 
+python.exe zoomhelper.py
+
 ---
 ## Config (old info for v0.3)
 You can access the GUI with -c or --config arguments.
