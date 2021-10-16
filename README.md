@@ -2,7 +2,7 @@
 
 ## What is it for?
 
-This program is for joining meetings easily with one click without entering any password or id. If you are looking for some advanced zoom stuff with zoom api, I am not planning to add those things in near future. (I don't even know how to do) However if I can manage to implement the things in the future plans section, I will try fancy zoom api stuff.
+This program is for joining meetings easily with one click without entering any password or id.
 
 ---
 ## Usage
@@ -37,4 +37,3 @@ The way program works is firstly it compares the day if they are equal it checks
 * Add non-repetitive meetings
 * Support for other meeting apps
 * Auto-open when the meeting is close without any click. (It will run in the background, will constantly check the time)
-* May be some creative things with zoom api (I need to learn it)
