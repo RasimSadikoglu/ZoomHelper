@@ -1,5 +1,5 @@
 import config as cnf
-import meeting as meeting
+import meeting
 
 import datetime
 import sys
