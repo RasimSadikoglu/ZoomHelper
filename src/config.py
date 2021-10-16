@@ -13,102 +13,107 @@ class ZoomHelper(tk.Frame):
         super().__init__(tk.Tk())
         self.master.title("ZoomHelper")
 
+        self.calendar()
+        
+        self.mainloop()
+
+    def calendar(self):
+
+        self.calendarFrame = tk.Frame(self.master)
+        self.calendarFrame.pack()
+
         for x in range(7):
-            tk.Label(self.master, text=weekDays[x], borderwidth=2, relief="solid",
+            tk.Label(self.calendarFrame, text=weekDays[x], borderwidth=2, relief="solid",
             width=15, height=2, padx=2, pady=2).grid(row=0, column=x)
 
         self.meetings = read()
         self.labels = []
 
+        def deleteMeeting(index):
+            self.meetings.remove(self.meetings[index])
+            self.save()
+            self.reset()
+
         count = [1, 1, 1, 1, 1, 1, 1]
         for i in range(len(self.meetings)):
             weekDay = self.meetings[i]["day"]
 
-            self.labels.append(tk.Label(self.master, text=mt.Meeting.info(self.meetings[i]), borderwidth=2,
+            self.labels.append(tk.Label(self.calendarFrame, text=mt.Meeting.info(self.meetings[i]), borderwidth=2,
             relief="solid", width=15, padx=2, pady=2, cursor="hand2"))
 
             self.labels[-1].grid(row=count[weekDay], column=weekDay)
 
-            self.labels[-1].bind("<Button-1>", lambda e, index=i: self.meetingInfo(index))
+            self.labels[-1].bind("<Button-1>", lambda e, index=i: self.meetingInfo(index, "Meeting Info", False))
+            self.labels[-1].bind("<Button-3>", lambda e, index=i: deleteMeeting(index))
             count[weekDay] += 1
 
-        tk.Button(self.master, text="ADD", command=self.addNewMeeting).grid(row=max(count) + 1, column=0)
+        tk.Button(self.calendarFrame, text="ADD", command=lambda: self.meetingInfo(-1, "Add New Meeting", True)).grid(row=max(count) + 1, column=0)
 
-        self.mainloop()
-
-    def addNewMeeting(self):
-
-        addNewMeetingWindow = tk.Toplevel()
-        addNewMeetingWindow.title("Add New Meeting")
-
-        tk.Label(addNewMeetingWindow, text="Name: ", ).grid(row=0, column=0)
-        name = tk.Entry(addNewMeetingWindow)
-        name.grid(row=0, column=1, columnspan=2)
-
-        tk.Label(addNewMeetingWindow, text="ID: ").grid(row=1, column=0)
-        id = tk.Entry(addNewMeetingWindow)
-        id.grid(row=1, column=1, columnspan=2)
-
-        tk.Label(addNewMeetingWindow, text="Password: ").grid(row=2, column=0)
-        password = tk.Entry(addNewMeetingWindow)
-        password.grid(row=2, column=1, columnspan=2)
-
-        tk.Label(addNewMeetingWindow, text="Day").grid(row=3, column=0)
-        tk.Label(addNewMeetingWindow, text="Start Time").grid(row=3, column=1)
-        tk.Label(addNewMeetingWindow, text="End Time").grid(row=3, column=2)
-
-        day = tk.Entry(addNewMeetingWindow)
-        day.grid(row=4, column=0)
-
-        startTime = tk.Entry(addNewMeetingWindow)
-        startTime.grid(row=4, column=1)
-
-        endTime = tk.Entry(addNewMeetingWindow)
-        endTime.grid(row=4, column=2)
-
-        def add():
-            st = int(startTime.get())
-            st = (st // 100) * 60 + (st % 100)
-
-            et = int(endTime.get())
-            et = (et // 100) * 60 + (et % 100)
-
-            self.meetings.append({"name": name.get(), "id": id.get(), "password": password.get(), "day": int(day.get()), "startTime": st, "endTime": et})
-            self.save()
-
-            name.delete(0, tk.END)
-            id.delete(0, tk.END)
-            password.delete(0, tk.END)
-            day.delete(0, tk.END)
-            startTime.delete(0, tk.END)
-            endTime.delete(0, tk.END)
-
-        tk.Button(addNewMeetingWindow, text="ADD", command=add).grid(row=5, column=0)
-        tk.Button(addNewMeetingWindow, text="EXIT", command=lambda: self.reset(addNewMeetingWindow)).grid(row=5, column=2)
-
-    def meetingInfo(self, index):
+    def meetingInfo(self, index, windowTitle, newMeeting):
         meetingInfoWindow = tk.Toplevel()
-        meetingInfoWindow.title("Meeting Info")
+        meetingInfoWindow.title(windowTitle)
 
         tk.Label(meetingInfoWindow, text="Meeting Name: ", padx=5, pady= 5).grid(row=0, column=0)
         nameEntry = tk.Entry(meetingInfoWindow)
         nameEntry.grid(row=0, column=1, columnspan=2)
-        nameEntry.insert(0, self.meetings[index]["name"])
+        if (index != -1):
+            nameEntry.insert(0, self.meetings[index]["name"])
 
         tk.Label(meetingInfoWindow, text="ID: ", padx=5, pady=5).grid(row=1, column=0)
         idEntry = tk.Entry(meetingInfoWindow)
         idEntry.grid(row=1, column=1, columnspan=2)
-        idEntry.insert(0, self.meetings[index]["id"])
+        if (index != -1):
+            idEntry.insert(0, self.meetings[index]["id"])
 
         tk.Label(meetingInfoWindow, text="Password: ", padx=5, pady=5).grid(row=2, column=0)
         passwordEntry = tk.Entry(meetingInfoWindow)
         passwordEntry.grid(row=2, column=1, columnspan=2)
-        passwordEntry.insert(0, self.meetings[index]["password"])
+        if (index != -1):
+            passwordEntry.insert(0, self.meetings[index]["password"])
 
         tk.Label(meetingInfoWindow, text="Day of Week", padx=5, pady=5).grid(row=3, column=0)
         dayOfWeekMenu = tk.StringVar(meetingInfoWindow)
-        dayOfWeekMenu.set(weekDays[self.meetings[index]["day"]])
+        if (index != -1):
+            dayOfWeekMenu.set(weekDays[self.meetings[index]["day"]])
         tk.OptionMenu(meetingInfoWindow, dayOfWeekMenu, *weekDays).grid(row=4, column=0)
+
+        tk.Label(meetingInfoWindow, text="Meeting Start", padx=5, pady=5).grid(row=3, column=1)
+        startTimeEntry = tk.Entry(meetingInfoWindow, width=15)
+        startTimeEntry.grid(row=4, column=1)
+        if (index != -1):
+            startTimeEntry.insert(0, mt.timeTranslate(self.meetings[index]["startTime"], 100))
+
+        tk.Label(meetingInfoWindow, text="Meeting End", padx=5, pady=5).grid(row=3, column=2)
+        endTimeEntry = tk.Entry(meetingInfoWindow, width=15)
+        endTimeEntry.grid(row=4, column=2)
+        if (index != -1):
+            endTimeEntry.insert(0, mt.timeTranslate(self.meetings[index]["endTime"], 100))
+
+        def add():
+            meeting = {
+                "name": "",
+                "id": "",
+                "password": "",
+                "day": "",
+                "startTime": 0,
+                "endTime": 0
+            }
+
+            meeting["name"] = nameEntry.get()
+            meeting["id"] = idEntry.get()
+            meeting["password"] = passwordEntry.get()
+            meeting["day"] = weekDays.index(dayOfWeekMenu.get())
+            meeting["startTime"] = mt.timeTranslate(int(startTimeEntry.get()), 60)
+            meeting["endTime"] = mt.timeTranslate(int(endTimeEntry.get()), 60)
+
+            nameEntry.delete(0, tk.END)
+            idEntry.delete(0, tk.END)
+            passwordEntry.delete(0, tk.END)
+            startTimeEntry.delete(0, tk.END)
+            endTimeEntry.delete(0, tk.END)
+
+            self.meetings.append(meeting)
+            self.save()
 
         def update(delete):
             if (delete):
@@ -118,23 +123,26 @@ class ZoomHelper(tk.Frame):
                 self.meetings[index]["id"] = idEntry.get()
                 self.meetings[index]["password"] = passwordEntry.get()
                 self.meetings[index]["day"] = weekDays.index(dayOfWeekMenu.get())
-                # self.meetings[index]["startTime"] = startTimeEntry.get()
-                # self.meetings[index]["endTime"] = endTimeEntry.get()
+                self.meetings[index]["startTime"] = mt.timeTranslate(int(startTimeEntry.get()), 60)
+                self.meetings[index]["endTime"] = mt.timeTranslate(int(endTimeEntry.get()), 60)
 
             self.save()
             self.reset(meetingInfoWindow)
 
-
-        tk.Button(meetingInfoWindow, text="Update", command=lambda: update(False)).grid(row=5, column=0)
-        tk.Button(meetingInfoWindow, text="Delete", command=lambda: update(True)).grid(row=5, column=2)
+        if (newMeeting):
+            tk.Button(meetingInfoWindow, text="Add", pady=10, command=add).grid(row=5, column=0)
+            tk.Button(meetingInfoWindow, text="Exit", pady=10, command=lambda: self.reset(meetingInfoWindow)).grid(row=5, column=2)
+        else:
+            tk.Button(meetingInfoWindow, text="Update", pady=10, command=lambda: update(False)).grid(row=5, column=0)
+            tk.Button(meetingInfoWindow, text="Delete", pady=10, command=lambda: update(True)).grid(row=5, column=2)
 
     def reset(self, window=None):
         if (window != None):
             window.destroy()
 
-        self.master.destroy()
+        self.calendarFrame.destroy()
 
-        self.__init__()
+        self.calendar()
 
     def save(self):
         self.meetings = sorted(self.meetings, key=cmp_to_key(compare))
