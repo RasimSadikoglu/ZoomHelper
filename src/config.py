@@ -1,8 +1,6 @@
-from os import name
 import tkinter as tk
 import json
 import sys
-from tkinter.constants import NO
 import meeting as mt
 
 from functools import cmp_to_key
