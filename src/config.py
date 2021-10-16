@@ -43,13 +43,13 @@ class ZoomHelper(tk.Frame):
 
             self.labels[-1].grid(row=count[weekDay], column=weekDay)
 
-            self.labels[-1].bind("<Button-1>", lambda e, index=i: self.meetingInfo(index, "Meeting Info", False))
+            self.labels[-1].bind("<Button-1>", lambda e, index=i: self.meetingInfo(index, "Meeting Info"))
             self.labels[-1].bind("<Button-3>", lambda e, index=i: deleteMeeting(index))
             count[weekDay] += 1
 
-        tk.Button(self.calendarFrame, text="ADD", command=lambda: self.meetingInfo(-1, "Add New Meeting", True)).grid(row=max(count) + 1, column=0)
+        tk.Button(self.calendarFrame, text="ADD", command=lambda: self.meetingInfo(-1, "Add New Meeting")).grid(row=max(count) + 1, column=0)
 
-    def meetingInfo(self, index, windowTitle, newMeeting):
+    def meetingInfo(self, index, windowTitle):
         meetingInfoWindow = tk.Toplevel()
         meetingInfoWindow.title(windowTitle)
 
@@ -129,7 +129,7 @@ class ZoomHelper(tk.Frame):
             self.save()
             self.reset(meetingInfoWindow)
 
-        if (newMeeting):
+        if (index == -1):
             tk.Button(meetingInfoWindow, text="Add", pady=10, command=add).grid(row=5, column=0)
             tk.Button(meetingInfoWindow, text="Exit", pady=10, command=lambda: self.reset(meetingInfoWindow)).grid(row=5, column=2)
         else:
