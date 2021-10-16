@@ -34,6 +34,7 @@ The way program works is firstly it compares the day if they are equal it checks
 * Delete meetings via GUI ✔
 * Edit meetings via GUI ✔
 * Good looking UI
+* Conflicting meeting support
 * Add non-repetitive meetings
 * Support for other meeting apps
 * Auto-open when the meeting is close without any click. (It will run in the background, will constantly check the time)
