@@ -13,14 +13,14 @@ class ZoomHelper(Frame):
         self.master.title("ZoomHelper")
 
         for x in range(7):
-            Label(self.master, text=weekDays[x]).grid(row=0, column=x)
+            Label(self.master, text=weekDays[x], borderwidth=2, relief="solid", width=15, height=2, padx=2, pady=2).grid(row=0, column=x)
 
         self.meetings = read()
 
         count = [1, 1, 1, 1, 1, 1, 1]
         for meeting in self.meetings:
             weekDay = meeting["day"]
-            Label(self.master, text=Meeting.info(meeting)).grid(row=count[weekDay], column=weekDay)
+            Label(self.master, text=Meeting.info(meeting), borderwidth=2, relief="solid", width=15, padx=2, pady=2).grid(row=count[weekDay], column=weekDay)
             count[weekDay] += 1
 
         Button(self.master, text="ADD", command=self.addNewMeeting).grid(row=max(count) + 1, column=0)
