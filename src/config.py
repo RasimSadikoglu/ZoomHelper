@@ -10,6 +10,8 @@ weekDays = ("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", 
 class ZoomHelper(tk.Frame):
 
     def __init__(self):
+        self.popUpCount = 0
+
         super().__init__(tk.Tk())
         self.master.title("ZoomHelper")
 
@@ -31,6 +33,8 @@ class ZoomHelper(tk.Frame):
         self.labels = []
 
         def deleteMeeting(index):
+            if (self.popUpCount > 0):
+                return
             self.meetings.remove(self.meetings[index])
             self.reset()
 
@@ -51,6 +55,8 @@ class ZoomHelper(tk.Frame):
         tk.Button(self.calendarFrame, text="Save", command=self.save).grid(row=max(count) + 1, column=6)
 
     def meetingInfo(self, index, windowTitle):
+        self.popUpCount += 1
+
         meetingInfoWindow = tk.Toplevel()
         meetingInfoWindow.title(windowTitle)
 
@@ -91,6 +97,7 @@ class ZoomHelper(tk.Frame):
             endTimeEntry.insert(0, mt.timeTranslate(self.meetings[index]["endTime"], 100))
 
         def add():
+            self.popUpCount -= 1
             meeting = {
                 "name": "",
                 "id": "",
@@ -118,6 +125,7 @@ class ZoomHelper(tk.Frame):
             self.meetings = sorted(self.meetings, key=cmp_to_key(compare))
 
         def update(delete):
+            self.popUpCount -= 1
             if (delete):
                 self.meetings.remove(self.meetings[index])
             else:
@@ -132,12 +140,17 @@ class ZoomHelper(tk.Frame):
 
             self.reset(meetingInfoWindow)
 
+        meetingInfoWindow.protocol('WM_DELETE_WINDOW', lambda: self.onClose(meetingInfoWindow))
         if (index == -1):
             tk.Button(meetingInfoWindow, text="Add", pady=10, command=add).grid(row=5, column=0)
             tk.Button(meetingInfoWindow, text="Exit", pady=10, command=lambda: self.reset(meetingInfoWindow)).grid(row=5, column=2)
         else:
             tk.Button(meetingInfoWindow, text="Update", pady=10, command=lambda: update(False)).grid(row=5, column=0)
             tk.Button(meetingInfoWindow, text="Delete", pady=10, command=lambda: update(True)).grid(row=5, column=2)
+
+    def onClose(self, window):
+        self.popUpCount -= 1
+        window.destroy()
 
     def reset(self, window=None):
         if (window != None):
