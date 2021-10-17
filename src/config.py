@@ -21,12 +21,12 @@ class ZoomHelper(tk.Frame):
 
     def calendar(self):
 
-        self.calendarFrame = tk.Frame(self.master)
+        self.calendarFrame = tk.Frame(self.master, bg="white")
         self.calendarFrame.pack()
 
         for x in range(7):
-            tk.Label(self.calendarFrame, text=weekDays[x], borderwidth=2, relief="solid",
-            width=15, height=2, padx=2, pady=2).grid(row=0, column=x)
+            tk.Label(self.calendarFrame, text=weekDays[x], borderwidth=1, relief="solid",
+            width=15, height=2, padx=2, pady=2, bg="white", fg="black").grid(row=0, column=x)
 
         self.labels = []
 
@@ -38,8 +38,8 @@ class ZoomHelper(tk.Frame):
         for i in range(len(self.meetings)):
             weekDay = self.meetings[i]["day"]
 
-            self.labels.append(tk.Label(self.calendarFrame, text=mt.Meeting.info(self.meetings[i]), borderwidth=2,
-            relief="solid", width=15, padx=2, pady=2, cursor="hand2"))
+            self.labels.append(tk.Label(self.calendarFrame, text=mt.Meeting.info(self.meetings[i]), borderwidth=1,
+            relief="solid", width=15, padx=2, pady=2, cursor="hand2", bg=("white", "yellow")[False], fg="black"))
 
             self.labels[-1].grid(row=count[weekDay], column=weekDay)
 
@@ -47,8 +47,14 @@ class ZoomHelper(tk.Frame):
             self.labels[-1].bind("<Button-3>", lambda e, index=i: deleteMeeting(index))
             count[weekDay] += 1
 
-        tk.Button(self.calendarFrame, text="Add", command=lambda: self.meetingInfo(-1, "Add New Meeting")).grid(row=max(count) + 1, column=0)
-        tk.Button(self.calendarFrame, text="Save", command=self.save).grid(row=max(count) + 1, column=6)
+        tk.Button(self.calendarFrame, cursor="hand2", height=2, width=14, relief="solid", borderwidth=1, text="Add", 
+        command=lambda: self.meetingInfo(-1, "Add New Meeting")).grid(row=max(count) + 1, column=0)
+
+        tk.Button(self.calendarFrame, cursor="hand2", height=2, width=14, relief="solid", borderwidth=1, text="Revert", 
+        command=lambda: self.reset(load=True)).grid(row=max(count) + 1, column=3)
+
+        tk.Button(self.calendarFrame, cursor="hand2", height=2, width=14, relief="solid", borderwidth=1, text="Save", 
+        command=self.save).grid(row=max(count) + 1, column=6)
 
     def meetingInfo(self, index, windowTitle):
         meetingInfoWindow = tk.Toplevel()
@@ -117,6 +123,8 @@ class ZoomHelper(tk.Frame):
 
             self.meetings = sorted(self.meetings, key=cmp_to_key(compare))
 
+            self.reset()
+
         def update(delete):
             if (delete):
                 self.meetings.remove(self.meetings[index])
@@ -139,9 +147,12 @@ class ZoomHelper(tk.Frame):
             tk.Button(meetingInfoWindow, text="Update", pady=10, command=lambda: update(False)).grid(row=5, column=0)
             tk.Button(meetingInfoWindow, text="Delete", pady=10, command=lambda: update(True)).grid(row=5, column=2)
 
-    def reset(self, window=None):
+    def reset(self, window=None, load=False):
         if (window != None):
             window.destroy()
+
+        if (load):
+            self.meetings = read()
 
         self.calendarFrame.destroy()
 
