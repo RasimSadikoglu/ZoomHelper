@@ -13,6 +13,8 @@ class ZoomHelper(tk.Frame):
         super().__init__(tk.Tk())
         self.master.title("ZoomHelper")
 
+        self.isTherePopUp = False
+
         self.meetings = read()
 
         self.calendar()
@@ -31,8 +33,9 @@ class ZoomHelper(tk.Frame):
         self.labels = []
 
         def deleteMeeting(index):
-            self.meetings.remove(self.meetings[index])
-            self.reset()
+            if (not self.isTherePopUp):
+                self.meetings.remove(self.meetings[index])
+                self.reset()
 
         count = [1, 1, 1, 1, 1, 1, 1]
         for i in range(len(self.meetings)):
@@ -57,8 +60,14 @@ class ZoomHelper(tk.Frame):
         command=self.save).grid(row=max(count) + 1, column=6)
 
     def meetingInfo(self, index, windowTitle):
+        if (self.isTherePopUp):
+            return
+
         meetingInfoWindow = tk.Toplevel()
         meetingInfoWindow.title(windowTitle)
+
+        self.isTherePopUp = True
+        meetingInfoWindow.protocol("WM_DELETE_WINDOW", lambda: self.reset(window=meetingInfoWindow))
 
         tk.Label(meetingInfoWindow, text="Meeting Name: ", padx=5, pady= 5).grid(row=0, column=0)
         nameEntry = tk.Entry(meetingInfoWindow)
@@ -149,6 +158,7 @@ class ZoomHelper(tk.Frame):
 
     def reset(self, window=None, load=False):
         if (window != None):
+            self.isTherePopUp = False
             window.destroy()
 
         if (load):
