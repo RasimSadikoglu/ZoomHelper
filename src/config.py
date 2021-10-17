@@ -161,7 +161,7 @@ class ZoomHelper(tk.Frame):
             self.isTherePopUp = False
             window.destroy()
 
-        if (load):
+        if (load and not self.isTherePopUp):
             self.meetings = read()
 
         self.calendarFrame.destroy()
@@ -170,6 +170,9 @@ class ZoomHelper(tk.Frame):
 
     def save(self):
         # self.meetings = sorted(self.meetings, key=cmp_to_key(compare))
+
+        if (self.isTherePopUp):
+            return
 
         with open(f'{sys.path[0]}/data.json', "w") as data:
             json.dump(self.meetings, data, default=lambda o: o.__dict__, indent=4)
