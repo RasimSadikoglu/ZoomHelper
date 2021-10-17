@@ -20,7 +20,7 @@ class ZoomHelper(tk.Frame):
         self.calendar()
         
         self.mainloop()
-
+    
     def calendar(self):
 
         self.calendarFrame = tk.Frame(self.master, bg="white")
