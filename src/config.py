@@ -37,12 +37,14 @@ class ZoomHelper(tk.Frame):
                 self.meetings.remove(self.meetings[index])
                 self.reset()
 
+        data = read()
+
         count = [1, 1, 1, 1, 1, 1, 1]
         for i in range(len(self.meetings)):
             weekDay = self.meetings[i]["day"]
 
             self.labels.append(tk.Label(self.calendarFrame, text=mt.Meeting.info(self.meetings[i]), borderwidth=1,
-            relief="solid", width=15, padx=2, pady=2, cursor="hand2", bg=("white", "yellow")[False], fg="black"))
+            relief="solid", width=15, padx=2, pady=2, cursor="hand2", bg=("yellow", "white")[self.meetings[i] in data], fg="black"))
 
             self.labels[-1].grid(row=count[weekDay], column=weekDay)
 
@@ -176,6 +178,8 @@ class ZoomHelper(tk.Frame):
 
         with open(f'{sys.path[0]}/data.json', "w") as data:
             json.dump(self.meetings, data, default=lambda o: o.__dict__, indent=4)
+
+        self.reset()
 
 def read():
     try:
