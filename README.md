@@ -37,4 +37,4 @@ The way program works is firstly it compares the day if they are equal it checks
 * Conflicting meeting support
 * Add non-repetitive meetings
 * Support for other meeting apps
-* Auto-open when the meeting is close without any click. (It will run in the background, will constantly check the time)
+* Auto-open
