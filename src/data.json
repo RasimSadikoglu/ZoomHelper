@@ -3,104 +3,352 @@
         "name": "CSE3063",
         "id": "96958566696",
         "password": "975426",
-        "day": 0,
-        "startTime": 570,
-        "endTime": 680
+        "startDate": {
+            "year": 2022,
+            "month": 1,
+            "day": 1,
+            "hour": 9,
+            "minute": 30
+        },
+        "endDate": {
+            "year": 2022,
+            "month": 1,
+            "day": 1,
+            "hour": 11,
+            "minute": 20
+        },
+        "weekDay": 0,
+        "isFree": false,
+        "platform": "Zoom"
     },
     {
         "name": "CSE3033",
         "id": "95139331787",
         "password": "590176",
-        "day": 0,
-        "startTime": 690,
-        "endTime": 740
+        "startDate": {
+            "year": 2022,
+            "month": 1,
+            "day": 1,
+            "hour": 11,
+            "minute": 30
+        },
+        "endDate": {
+            "year": 2022,
+            "month": 1,
+            "day": 1,
+            "hour": 12,
+            "minute": 20
+        },
+        "weekDay": 0,
+        "isFree": false,
+        "platform": "Zoom"
     },
     {
         "name": "CSE3063",
         "id": "97152901094",
         "password": "085528",
-        "day": 1,
-        "startTime": 570,
-        "endTime": 620
+        "startDate": {
+            "year": 2022,
+            "month": 1,
+            "day": 1,
+            "hour": 9,
+            "minute": 30
+        },
+        "endDate": {
+            "year": 2022,
+            "month": 1,
+            "day": 1,
+            "hour": 10,
+            "minute": 20
+        },
+        "weekDay": 1,
+        "isFree": false,
+        "platform": "Zoom"
     },
     {
         "name": "CSE3015",
         "id": "98540412668",
         "password": "707039",
-        "day": 1,
-        "startTime": 630,
-        "endTime": 740
+        "startDate": {
+            "year": 2022,
+            "month": 1,
+            "day": 1,
+            "hour": 10,
+            "minute": 30
+        },
+        "endDate": {
+            "year": 2022,
+            "month": 1,
+            "day": 1,
+            "hour": 12,
+            "minute": 20
+        },
+        "weekDay": 1,
+        "isFree": false,
+        "platform": "Zoom"
     },
     {
         "name": "CSE3055",
         "id": "2319763386",
         "password": "453461",
-        "day": 2,
-        "startTime": 630,
-        "endTime": 740
+        "startDate": {
+            "year": 2022,
+            "month": 1,
+            "day": 1,
+            "hour": 10,
+            "minute": 30
+        },
+        "endDate": {
+            "year": 2022,
+            "month": 1,
+            "day": 1,
+            "hour": 12,
+            "minute": 20
+        },
+        "weekDay": 2,
+        "isFree": false,
+        "platform": "Zoom"
     },
     {
         "name": "CSE3033.2",
         "id": "96371001006",
         "password": "879007",
-        "day": 2,
-        "startTime": 840,
-        "endTime": 950
+        "startDate": {
+            "year": 2022,
+            "month": 1,
+            "day": 1,
+            "hour": 14,
+            "minute": 0
+        },
+        "endDate": {
+            "year": 2022,
+            "month": 1,
+            "day": 1,
+            "hour": 15,
+            "minute": 50
+        },
+        "weekDay": 2,
+        "isFree": false,
+        "platform": "Zoom"
     },
     {
         "name": "CSE3015.1",
         "id": "95384959605",
         "password": "349145",
-        "day": 2,
-        "startTime": 960,
-        "endTime": 1070
+        "startDate": {
+            "year": 2022,
+            "month": 1,
+            "day": 1,
+            "hour": 16,
+            "minute": 0
+        },
+        "endDate": {
+            "year": 2022,
+            "month": 1,
+            "day": 1,
+            "hour": 17,
+            "minute": 50
+        },
+        "weekDay": 2,
+        "isFree": false,
+        "platform": "Zoom"
     },
     {
         "name": "CSE3015",
         "id": "96068761202",
         "password": "840997",
-        "day": 3,
-        "startTime": 570,
-        "endTime": 620
+        "startDate": {
+            "year": 2022,
+            "month": 1,
+            "day": 1,
+            "hour": 9,
+            "minute": 30
+        },
+        "endDate": {
+            "year": 2022,
+            "month": 1,
+            "day": 1,
+            "hour": 10,
+            "minute": 20
+        },
+        "weekDay": 3,
+        "isFree": false,
+        "platform": "Zoom"
     },
     {
         "name": "IE3081",
         "id": "91740880571",
         "password": "308121",
-        "day": 3,
-        "startTime": 630,
-        "endTime": 740
+        "startDate": {
+            "year": 2022,
+            "month": 1,
+            "day": 1,
+            "hour": 10,
+            "minute": 30
+        },
+        "endDate": {
+            "year": 2022,
+            "month": 1,
+            "day": 1,
+            "hour": 12,
+            "minute": 20
+        },
+        "weekDay": 3,
+        "isFree": false,
+        "platform": "Zoom"
     },
     {
         "name": "CSE3055.2",
         "id": "92153915749",
         "password": "007604",
-        "day": 3,
-        "startTime": 960,
-        "endTime": 1070
+        "startDate": {
+            "year": 2022,
+            "month": 1,
+            "day": 1,
+            "hour": 16,
+            "minute": 0
+        },
+        "endDate": {
+            "year": 2022,
+            "month": 1,
+            "day": 1,
+            "hour": 17,
+            "minute": 50
+        },
+        "weekDay": 3,
+        "isFree": false,
+        "platform": "Zoom"
     },
     {
         "name": "IE3081",
         "id": "93742155765",
         "password": "308121",
-        "day": 4,
-        "startTime": 570,
-        "endTime": 620
+        "startDate": {
+            "year": 2022,
+            "month": 1,
+            "day": 1,
+            "hour": 9,
+            "minute": 30
+        },
+        "endDate": {
+            "year": 2022,
+            "month": 1,
+            "day": 1,
+            "hour": 10,
+            "minute": 20
+        },
+        "weekDay": 4,
+        "isFree": false,
+        "platform": "Zoom"
     },
     {
         "name": "CSE3033",
         "id": "98077656088",
         "password": "892716",
-        "day": 4,
-        "startTime": 630,
-        "endTime": 740
+        "startDate": {
+            "year": 2022,
+            "month": 1,
+            "day": 1,
+            "hour": 10,
+            "minute": 30
+        },
+        "endDate": {
+            "year": 2022,
+            "month": 1,
+            "day": 1,
+            "hour": 12,
+            "minute": 20
+        },
+        "weekDay": 4,
+        "isFree": false,
+        "platform": "Zoom"
     },
     {
         "name": "CSE3055",
         "id": "2319763386",
         "password": "453461",
-        "day": 4,
-        "startTime": 900,
-        "endTime": 950
+        "startDate": {
+            "year": 2022,
+            "month": 1,
+            "day": 1,
+            "hour": 15,
+            "minute": 0
+        },
+        "endDate": {
+            "year": 2022,
+            "month": 1,
+            "day": 1,
+            "hour": 15,
+            "minute": 50
+        },
+        "weekDay": 4,
+        "isFree": false,
+        "platform": "Zoom"
+    },
+    {
+        "name": "CSE3033.1",
+        "id": "96371001006",
+        "password": "879007",
+        "startDate": {
+            "year": 2022,
+            "month": 1,
+            "day": 1,
+            "hour": 14,
+            "minute": 0
+        },
+        "endDate": {
+            "year": 2022,
+            "month": 1,
+            "day": 1,
+            "hour": 15,
+            "minute": 50
+        },
+        "weekDay": 1,
+        "isFree": false,
+        "platform": "Zoom"
+    },
+    {
+        "name": "CSE3055.1",
+        "id": "98088215701",
+        "password": "918630",
+        "startDate": {
+            "year": 2022,
+            "month": 1,
+            "day": 1,
+            "hour": 16,
+            "minute": 0
+        },
+        "endDate": {
+            "year": 2022,
+            "month": 1,
+            "day": 1,
+            "hour": 17,
+            "minute": 50
+        },
+        "weekDay": 1,
+        "isFree": false,
+        "platform": "Zoom"
+    },
+    {
+        "name": "CSE3015.2",
+        "id": "92531823926",
+        "password": "849712",
+        "startDate": {
+            "year": 2022,
+            "month": 1,
+            "day": 1,
+            "hour": 14,
+            "minute": 0
+        },
+        "endDate": {
+            "year": 2022,
+            "month": 1,
+            "day": 1,
+            "hour": 15,
+            "minute": 50
+        },
+        "weekDay": 3,
+        "isFree": false,
+        "platform": "Zoom"
     }
 ]
