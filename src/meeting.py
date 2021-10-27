@@ -1,26 +1,63 @@
 from os import system
+import datetime
+import json
 
 weekDays = ("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
 
 class Meeting:
-    
+
+    def __init__(self, name="", id="", password="", startDate={}, endDate={}, weekDay=-1, isFree=True, platform="Zoom"):
+        self.name = name
+        self.id = id
+        self.password = password
+        self.startDate = datetime.datetime(**startDate)
+        self.endDate = datetime.datetime(**endDate)
+        self.weekDay = weekDay
+        self.isFree = isFree
+        self.platform = platform
+
+        self.markForDelete = False
+
     def open(self):
-        system("%APPDATA%/Zoom/bin/Zoom.exe \"-url=zoommtg://zoom.us/join?action=join&confno={:s}&pwd={:s}\"".format(self["id"], self["password"]))
+        system(f'%APPDATA%/Zoom/bin/Zoom.exe "-url=zoommtg://zoom.us/join?action=join&confno={self.id}&pwd={self.password}"')
 
-    def info(self):
-        st = self["startTime"]
-        et = self["endTime"]
+    def labelInfo(self):
+        return f'{self.name}\n{self.startDate.hour:02}.{self.startDate.minute:02} - {self.endDate.hour:02}.{self.endDate.minute:02}'
 
-        startTime = f'{st // 60:02}.{st % 60:02}'
-        endTime = f'{et // 60:02}.{et % 60:02}'
+    def jsonSerialize(self):
+        sd = {
+            'year': self.startDate.year,
+            'month': self.startDate.month,
+            'day': self.startDate.day,
+            'hour': self.startDate.hour,
+            'minute': self.startDate.minute
+        }
 
-        return f'{self["name"]}\n{weekDays[self["day"]]}\n{startTime} - {endTime}'
+        ed = {
+            'year': self.endDate.year,
+            'month': self.endDate.month,
+            'day': self.endDate.day,
+            'hour': self.endDate.hour,
+            'minute': self.endDate.minute
+        }
 
-    def print(self):
-        return f'{self["name"]} {weekDays[self["day"]]} {self["startTime"] // 60:02}.{self["startTime"] % 60:02} - {self["endTime"] // 60:02}.{self["endTime"] % 60:02}'
+        return {
+            "name": self.name,
+            "id": self.id,
+            "password": self.password,
+            "startDate": sd,
+            "endDate": ed,
+            "weekDay": self.weekDay,
+            "isFree": self.isFree,
+            "platform": self.platform
+        }
 
-def timeTranslate(time, targetBase):
-    if (targetBase == 100):
-        return (time // 60) * 100 + (time % 60)
-    elif (targetBase == 60):
-        return (time // 100) * 60 + (time % 100)
+    def jsonDeserialize(meeting):
+        return Meeting(name=meeting["name"],
+        id=meeting["id"],
+        password=meeting["password"],
+        startDate=meeting['startDate'],
+        endDate=meeting['endDate'],
+        weekDay=meeting['weekDay'],
+        isFree=meeting["isFree"],
+        platform=meeting["platform"])
