@@ -1,4 +1,6 @@
-import tkinter, data, datetime, meeting, dateframe, other_meetings_window, settings_window
+import tkinter, data, datetime, meeting, dateframe, other_meetings_window, settings_window, re
+from typing import Collection
+from tkinter import font
 
 labelFormat = {'relief': 'solid', 'borderwidth': 1, 'height': 3, 'width': 15, 'padx': 5, 'pady': 5}
 
@@ -7,6 +9,8 @@ class Interface():
     def __init__(self):
         self.master = tkinter.Tk()
         self.master.title("ZoomHelper")
+
+        self.master.protocol('WM_DELETE_WINDOW', lambda: self.check())
 
         self.isTherePopUp = False
 
@@ -221,13 +225,28 @@ class Interface():
         infoFrame = tkinter.Frame(meetingInfoWindow, background='white', relief='solid')
         infoFrame.grid(row=0)
 
+        def parseLink():
+            text = linkEntry.get()
+
+            id = re.findall('zoom.us/[jw]/(\d+)', text)
+            password = re.findall('pwd=(\w+)', text)
+
+            if len(id) != 1 or len(password) != 1:
+                return
+
+            self.idEntry.delete(0, tkinter.END)
+            self.idEntry.insert(0, id[0])
+
+            self.passwordEntry.delete(0, tkinter.END)
+            self.passwordEntry.insert(0, password[0])
+
         # Row 0
         tkinter.Label(infoFrame, text="Link:", width=16, pady=10, background='white').grid(row=0, column=0, columnspan=2)
 
         linkEntry = tkinter.Entry(infoFrame, width=24)
         linkEntry.grid(row=0, column=2, columnspan=3)
 
-        tkinter.Button(infoFrame, text='Parse').grid(row=0, column=5)
+        tkinter.Button(infoFrame, text='Parse', command=parseLink).grid(row=0, column=5)
 
         # Row 1
         tkinter.Label(infoFrame, text='Meeting Name:', width=16, pady=10, background='white').grid(row=1, column=0, columnspan=2)
@@ -279,3 +298,39 @@ class Interface():
         isFree.set(self.dateFrame.isFree)
         tkinter.Checkbutton(buttonFrame, variable=isFree, background='white', command=lambda: self.dateFrame.reset(isFree.get())).grid(row=1, column=2, columnspan=2)
 
+    def check(self):
+
+        meetingsLength = 0
+        for m in self.meetings:
+            meetingsLength += not m.markForDelete
+        
+        changes = False
+
+        if meetingsLength != len(self.jsonData):
+            changes = True
+
+        for m in self.meetings:
+            if changes:
+                break
+            if m.jsonSerialize() not in self.jsonData:
+                changes = True
+
+        if changes:
+            self.changeWarning()
+        else:
+            self.master.destroy()
+
+    def changeWarning(self):
+
+        changeWarningWindow = tkinter.Toplevel(bg='white')
+        changeWarningWindow.title('Discard Changes')
+
+        tkinter.Label(changeWarningWindow, text='Your changes have not been saved!', padx=10, pady=10, bg='white', font=font.Font(size=12)).grid(columnspan=2)
+
+        tkinter.Button(changeWarningWindow, text='Quit Anyway', command=self.master.destroy).grid(row=1)
+
+        def save():
+            data.saveDataFile(self.meetings)
+            self.master.destroy()
+
+        tkinter.Button(changeWarningWindow, text='Save', command=save).grid(row=1, column=1)
