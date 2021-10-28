@@ -22,7 +22,7 @@ class Meeting:
         system(f'%APPDATA%/Zoom/bin/Zoom.exe "-url=zoommtg://zoom.us/join?action=join&confno={self.id}&pwd={self.password}"')
 
     def labelInfo(self):
-        return f'{self.name}\n{self.startDate.hour:02}.{self.startDate.minute:02} - {self.endDate.hour:02}.{self.endDate.minute:02}'
+        return f'{self.name} \n {self.startDate.hour:02}.{self.startDate.minute:02} - {self.endDate.hour:02}.{self.endDate.minute:02}'
 
     def jsonSerialize(self):
         sd = {
