@@ -1,4 +1,5 @@
 {
-    "startTimeOffset": -30,
-    "endTimeOffset": -30
+    "startTimeOffset": -15,
+    "endTimeOffset": -15,
+    "autoDelete": true
 }

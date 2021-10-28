@@ -24,7 +24,7 @@ def run():
 
             if now > sd and now < ed:
                 currentMeetings.append(m)
-            elif now > ed:
+            elif now > ed and config['autoDelete']:
                 meetings.remove(m)
         elif m.weekDay == now.weekday():
             sd = m.startDate

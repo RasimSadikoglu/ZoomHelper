@@ -22,7 +22,7 @@ class ConflictWindow():
         scrollBar = tkinter.Scrollbar(self.mainFrame, bg='white')
         scrollBar.pack(side='right', fill='y')
 
-        listBox = tkinter.Listbox(self.mainFrame, selectmode='single')
+        listBox = tkinter.Listbox(self.mainFrame, selectmode='single', yscrollcommand=scrollBar.set)
         listBox.pack(fill='x')
 
         for i in range(len(self.meetings)):
