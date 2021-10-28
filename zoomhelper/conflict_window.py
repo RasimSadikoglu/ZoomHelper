@@ -26,7 +26,7 @@ class ConflictWindow():
         listBox.pack(fill='x')
 
         for i in range(len(self.meetings)):
-            listBox.insert(i, self.meetings[i].labelInfo())
+            listBox.insert(i, self.meetings[i].info())
 
         tkinter.Button(self.mainFrame, text='Open', command=lambda: self.open(listBox.curselection())).pack(side='left')
         tkinter.Button(self.mainFrame, text='Quit', command=self.root.destroy).pack(side='right')

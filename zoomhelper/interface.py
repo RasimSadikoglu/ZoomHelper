@@ -1,4 +1,4 @@
-import tkinter, data, datetime, meeting, dateframe
+import tkinter, data, datetime, meeting, dateframe, other_meetings_window
 
 labelFormat = {'relief': 'solid', 'borderwidth': 1, 'height': 3, 'width': 15, 'padx': 5, 'pady': 5}
 
@@ -26,10 +26,10 @@ class Interface():
 
     def setCalendarFrame(self):
 
-        calendarFrame = tkinter.Frame(self.master, background='white')
-        calendarFrame.pack()
+        self.calendarFrame = tkinter.Frame(self.master, background='white')
+        self.calendarFrame.pack()
         
-        maxRows = self.getMeetingsInGroup(calendarFrame) - 1
+        maxRows = self.getMeetingsInGroup(self.calendarFrame) - 1
 
         def changeDateWindow(direction):
             if direction != 0:
@@ -37,29 +37,29 @@ class Interface():
             else:
                 (self.startDate, self.endDate) = (self.dateOfToday - datetime.timedelta(days=self.dateOfToday.weekday()), self.dateOfToday + datetime.timedelta(days=6-self.dateOfToday.weekday()))
 
-            calendarFrame.destroy()
+            self.calendarFrame.destroy()
             self.setCalendarFrame()
 
-        tkinter.Button(calendarFrame, text="<", command=lambda: changeDateWindow(-7)).grid(row=0, column=0)
-        tkinter.Button(calendarFrame, text=">", command=lambda: changeDateWindow(7)).grid(row=0, column=6)
+        tkinter.Button(self.calendarFrame, text="<", command=lambda: changeDateWindow(-7)).grid(row=0, column=0)
+        tkinter.Button(self.calendarFrame, text=">", command=lambda: changeDateWindow(7)).grid(row=0, column=6)
 
-        dateLabel = tkinter.Label(calendarFrame, text=datetime.datetime.today().strftime('%d %B, %Y - %A'), background='white', height=3, cursor="hand2")
+        dateLabel = tkinter.Label(self.calendarFrame, text=datetime.datetime.today().strftime('%d %B, %Y - %A'), background='white', height=3, cursor="hand2")
         dateLabel.grid(row=0, column=1, columnspan=5)
         dateLabel.bind('<Button-1>', lambda e: changeDateWindow(0))
 
-        tkinter.Button(calendarFrame, text="Settings").grid(row=0, column=7)
+        tkinter.Button(self.calendarFrame, text="Settings").grid(row=0, column=7)
 
         dateOfWeekday = self.startDate
         for i in range(7):
             stringDate = f'{meeting.weekDays[i]}\n{dateOfWeekday.strftime("%d/%m/%y")}'
-            tkinter.Label(calendarFrame, text=stringDate, background=('white', '#69E7FF')[dateOfWeekday == self.dateOfToday], **labelFormat).grid(row=1, column=i)
+            tkinter.Label(self.calendarFrame, text=stringDate, background=('white', '#69E7FF')[dateOfWeekday == self.dateOfToday], **labelFormat).grid(row=1, column=i)
             dateOfWeekday += datetime.timedelta(days=1)
 
         maxRows = max(maxRows, 4)
 
-        tkinter.Button(calendarFrame, text="Other Meetings").grid(row=maxRows + 1, column=0)
+        tkinter.Button(self.calendarFrame, text="Other Meetings", command=lambda: other_meetings_window.OtherMeetingsWindow(self)).grid(row=maxRows + 1, column=0)
 
-        tkinter.Label(calendarFrame, text="Left Click for Edit - Right Click for Delete", background='white').grid(row=maxRows + 2, column=0, columnspan=8)
+        tkinter.Label(self.calendarFrame, text="Left Click for Edit - Right Click for Delete", background='white').grid(row=maxRows + 2, column=0, columnspan=8)
 
         def saveMeetings():
             if self.isTherePopUp:
@@ -67,22 +67,22 @@ class Interface():
             
             data.saveDataFile(self.meetings)
             (self.jsonData, self.meetings) = data.readDataFile()
-            calendarFrame.destroy()
+            self.calendarFrame.destroy()
             self.setCalendarFrame()
 
-        tkinter.Button(calendarFrame, text="Save", command=saveMeetings).grid(row=maxRows, column=7)
+        tkinter.Button(self.calendarFrame, text="Save", command=saveMeetings).grid(row=maxRows, column=7)
 
         def revertMeetings():
             if self.isTherePopUp:
                 return
 
             self.meetings = [meeting.Meeting.jsonDeserialize(m) for m in self.jsonData]
-            calendarFrame.destroy()
+            self.calendarFrame.destroy()
             self.setCalendarFrame()
 
-        tkinter.Button(calendarFrame, text="Revert", command=revertMeetings).grid(row=maxRows - 1, column=7)
+        tkinter.Button(self.calendarFrame, text="Revert", command=revertMeetings).grid(row=maxRows - 1, column=7)
 
-        tkinter.Button(calendarFrame, text="Add", command=lambda: self.meetingInfo(-1, calendarFrame)).grid(row=maxRows - 2, column=7)
+        tkinter.Button(self.calendarFrame, text="Add", command=lambda: self.meetingInfo(-1, self.calendarFrame)).grid(row=maxRows - 2, column=7)
 
 
     def getMeetingsInGroup(self, frame):
@@ -91,12 +91,14 @@ class Interface():
         meetingsInGroup = [[], [], [], [], [], [], []]
 
         for m in self.meetings:
-            if m.weekDay != -1:
+            if m.isFree:
+                self.otherMeetings.append(m)
+            elif m.weekDay != -1:
                 meetingsInGroup[m.weekDay].append(m)
             elif m.startDate >= self.startDate and m.startDate <= self.endDate:
                 meetingsInGroup[m.startDate.weekday()].append(m)
             else:
-                self.otherMeetings.append(self.meetings.index(m))
+                self.otherMeetings.append(m)
 
         meetingsInGroup = [sorted(m, key=lambda mt: [mt.startDate.hour, mt.startDate.minute]) for m in meetingsInGroup]
 
@@ -125,7 +127,7 @@ class Interface():
 
         return max(meetingsIndex)
 
-    def meetingInfo(self, index, frame):
+    def meetingInfo(self, index, frame, otherMeetings=None):
         if self.isTherePopUp:
             return
 
@@ -206,6 +208,8 @@ class Interface():
             meetingInfoWindow.destroy()
             frame.destroy()
             self.setCalendarFrame()
+            if otherMeetings != None:
+                otherMeetings.update()
 
             self.isTherePopUp = False
 

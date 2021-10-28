@@ -47,7 +47,7 @@ def run():
         currentMeetings[0].open()
     else:
         tkinter.Tk().withdraw()
-        messagebox.showinfo('ZoomHelper', 'Currently there is no meeting!')
+        messagebox.showinfo('ZoomHelper', 'There is no meeting at the moment!')
 
     data.saveDataFile(meetings)
 
