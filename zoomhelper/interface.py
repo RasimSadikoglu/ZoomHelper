@@ -14,6 +14,7 @@ class Interface():
         self.config = data.readConfigFile()
 
         self.otherMeetings = []
+        self.otherMeetingsWindow = False
         
         self.dateOfToday = datetime.datetime.today()
         self.dateOfToday = datetime.datetime(year=self.dateOfToday.year, month=self.dateOfToday.month, day=self.dateOfToday.day)
@@ -32,6 +33,8 @@ class Interface():
         maxRows = self.getMeetingsInGroup(self.calendarFrame) - 1
 
         def changeDateWindow(direction):
+            if self.otherMeetingsWindow:
+                return
             if direction != 0:
                 (self.startDate, self.endDate) = (self.startDate + datetime.timedelta(days=direction), self.endDate + datetime.timedelta(days=direction))
             else:
@@ -62,7 +65,7 @@ class Interface():
         tkinter.Label(self.calendarFrame, text="Left Click for Edit - Right Click for Delete", background='white').grid(row=maxRows + 2, column=0, columnspan=8)
 
         def saveMeetings():
-            if self.isTherePopUp:
+            if self.isTherePopUp or self.otherMeetingsWindow:
                 return
             
             data.saveDataFile(self.meetings)
@@ -73,7 +76,7 @@ class Interface():
         tkinter.Button(self.calendarFrame, text="Save", command=saveMeetings).grid(row=maxRows, column=7)
 
         def revertMeetings():
-            if self.isTherePopUp:
+            if self.isTherePopUp or self.otherMeetingsWindow:
                 return
 
             self.meetings = [meeting.Meeting.jsonDeserialize(m) for m in self.jsonData]

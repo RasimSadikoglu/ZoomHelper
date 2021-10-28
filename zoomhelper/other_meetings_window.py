@@ -8,6 +8,10 @@ class OtherMeetingsWindow():
         self.root = tkinter.Toplevel()
         self.root.title('Other Meetings')
 
+        self.root.protocol("WM_DELETE_WINDOW", lambda: self.close())
+
+        self.interface.otherMeetingsWindow = True
+
         self.setup()
 
         self.root.mainloop()
@@ -42,3 +46,6 @@ class OtherMeetingsWindow():
         self.mainFrame.destroy()
         self.setup()
 
+    def close(self):
+        self.root.destroy()
+        self.interface.otherMeetingsWindow = False
