@@ -1,4 +1,5 @@
-import interface, data, sys, datetime
+import interface, data, sys, datetime, tkinter, conflict_window
+from tkinter import messagebox
 
 config = data.readConfigFile()
 
@@ -40,10 +41,13 @@ def run():
             if n > sd and n < ed:
                 currentMeetings.append(m)
 
-    if len(currentMeetings) != 0:
+    if len(currentMeetings) > 2:
+        conflict_window.ConflictWindow(currentMeetings)
+    elif len(currentMeetings) == 1:
         currentMeetings[0].open()
     else:
-        print('Currently there is no meeting!')
+        tkinter.Tk().withdraw()
+        messagebox.showinfo('ZoomHelper', 'Currently there is no meeting!')
 
     data.saveDataFile(meetings)
 

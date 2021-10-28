@@ -72,13 +72,13 @@ class DateFrame(tkinter.Frame):
             self.startLabels[2].grid(row=1, columnspan=3)
             self.weekdayMenu.grid(row=2, columnspan=3)
         else:
-            for i in range(3):
-                self.startLabels[2 - i].grid(row=1, column=i)
-                self.startDateEntries[2 - i].grid(row=2, column=i)
+            for i in range(2, -1, -1):
+                self.startLabels[i].grid(row=1, column=2-i)
+                self.startDateEntries[i].grid(row=2, column=2-i)
 
                 if self.differentEndTime.get():
-                    self.endLabels[2 - i].grid(row=4, column=i)
-                    self.endDateEntries[2 - i].grid(row=5, column=i)
+                    self.endLabels[i].grid(row=4, column=2-i)
+                    self.endDateEntries[i].grid(row=5, column=2-i)
         
 
     def getValues(self):
