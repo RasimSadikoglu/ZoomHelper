@@ -1,4 +1,4 @@
-# ZoomHelper v0.9.5
+# ZoomHelper v0.9.7
 
 ## What is it for?
 
