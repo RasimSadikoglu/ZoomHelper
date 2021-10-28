@@ -1,4 +1,4 @@
-import tkinter, data, datetime, meeting, dateframe, other_meetings_window
+import tkinter, data, datetime, meeting, dateframe, other_meetings_window, settings_window
 
 labelFormat = {'relief': 'solid', 'borderwidth': 1, 'height': 3, 'width': 15, 'padx': 5, 'pady': 5}
 
@@ -50,7 +50,7 @@ class Interface():
         dateLabel.grid(row=0, column=1, columnspan=5)
         dateLabel.bind('<Button-1>', lambda e: changeDateWindow(0))
 
-        tkinter.Button(self.calendarFrame, text="Settings").grid(row=0, column=7)
+        tkinter.Button(self.calendarFrame, text="Settings", command=lambda: settings_window.SettingsWindow()).grid(row=0, column=7)
 
         dateOfWeekday = self.startDate
         for i in range(7):

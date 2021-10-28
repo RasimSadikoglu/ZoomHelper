@@ -43,4 +43,4 @@ def readConfigFile():
 def saveConfigFile(config):
 
     with open(f'{sys.path[0]}/config.json', "w") as configFile:
-        json.dump(config, configFile)
+        json.dump(config, configFile, indent=4)

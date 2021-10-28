@@ -1,4 +1,4 @@
-# ZoomHelper v0.9.0
+# ZoomHelper v0.9.5
 
 ## What is it for?
 
@@ -6,13 +6,15 @@ This program is for joining meetings easily with one click without entering any 
 
 ---
 ## Usage
-The usage is simple just run the python file and it is done. Firstly you need to enter your meetings info into the program via GUI or directly to JSON file.
+The usage is simple just run the python file and it is done. Firstly you need to enter your meetings infos' into the program.
 
-python.exe zoomhelper.py
+py zoomhelper.py
 
 ---
 ## Config (old info for v0.3)
 You can access the GUI with -c or --config arguments.
+
+py zoomhelper.py -c or py zoomhelper.py --config
 
 ![GUI.png](https://user-images.githubusercontent.com/72021576/136834720-d2964001-6228-4d82-af5c-c0d59a3aa8f0.png)
 
