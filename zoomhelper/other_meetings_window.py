@@ -1,4 +1,5 @@
 import tkinter
+from tkinter import ttk
 
 class OtherMeetingsWindow():
     def __init__(self, interface):
@@ -18,10 +19,10 @@ class OtherMeetingsWindow():
 
     def setup(self):
 
-        self.mainFrame = tkinter.Frame(self.root, bg='white')
+        self.mainFrame = ttk.Frame(self.root)
         self.mainFrame.pack()
 
-        scrollBar = tkinter.Scrollbar(self.mainFrame, bg='white')
+        scrollBar = ttk.Scrollbar(self.mainFrame)
         scrollBar.pack(side='right', fill='y')
 
         listBox = tkinter.Listbox(self.mainFrame, selectmode='single', width=40, yscrollcommand=scrollBar.set)
@@ -30,8 +31,8 @@ class OtherMeetingsWindow():
         for i in range(len(self.meetings)):
             listBox.insert(i, self.meetings[i].info())
 
-        tkinter.Button(self.mainFrame, text='Edit', command=lambda: self.update(listBox.curselection(), 'EDIT')).pack(side='left')
-        tkinter.Button(self.mainFrame, text='Delete', command=lambda: self.update(listBox.curselection(), 'DELETE')).pack(side='right')
+        ttk.Button(self.mainFrame, text='Edit', command=lambda: self.update(listBox.curselection(), 'EDIT')).pack(side='left')
+        ttk.Button(self.mainFrame, text='Delete', command=lambda: self.update(listBox.curselection(), 'DELETE')).pack(side='right')
 
     def update(self, index=[], op='UPDATE'):
         if (len(index) == 0 or self.interface.isTherePopUp) and op != 'UPDATE':

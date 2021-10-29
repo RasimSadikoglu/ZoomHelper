@@ -1,8 +1,7 @@
 import tkinter, data, datetime, meeting, dateframe, other_meetings_window, settings_window, re
-from typing import Collection
-from tkinter import font
+from tkinter import font, ttk
 
-labelFormat = {'relief': 'solid', 'borderwidth': 1, 'height': 3, 'width': 15, 'padx': 5, 'pady': 5}
+labelFormat = {'relief': 'solid', 'borderwidth': 1, 'width': 15}
 
 class Interface():
 
@@ -31,7 +30,7 @@ class Interface():
 
     def setCalendarFrame(self):
 
-        self.calendarFrame = tkinter.Frame(self.master, background='white')
+        self.calendarFrame = ttk.Frame(self.master)
         self.calendarFrame.pack()
         
         maxRows = self.getMeetingsInGroup(self.calendarFrame) - 1
@@ -47,26 +46,26 @@ class Interface():
             self.calendarFrame.destroy()
             self.setCalendarFrame()
 
-        tkinter.Button(self.calendarFrame, text="<", command=lambda: changeDateWindow(-7)).grid(row=0, column=0)
-        tkinter.Button(self.calendarFrame, text=">", command=lambda: changeDateWindow(7)).grid(row=0, column=6)
+        ttk.Button(self.calendarFrame, text="<", command=lambda: changeDateWindow(-7)).grid(row=0, column=0)
+        ttk.Button(self.calendarFrame, text=">", command=lambda: changeDateWindow(7)).grid(row=0, column=6)
 
-        dateLabel = tkinter.Label(self.calendarFrame, text=datetime.datetime.today().strftime('%d %B, %Y - %A'), background='white', height=3, cursor="hand2")
+        dateLabel = ttk.Label(self.calendarFrame, text=datetime.datetime.today().strftime('%d %B, %Y - %A'), cursor="hand2")
         dateLabel.grid(row=0, column=1, columnspan=5)
         dateLabel.bind('<Button-1>', lambda e: changeDateWindow(0))
 
-        tkinter.Button(self.calendarFrame, text="Settings", command=lambda: settings_window.SettingsWindow()).grid(row=0, column=7)
+        ttk.Button(self.calendarFrame, text="Settings", command=lambda: settings_window.SettingsWindow()).grid(row=0, column=7)
 
         dateOfWeekday = self.startDate
         for i in range(7):
             stringDate = f'{meeting.weekDays[i]}\n{dateOfWeekday.strftime("%d/%m/%y")}'
-            tkinter.Label(self.calendarFrame, text=stringDate, background=('white', '#69E7FF')[dateOfWeekday == self.dateOfToday], **labelFormat).grid(row=1, column=i)
+            ttk.Label(self.calendarFrame, text=stringDate, background=('white', '#69E7FF')[dateOfWeekday == self.dateOfToday], **labelFormat).grid(row=1, column=i)
             dateOfWeekday += datetime.timedelta(days=1)
 
         maxRows = max(maxRows, 4)
 
-        tkinter.Button(self.calendarFrame, text="Other Meetings", command=lambda: other_meetings_window.OtherMeetingsWindow(self)).grid(row=maxRows + 1, column=0)
+        ttk.Button(self.calendarFrame, text="Other Meetings", command=lambda: other_meetings_window.OtherMeetingsWindow(self)).grid(row=maxRows + 1, column=0)
 
-        tkinter.Label(self.calendarFrame, text="Left Click for Edit - Right Click for Delete", background='white').grid(row=maxRows + 2, column=0, columnspan=8)
+        ttk.Label(self.calendarFrame, text="Left Click for Edit - Right Click for Delete").grid(row=maxRows + 2, column=0, columnspan=8)
 
         def saveMeetings():
             if self.isTherePopUp or self.otherMeetingsWindow:
@@ -77,7 +76,7 @@ class Interface():
             self.calendarFrame.destroy()
             self.setCalendarFrame()
 
-        tkinter.Button(self.calendarFrame, text="Save", command=saveMeetings).grid(row=maxRows, column=7)
+        ttk.Button(self.calendarFrame, text="Save", command=saveMeetings).grid(row=maxRows, column=7)
 
         def revertMeetings():
             if self.isTherePopUp or self.otherMeetingsWindow:
@@ -87,10 +86,12 @@ class Interface():
             self.calendarFrame.destroy()
             self.setCalendarFrame()
 
-        tkinter.Button(self.calendarFrame, text="Revert", command=revertMeetings).grid(row=maxRows - 1, column=7)
+        ttk.Button(self.calendarFrame, text="Revert", command=revertMeetings).grid(row=maxRows - 1, column=7)
 
-        tkinter.Button(self.calendarFrame, text="Add", command=lambda: self.meetingInfo(-1, self.calendarFrame)).grid(row=maxRows - 2, column=7)
+        ttk.Button(self.calendarFrame, text="Add", command=lambda: self.meetingInfo(-1, self.calendarFrame)).grid(row=maxRows - 2, column=7)
 
+        for child in self.calendarFrame.winfo_children(): 
+            child.grid_configure(padx=5, pady=5)
 
     def getMeetingsInGroup(self, frame):
 
@@ -124,7 +125,7 @@ class Interface():
 
         for i in range(7):
             for m in meetingsInGroup[i]:
-                meetingLabel = tkinter.Label(frame, text=m.labelInfo(), cursor="hand2", **labelFormat, background=meetingColor(m))
+                meetingLabel = ttk.Label(frame, text=m.labelInfo(), cursor="hand2", **labelFormat, background=meetingColor(m))
                 meetingLabel.grid(row=meetingsIndex[i], column=i)
 
                 meetingLabel.bind("<Button-1>", lambda e, index=self.meetings.index(m): self.meetingInfo(index, frame))
@@ -140,7 +141,7 @@ class Interface():
 
         self.isTherePopUp = True
 
-        meetingInfoWindow = tkinter.Toplevel(background='white')
+        meetingInfoWindow = tkinter.Toplevel()
         meetingInfoWindow.title("Add New Meeting" if index == -1 else "Meeting Info")
 
         def closeMeetingInfoWindow(op):
@@ -222,7 +223,7 @@ class Interface():
 
         meetingInfoWindow.protocol("WM_DELETE_WINDOW", lambda: closeMeetingInfoWindow(0))
 
-        infoFrame = tkinter.Frame(meetingInfoWindow, background='white', relief='solid')
+        infoFrame = ttk.Frame(meetingInfoWindow, relief='solid')
         infoFrame.grid(row=0)
 
         def parseLink():
@@ -241,27 +242,27 @@ class Interface():
             self.passwordEntry.insert(0, password[0])
 
         # Row 0
-        tkinter.Label(infoFrame, text="Link:", width=16, pady=10, background='white').grid(row=0, column=0, columnspan=2)
+        ttk.Label(infoFrame, text="Link:", width=16).grid(row=0, column=0, columnspan=2)
 
         linkEntry = tkinter.Entry(infoFrame, width=24)
         linkEntry.grid(row=0, column=2, columnspan=3)
 
-        tkinter.Button(infoFrame, text='Parse', command=parseLink).grid(row=0, column=5)
+        ttk.Button(infoFrame, text='Parse', command=parseLink).grid(row=0, column=5)
 
         # Row 1
-        tkinter.Label(infoFrame, text='Meeting Name:', width=16, pady=10, background='white').grid(row=1, column=0, columnspan=2)
+        ttk.Label(infoFrame, text='Meeting Name:', width=16).grid(row=1, column=0, columnspan=2)
 
         self.meetingNameEntry = tkinter.Entry(infoFrame, width=24)
         self.meetingNameEntry.grid(row=1, column=2, columnspan=3)
 
         # Row 2
-        tkinter.Label(infoFrame, text='ID:', width=16, pady=10, background='white').grid(row=2, column=0, columnspan=2)
+        ttk.Label(infoFrame, text='ID:', width=16).grid(row=2, column=0, columnspan=2)
 
         self.idEntry = tkinter.Entry(infoFrame, width=24)
         self.idEntry.grid(row=2, column=2, columnspan=3)
 
         # Row 3
-        tkinter.Label(infoFrame, text='Password:', width=16, pady=10, background='white').grid(row=3, column=0, columnspan=2)
+        ttk.Label(infoFrame, text='Password:', width=16).grid(row=3, column=0, columnspan=2)
 
         self.passwordEntry = tkinter.Entry(infoFrame, width=24)
         self.passwordEntry.grid(row=3, column=2, columnspan=3)
@@ -287,16 +288,16 @@ class Interface():
 
         self.dateFrame = dateframe.DateFrame(meetingInfoWindow, **args)
 
-        buttonFrame = tkinter.Frame(meetingInfoWindow, background='white')
+        buttonFrame = ttk.Frame(meetingInfoWindow)
         buttonFrame.grid(row=2)
 
-        tkinter.Button(buttonFrame, text=('Add', 'Update')[index != -1], command=lambda: closeMeetingInfoWindow(1)).grid(row=1, column=0, columnspan=2)
-        tkinter.Button(buttonFrame, text=('Exit', 'Delete')[index != -1], command=lambda: closeMeetingInfoWindow(2)).grid(row=1, column=4, columnspan=2)
+        ttk.Button(buttonFrame, text=('Add', 'Update')[index != -1], command=lambda: closeMeetingInfoWindow(1)).grid(row=1, column=0, columnspan=2)
+        ttk.Button(buttonFrame, text=('Exit', 'Delete')[index != -1], command=lambda: closeMeetingInfoWindow(2)).grid(row=1, column=4, columnspan=2)
 
-        tkinter.Label(buttonFrame, text='Free', background='white', width=16, pady=5).grid(row=0, column=2, columnspan=2)
+        ttk.Label(buttonFrame, text='Free', width=16).grid(row=0, column=2, columnspan=2)
         isFree = tkinter.BooleanVar()
         isFree.set(self.dateFrame.isFree)
-        tkinter.Checkbutton(buttonFrame, variable=isFree, background='white', command=lambda: self.dateFrame.reset(isFree.get())).grid(row=1, column=2, columnspan=2)
+        ttk.Checkbutton(buttonFrame, variable=isFree,command=lambda: self.dateFrame.reset(isFree.get())).grid(row=1, column=2, columnspan=2)
 
     def check(self):
 
@@ -322,15 +323,15 @@ class Interface():
 
     def changeWarning(self):
 
-        changeWarningWindow = tkinter.Toplevel(bg='white')
+        changeWarningWindow = tkinter.Toplevel()
         changeWarningWindow.title('Discard Changes')
 
-        tkinter.Label(changeWarningWindow, text='Your changes have not been saved!', padx=10, pady=10, bg='white', font=font.Font(size=12)).grid(columnspan=2)
+        ttk.Label(changeWarningWindow, text='Your changes have not been saved!', font=font.Font(size=12)).grid(columnspan=2)
 
-        tkinter.Button(changeWarningWindow, text='Quit Anyway', command=self.master.destroy).grid(row=1)
+        ttk.Button(changeWarningWindow, text='Quit Anyway', command=self.master.destroy).grid(row=1)
 
         def save():
             data.saveDataFile(self.meetings)
             self.master.destroy()
 
-        tkinter.Button(changeWarningWindow, text='Save', command=save).grid(row=1, column=1)
+        ttk.Button(changeWarningWindow, text='Save', command=save).grid(row=1, column=1)

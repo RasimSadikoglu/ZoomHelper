@@ -350,27 +350,5 @@
         "weekDay": 3,
         "isFree": false,
         "platform": "Zoom"
-    },
-    {
-        "name": "TEST",
-        "id": "95384959605",
-        "password": "TVUvV0tiNG1wVDRzYUR6S09kY2VvZz09",
-        "startDate": {
-            "year": 2022,
-            "month": 1,
-            "day": 1,
-            "hour": 0,
-            "minute": 0
-        },
-        "endDate": {
-            "year": 2022,
-            "month": 1,
-            "day": 1,
-            "hour": 0,
-            "minute": 0
-        },
-        "weekDay": -1,
-        "isFree": true,
-        "platform": "Zoom"
     }
 ]

@@ -1,9 +1,10 @@
 import tkinter, meeting
+from tkinter import ttk
 
-class DateFrame(tkinter.Frame):
+class DateFrame(ttk.Frame):
 
     def __init__(self, master, mt=None, det=False, r=True, isFree=False):
-        super().__init__(master, background='white')
+        super().__init__(master)
         self.grid(row=1)
 
         self.mt = mt
@@ -16,14 +17,14 @@ class DateFrame(tkinter.Frame):
         self.repetitive.set(r)
 
         labelTexts = ['Year', 'Month', 'Day', 'Hour', 'Minute']
-        self.startLabels = [tkinter.Label(self, text=t, background='white', pady=3) for t in labelTexts]
-        self.endLabels = [tkinter.Label(self, text=t, background='white', pady=3) for t in labelTexts]
+        self.startLabels = [ttk.Label(self, text=t) for t in labelTexts]
+        self.endLabels = [ttk.Label(self, text=t) for t in labelTexts]
 
-        self.startDateEntries = [tkinter.Entry(self, width=(4, 8)[t == 'Year']) for t in labelTexts]
-        self.endDateEntries = [tkinter.Entry(self, width=(4, 8)[t == 'Year']) for t in labelTexts]
+        self.startDateEntries = [ttk.Entry(self, width=(4, 8)[t == 'Year']) for t in labelTexts]
+        self.endDateEntries = [ttk.Entry(self, width=(4, 8)[t == 'Year']) for t in labelTexts]
 
         self.weekDayVar = tkinter.StringVar(self)
-        self.weekdayMenu = tkinter.OptionMenu(self, self.weekDayVar, *meeting.weekDays)
+        self.weekdayMenu = ttk.OptionMenu(self, self.weekDayVar, *meeting.weekDays)
 
         if self.mt != None:
             self.insertInfo()
@@ -48,15 +49,15 @@ class DateFrame(tkinter.Frame):
             
 
     def placeIntoGrid(self):
-        tkinter.Label(self, text='Start Date:', background='white', width=16, pady=10).grid(row=0, column=0, columnspan=2)
-        tkinter.Label(self, text='Weekly Repeat', background='white', width=24, pady=10, anchor='e').grid(row=0, column=2, columnspan=3)
+        ttk.Label(self, text='Start Date:', width=16).grid(row=0, column=0, columnspan=2)
+        ttk.Label(self, text='Weekly Repeat', width=24, anchor='e').grid(row=0, column=2, columnspan=3)
         
-        tkinter.Checkbutton(self, background='white', variable=self.repetitive, command=lambda: self.reset(self.isFree)).grid(row=0, column=5)
+        ttk.Checkbutton(self, variable=self.repetitive, command=lambda: self.reset(self.isFree)).grid(row=0, column=5)
 
-        tkinter.Label(self, text='End Date:', background='white', width=16, pady=10).grid(row=3, column=0, columnspan=2)
-        tkinter.Label(self, text='Different End Date', background='white', width=24, pady=10, anchor='e').grid(row=3, column=2, columnspan=3)
+        ttk.Label(self, text='End Date:', width=16).grid(row=3, column=0, columnspan=2)
+        ttk.Label(self, text='Different End Date', width=24, anchor='e').grid(row=3, column=2, columnspan=3)
 
-        tkinter.Checkbutton(self, background='white', variable=self.differentEndTime, state=('normal', 'disabled')[self.repetitive.get()], command=lambda: self.reset(self.isFree)).grid(row=3, column=5)
+        ttk.Checkbutton(self, variable=self.differentEndTime, state=('normal', 'disabled')[self.repetitive.get()], command=lambda: self.reset(self.isFree)).grid(row=3, column=5)
 
         self.startLabels[3].grid(row=1, column=3)
         self.startLabels[4].grid(row=1, column=4)

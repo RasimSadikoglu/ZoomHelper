@@ -1,6 +1,5 @@
 from os import system
 import datetime
-import json
 
 weekDays = ("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
 
