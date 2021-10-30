@@ -1,5 +1,5 @@
 import tkinter, data, datetime, meeting, dateframe, other_meetings_window, settings_window, re
-from tkinter import font, ttk
+from tkinter import messagebox, font, ttk
 
 labelFormat = {'relief': 'solid', 'borderwidth': 1, 'width': 15}
 
@@ -31,7 +31,7 @@ class Interface():
     def setCalendarFrame(self):
 
         self.calendarFrame = ttk.Frame(self.master)
-        self.calendarFrame.pack()
+        self.calendarFrame.grid()
         
         maxRows = self.getMeetingsInGroup(self.calendarFrame) - 1
 
@@ -223,7 +223,7 @@ class Interface():
 
         meetingInfoWindow.protocol("WM_DELETE_WINDOW", lambda: closeMeetingInfoWindow(0))
 
-        infoFrame = ttk.Frame(meetingInfoWindow, relief='solid')
+        infoFrame = ttk.Frame(meetingInfoWindow)
         infoFrame.grid(row=0)
 
         def parseLink():
@@ -242,30 +242,30 @@ class Interface():
             self.passwordEntry.insert(0, password[0])
 
         # Row 0
-        ttk.Label(infoFrame, text="Link:", width=16).grid(row=0, column=0, columnspan=2)
+        ttk.Label(infoFrame, text="Link:", width=16, anchor='e').grid(row=0, column=0, columnspan=2)
 
         linkEntry = tkinter.Entry(infoFrame, width=24)
-        linkEntry.grid(row=0, column=2, columnspan=3)
+        linkEntry.grid(row=0, column=2, columnspan=3, pady=10, padx=5)
 
         ttk.Button(infoFrame, text='Parse', command=parseLink).grid(row=0, column=5)
 
         # Row 1
-        ttk.Label(infoFrame, text='Meeting Name:', width=16).grid(row=1, column=0, columnspan=2)
+        ttk.Label(infoFrame, text='Meeting Name:', width=16, anchor='e').grid(row=1, column=0, columnspan=2)
 
         self.meetingNameEntry = tkinter.Entry(infoFrame, width=24)
-        self.meetingNameEntry.grid(row=1, column=2, columnspan=3)
+        self.meetingNameEntry.grid(row=1, column=2, columnspan=3, pady=10, padx=5)
 
         # Row 2
-        ttk.Label(infoFrame, text='ID:', width=16).grid(row=2, column=0, columnspan=2)
+        ttk.Label(infoFrame, text='ID:', width=16, anchor='e').grid(row=2, column=0, columnspan=2)
 
         self.idEntry = tkinter.Entry(infoFrame, width=24)
-        self.idEntry.grid(row=2, column=2, columnspan=3)
+        self.idEntry.grid(row=2, column=2, columnspan=3, pady=10, padx=5)
 
         # Row 3
-        ttk.Label(infoFrame, text='Password:', width=16).grid(row=3, column=0, columnspan=2)
+        ttk.Label(infoFrame, text='Password:', width=16, anchor='e').grid(row=3, column=0, columnspan=2)
 
         self.passwordEntry = tkinter.Entry(infoFrame, width=24)
-        self.passwordEntry.grid(row=3, column=2, columnspan=3)
+        self.passwordEntry.grid(row=3, column=2, columnspan=3, pady=10, padx=5)
 
         if index != -1:
             self.meetingNameEntry.insert(0, self.meetings[index].name)
@@ -294,10 +294,14 @@ class Interface():
         ttk.Button(buttonFrame, text=('Add', 'Update')[index != -1], command=lambda: closeMeetingInfoWindow(1)).grid(row=1, column=0, columnspan=2)
         ttk.Button(buttonFrame, text=('Exit', 'Delete')[index != -1], command=lambda: closeMeetingInfoWindow(2)).grid(row=1, column=4, columnspan=2)
 
-        ttk.Label(buttonFrame, text='Free', width=16).grid(row=0, column=2, columnspan=2)
         isFree = tkinter.BooleanVar()
         isFree.set(self.dateFrame.isFree)
-        ttk.Checkbutton(buttonFrame, variable=isFree,command=lambda: self.dateFrame.reset(isFree.get())).grid(row=1, column=2, columnspan=2)
+        ttk.Checkbutton(buttonFrame, text='Free', variable=isFree,command=lambda: self.dateFrame.reset(isFree.get())).grid(row=1, column=2, columnspan=2, pady=10, padx=10)
+
+        meetingInfoWindow.transient(self.master)
+        meetingInfoWindow.wait_visibility()
+        meetingInfoWindow.grab_set()
+        meetingInfoWindow.wait_window()
 
     def check(self):
 
@@ -335,3 +339,8 @@ class Interface():
             self.master.destroy()
 
         ttk.Button(changeWarningWindow, text='Save', command=save).grid(row=1, column=1)
+
+        changeWarningWindow.transient(self.master)
+        changeWarningWindow.wait_visibility()
+        changeWarningWindow.grab_set()
+        changeWarningWindow.wait_window()
