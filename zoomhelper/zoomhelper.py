@@ -1,9 +1,9 @@
 import interface, data, sys, datetime, tkinter, conflict_window
 from tkinter import messagebox
 
-config = data.readConfigFile()
-
 def run():
+    config = data.readConfigFile()
+
     meetings = data.readDataFile()[1]
 
     now = datetime.datetime.today()
@@ -54,12 +54,8 @@ def run():
 def openInterface():
     interface.Interface()
 
-def test():
-    return
-
-if (len(sys.argv) > 1 and (sys.argv[1] == "--config" or sys.argv[1] == "-c")):
-    openInterface()
-elif (len(sys.argv) > 1 and sys.argv[1] == "--test"):
-    test()
-else:
-    run()
+if __name__ == '__main__':
+    if len(sys.argv) == 1:
+        run()
+    elif sys.argv[1] == '-c' or sys.argv[1] == '--config':
+        openInterface()

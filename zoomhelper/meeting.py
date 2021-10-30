@@ -21,6 +21,9 @@ class Meeting:
         system(f'%APPDATA%/Zoom/bin/Zoom.exe "-url=zoommtg://zoom.us/join?action=join&confno={self.id}&pwd={self.password}"')
 
     def info(self):
+        self.__str__()
+
+    def __str__(self):
         if not self.isFree:
             date = f'{self.startDate.day}/{self.startDate.month}/{self.startDate.year}'
             time = f'{self.startDate.hour}.{self.startDate.minute} - {self.endDate.hour}.{self.endDate.minute}'

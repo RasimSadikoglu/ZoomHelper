@@ -317,7 +317,7 @@ class Interface():
         for m in self.meetings:
             if changes:
                 break
-            if m.jsonSerialize() not in self.jsonData:
+            if not m.markForDelete and m.jsonSerialize() not in self.jsonData:
                 changes = True
 
         if changes:
