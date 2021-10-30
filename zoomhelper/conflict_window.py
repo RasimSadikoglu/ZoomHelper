@@ -3,8 +3,10 @@ from tkinter import font, ttk
 
 class ConflictWindow():
 
-    def __init__(self, meetings):
+    def __init__(self, meetings, config):
         self.meetings = meetings
+
+        self.config = config
 
         self.root = tkinter.Tk()
         self.root.title('ZoomHelper')
@@ -35,5 +37,4 @@ class ConflictWindow():
         if len(index) == 0:
             return
         
-        self.meetings[index[0]].open()
-        self.root.destroy()
+        self.meetings[index[0]].open(tkinterWindow=self.root, copyURL=self.config['copyURL'])

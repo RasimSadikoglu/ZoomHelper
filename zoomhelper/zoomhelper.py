@@ -42,9 +42,9 @@ def run():
                 currentMeetings.append(m)
 
     if len(currentMeetings) > 2:
-        conflict_window.ConflictWindow(currentMeetings)
+        conflict_window.ConflictWindow(currentMeetings, config)
     elif len(currentMeetings) == 1:
-        currentMeetings[0].open()
+        currentMeetings[0].open(copyURL=config['copyURL'])
     else:
         tkinter.Tk().withdraw()
         messagebox.showinfo('ZoomHelper', 'There is no meeting at the moment!')

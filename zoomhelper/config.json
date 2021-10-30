@@ -1,5 +1,6 @@
 {
     "startTimeOffset": -15,
     "endTimeOffset": -15,
-    "autoDelete": true
+    "autoDelete": true,
+    "copyURL": true
 }
