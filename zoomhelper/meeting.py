@@ -29,7 +29,7 @@ class Meeting:
             tkinterWindow.clipboard_append(inviteURL)
             tkinterWindow.update()
 
-        if destroyTkinter:
+        if destroyTkinter and tkinterWindow != None:
             tkinterWindow.after(100, tkinterWindow.destroy)
 
         if openMeeting:
