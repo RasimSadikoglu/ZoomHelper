@@ -46,7 +46,9 @@ def run():
     elif len(currentMeetings) == 1:
         currentMeetings[0].open(copyURL=config['copyURL'])
     else:
-        tkinter.Tk().withdraw()
+        root = tkinter.Tk()
+        root.withdraw()
+        root.after(2000, root.destroy)
         messagebox.showinfo('ZoomHelper', 'There is no meeting at the moment!')
 
     data.saveDataFile(meetings)
