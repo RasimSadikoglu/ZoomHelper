@@ -17,10 +17,10 @@ class SettingsWindow():
 
     def setup(self):
 
-        ttk.Label(self.frame, text='Start Time Offset (in minutes):').grid()
-        ttk.Label(self.frame, text='End Time Offset (in minutes):').grid(row=1)
-        ttk.Label(self.frame, text='Auto Delete').grid(row=2)
-        ttk.Label(self.frame, text='Copy URL').grid(row=3)
+        ttk.Label(self.frame, text='Start Time Offset (in minutes):', anchor='e').grid(sticky='e')
+        ttk.Label(self.frame, text='End Time Offset (in minutes):', anchor='e').grid(row=1, sticky='e')
+        ttk.Label(self.frame, text='Auto Delete', anchor='e').grid(row=2, sticky='e')
+        ttk.Label(self.frame, text='Copy URL', anchor='e').grid(row=3, sticky='e')
 
         ttk.Button(self.frame, text='Save', command=lambda: self.save()).grid(row=4, columnspan=2)
 
@@ -31,8 +31,8 @@ class SettingsWindow():
 
         ttk.Entry(self.frame, textvariable=self.startTimeOffsetValue).grid(row=0, column=1)
         ttk.Entry(self.frame, textvariable=self.endTimeOffsetValue).grid(row=1, column=1)
-        ttk.Checkbutton(self.frame, variable=self.autoDeleteValue).grid(row=2, column=1)
-        ttk.Checkbutton(self.frame, variable=self.copyURL).grid(row=3, column=1)
+        ttk.Checkbutton(self.frame, variable=self.autoDeleteValue).grid(row=2, column=1, sticky='w')
+        ttk.Checkbutton(self.frame, variable=self.copyURL).grid(row=3, column=1, sticky='w')
 
         for child in self.frame.winfo_children():
             child.grid_configure(padx=5, pady=5)
