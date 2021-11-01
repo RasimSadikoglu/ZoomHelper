@@ -49,9 +49,9 @@ def run():
         root = tkinter.Tk()
         root.withdraw()
 
-        meetings[0].copyURL(root)
+        currentMeetings[0].copyURL(root)
 
-        root.after(1000, lambda: meetings[0].open(root))
+        root.after(1000, lambda: currentMeetings[0].open(root))
         
         root.mainloop()
     else:
