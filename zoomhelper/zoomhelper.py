@@ -6,6 +6,8 @@ def run():
 
     meetings = data.readDataFile()[1]
 
+    save = len(meetings) > 0
+
     now = datetime.datetime.today()
 
     currentMeetings = []
@@ -44,14 +46,22 @@ def run():
     if len(currentMeetings) > 2:
         conflict_window.ConflictWindow(currentMeetings, config)
     elif len(currentMeetings) == 1:
-        currentMeetings[0].open(copyURL=config['copyURL'])
+        root = tkinter.Tk()
+        root.withdraw()
+
+        meetings[0].copyURL(root)
+
+        root.after(1000, lambda: meetings[0].open(root))
+        
+        root.mainloop()
     else:
         root = tkinter.Tk()
         root.withdraw()
         root.after(2000, root.destroy)
         messagebox.showinfo('ZoomHelper', 'There is no meeting at the moment!')
 
-    data.saveDataFile(meetings)
+    if save:
+        data.saveDataFile(meetings)
 
 def openInterface():
     interface.Interface()

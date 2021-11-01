@@ -1,6 +1,4 @@
-import json
-import sys
-import meeting
+import json, sys, meeting
 
 def readDataFile():
     try:
@@ -38,7 +36,7 @@ def readConfigFile():
             return json.load(configFile)
     except:
         print("Error no config file is found!")
-        exit
+        exit()
 
 def saveConfigFile(config):
 

@@ -1,5 +1,6 @@
 from os import system
-import datetime, tkinter, time
+import datetime, time
+import tkinter
 
 weekDays = ("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
 
@@ -17,24 +18,23 @@ class Meeting:
 
         self.markForDelete = False
 
-    def open(self, tkinterWindow=None, destroyTkinter=True, openMeeting=True, copyURL=True):
+    def copyURL(self, window=None):
 
         inviteURL = f'https://zoom.us/j/{self.id}?pwd={self.password}'
 
-        if tkinterWindow == None and copyURL:
-            tkinterWindow = tkinter.Tk()
+        if window != None:
+            window.clipboard_clear()
+            window.clipboard_append(inviteURL)
+            window.update()
 
-        if copyURL:
-            tkinterWindow.clipboard_clear()
-            tkinterWindow.clipboard_append(inviteURL)
-            tkinterWindow.update()
+    def open(self, window=None):
+        if window != None:
+            window.destroy()
 
-        if destroyTkinter and tkinterWindow != None:
-            tkinterWindow.after(100, tkinterWindow.destroy)
+        time.sleep(0.5)
 
-        if openMeeting:
-            time.sleep(1)
-            system(f'%APPDATA%/Zoom/bin/Zoom.exe "-url=zoommtg://zoom.us/join?action=join&confno={self.id}&pwd={self.password}"')
+        url = f'%APPDATA%/Zoom/bin/Zoom.exe "-url=zoommtg://zoom.us/join?action=join&confno={self.id}&pwd={self.password}"'
+        system(url)
 
     def info(self):
         return self.__str__()

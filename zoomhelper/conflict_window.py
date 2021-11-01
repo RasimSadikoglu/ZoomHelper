@@ -37,4 +37,6 @@ class ConflictWindow():
         if len(index) == 0:
             return
         
-        self.meetings[index[0]].open(tkinterWindow=self.root, copyURL=self.config['copyURL'])
+        self.meetings[0].copyURL(self.root)
+
+        self.root.after(1000, lambda: self.meetings[0].open(self.root))
