@@ -1,4 +1,5 @@
 from os import system
+from sys import platform
 import datetime, time
 import tkinter
 
@@ -33,7 +34,11 @@ class Meeting:
 
         time.sleep(0.5)
 
-        url = f'%APPDATA%/Zoom/bin/Zoom.exe "-url=zoommtg://zoom.us/join?action=join&confno={self.id}&pwd={self.password}"'
+        if platform == "win32":
+            url = f'%APPDATA%/Zoom/bin/Zoom.exe "-url=zoommtg://zoom.us/join?action=join&confno={self.id}&pwd={self.password}"'
+        elif platform == "darwin":
+            url = f'open /Applications/zoom.us.app "--url=zoommtg://zoom.us/join?action=join&confno={self.id}&pwd={self.password}"'
+        
         system(url)
 
     def info(self):
