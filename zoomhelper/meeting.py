@@ -1,94 +1,50 @@
 from os import system
 from sys import platform
-import datetime, time
-import tkinter
-
-weekDays = ("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
+from datetime import datetime
 
 class Meeting:
 
-    def __init__(self, name="", id="", password="", startDate={}, endDate={}, weekDay=-1, isFree=True, platform="Zoom"):
+    def __init__(self, name: str, id: str, password: str, date: dict, weekDay: int, time: str, isFree: bool):
         self.name = name
         self.id = id
         self.password = password
-        self.startDate = datetime.datetime(**startDate)
-        self.endDate = datetime.datetime(**endDate)
+        self.date = datetime(**date) if date != None else None
         self.weekDay = weekDay
         self.isFree = isFree
-        self.platform = platform
+        self.time = time
 
-        self.markForDelete = False
-
-    def copyURL(self, window=None):
-
-        inviteURL = f'https://zoom.us/j/{self.id}?pwd={self.password}'
-
-        if window != None:
-            window.clipboard_clear()
-            window.clipboard_append(inviteURL)
-            window.update()
-
-    def open(self, window=None):
-        if window != None:
-            window.destroy()
-
-        time.sleep(0.5)
-
+    def open(self) -> None:
         if platform == "win32":
             url = f'%APPDATA%/Zoom/bin/Zoom.exe "-url=zoommtg://zoom.us/join?action=join&confno={self.id}&pwd={self.password}"'
         elif platform == "darwin":
             url = f'open /Applications/zoom.us.app "--url=zoommtg://zoom.us/join?action=join&confno={self.id}&pwd={self.password}"'
-        
+
         system(url)
 
-    def info(self):
-        return self.__str__()
+    def check(self, startTimeOffset, endTimeOffset) -> bool:
+        now = datetime.now()
 
-    def __str__(self):
-        if not self.isFree:
-            date = f'{self.startDate.day}/{self.startDate.month}/{self.startDate.year}'
-            time = f'{self.startDate.hour}.{self.startDate.minute} - {self.endDate.hour}.{self.endDate.minute}'
-            return f'{self.name} | {date} | {time}'
-        else:
-            return f'{self.name} | Free'
+        if self.isFree:
+            return True
+        
+        if self.weekDay != None and self.weekDay != now.weekday():
+            return False
 
-    def labelInfo(self):
-        return f'{self.name}\n{self.startDate.hour:02}.{self.startDate.minute:02} - {self.endDate.hour:02}.{self.endDate.minute:02}'
+        if self.date != None and self.date != now.date():
+            return False
 
-    def jsonSerialize(self):
-        sd = {
-            'year': self.startDate.year,
-            'month': self.startDate.month,
-            'day': self.startDate.day,
-            'hour': self.startDate.hour,
-            'minute': self.startDate.minute
-        }
+        startTime, endTime = self.time.split('-')
+        startTime, endTime = startTime.split('.'), endTime.split('.')
 
-        ed = {
-            'year': self.endDate.year,
-            'month': self.endDate.month,
-            'day': self.endDate.day,
-            'hour': self.endDate.hour,
-            'minute': self.endDate.minute
-        }
+        startTime = int(startTime[0]) * 60 + int(startTime[1]) + startTimeOffset
+        endTime = int(endTime[0]) * 60 + int(endTime[1]) + endTimeOffset
 
-        return {
-            "name": self.name,
-            "id": self.id,
-            "password": self.password,
-            "startDate": sd,
-            "endDate": ed,
-            "weekDay": self.weekDay,
-            "isFree": self.isFree,
-            "platform": self.platform
-        }
+        now = now.hour * 60 + now.minute
 
-    def jsonDeserialize(meeting):
-        return Meeting(name=meeting["name"],
-        id=meeting["id"],
-        password=meeting["password"],
-        startDate=meeting['startDate'],
-        endDate=meeting['endDate'],
-        weekDay=meeting['weekDay'],
-        isFree=meeting["isFree"],
-        platform=meeting["platform"])
+        return now >= startTime and now <= endTime
+
+    def jsonSerialize(self) -> dict:
+        return self.__dict__
+
+    def jsonDeserialize(meeting) -> object:
+        return Meeting(**meeting)

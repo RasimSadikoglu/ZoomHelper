@@ -1,8 +1,9 @@
-import json, sys, meeting
+import json, sys
+from meeting import Meeting
 
-def readDataFile():
+def readDataFile() -> list[Meeting]:
     try:
-        with open(f'{sys.path[0]}/data.json', "r") as dataFile:
+        with open(f'{sys.path[0]}/../files/data.json', "r") as dataFile:
             jsonData = json.load(dataFile)
     except:
         print('No JSON file found!')
@@ -11,34 +12,30 @@ def readDataFile():
     meetings = []
 
     for i in range(len(jsonData)):
-        meetings.append(meeting.Meeting.jsonDeserialize(jsonData[i]))
+        meetings.append(Meeting.jsonDeserialize(jsonData[i]))
 
     return (jsonData, meetings)
 
-def saveDataFile(meetings):
+def saveDataFile(meetings: list[Meeting]) -> None:
 
     jsonData = []
 
     for i in range(len(meetings)):
 
-        if meetings[i].markForDelete:
-            continue
-
         jsonData.append(meetings[i].jsonSerialize())
 
-    with open(f'{sys.path[0]}/data.json', "w") as dataFile:
+    with open(f'{sys.path[0]}/../files/data.json', "w") as dataFile:
         json.dump(jsonData, dataFile, indent=4)
 
 
-def readConfigFile():
+def readConfigFile() -> dict:
     try:
-        with open(f'{sys.path[0]}/config.json', "r") as configFile:
+        with open(f'{sys.path[0]}/../files/config.json', "r") as configFile:
             return json.load(configFile)
-    except:
-        print("Error no config file is found!")
-        exit()
+    except FileNotFoundError:
+        raise FileNotFoundError(f'Config file is missing!\n{sys.path[0]}../files/config.json')
 
-def saveConfigFile(config):
+def saveConfigFile(config: dict):
 
-    with open(f'{sys.path[0]}/config.json', "w") as configFile:
+    with open(f'{sys.path[0]}/../files/config.json', "w") as configFile:
         json.dump(config, configFile, indent=4)
