@@ -1,4 +1,4 @@
-import data, sys
+import data, sys, time
 from interface import Interface
 
 def run():
@@ -8,7 +8,11 @@ def run():
 
     meetings = [m for m in data.readDataFile()[1] if m.check(startTimeOffset, endTimeOffset)]
 
-    meetings[0].open()
+    if len(meetings) == 0:
+        print('There are no meetings!')
+        time.sleep(5)
+    else:
+        meetings[0].open()
 
 if __name__ == '__main__':
 
