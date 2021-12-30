@@ -1,7 +1,7 @@
 import json, sys
 from meeting import Meeting
 
-def readDataFile() -> list[Meeting]:
+def readDataFile(meetings: list=None) -> list[Meeting]:
     try:
         with open(f'{sys.path[0]}/../files/data.json', "r") as dataFile:
             jsonData = json.load(dataFile)
@@ -9,7 +9,10 @@ def readDataFile() -> list[Meeting]:
         print('No JSON file found!')
         return ([], [])
 
-    meetings = []
+    if meetings != None:
+        meetings.clear()
+    else:
+        meetings = []
 
     for i in range(len(jsonData)):
         meetings.append(Meeting.jsonDeserialize(jsonData[i]))
