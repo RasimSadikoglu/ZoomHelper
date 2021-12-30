@@ -1,4 +1,3 @@
-from io import DEFAULT_BUFFER_SIZE
 from tkinter import ttk
 from meeting import Meeting
 from datetime import datetime, timedelta

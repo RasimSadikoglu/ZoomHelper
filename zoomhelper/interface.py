@@ -8,7 +8,7 @@ class Interface(Tk):
 
     def __init__(self):
         super().__init__()
-        # self.geometry('800x325')
+        self.geometry('1000x500')
 
         self.title('ZoomHelper')
         self.protocol('WM_DELETE_WINDOW', lambda: self.check())

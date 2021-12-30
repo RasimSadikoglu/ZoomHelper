@@ -104,6 +104,12 @@ class MainMenu(ttk.Frame):
 
     def save(self):
         data.saveDataFile(self.meetings)
+
+        self.jsonData.clear()
+
+        for m in self.meetings:
+            self.jsonData.append(m.jsonSerialize())
+
         self.schedule.update()
 
     def meetingInfo(self, meeting=None):

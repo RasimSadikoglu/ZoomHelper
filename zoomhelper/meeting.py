@@ -1,7 +1,7 @@
 from os import system, getenv
 from sys import platform
 from datetime import datetime
-import subprocess, time
+import subprocess, time, psutil
 
 class Meeting:
 
@@ -26,15 +26,17 @@ class Meeting:
         self.time = time
 
     def open(self) -> None:
-
         if platform == "win32":
-            subprocess.Popen([getenv('APPDATA') + 'Zoom/bin/Zoom.exe'])
-            url = f'{getenv("APPDATA") + "Zoom/bin/Zoom.exe"} "-url=zoommtg://zoom.us/join?action=join&confno={self.id}&pwd={self.password}"'
+            zoomProcess = len(list(filter(lambda p: p.name() == 'Zoom.exe', psutil.process_iter())))
+
+            if zoomProcess == 0:
+                subprocess.Popen([getenv('APPDATA') + '/Zoom/bin/Zoom.exe'])
+                time.sleep(5)
+
+            url = f'{getenv("APPDATA") + "/Zoom/bin/Zoom.exe"} "-url=zoommtg://zoom.us/join?action=join&confno={self.id}&pwd={self.password}"'
         elif platform == "darwin":
             url = f'open /Applications/zoom.us.app "--url=zoommtg://zoom.us/join?action=join&confno={self.id}&pwd={self.password}"'
-
-        time.sleep(1)
-
+            
         system(url)
 
     def check(self, startTimeOffset, endTimeOffset) -> bool:
