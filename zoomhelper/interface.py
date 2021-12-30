@@ -10,7 +10,7 @@ class Interface(Tk):
         super().__init__()
 
         self.title('ZoomHelper')
-        self.protocol('WM_DELETE_WINDOW', lambda: self.check())
+        self.protocol('WM_DELETE_WINDOW', lambda: self.exitCheck())
 
         (self.jsonData, self.meetings) = data.readDataFile()
         self.config = data.readConfigFile()
@@ -25,8 +25,9 @@ class Interface(Tk):
 
         self.geometry(f'{self.mainMenu.row * 200}x500')
 
-    def check(self):
-        self.destroy()
+    def exitCheck(self):
+        if self.mainMenu.exitCheck():
+            self.destroy()
 
     def showMainMenu(self):
         if self.currentFrame == self.mainMenu:

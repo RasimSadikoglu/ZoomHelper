@@ -213,7 +213,7 @@ class DateFrame(ttk.Frame):
             self.weekDay.set(weekDays[now.weekday()])
             self.year.set(now.year)
             self.month.set(months[now.month - 1])
-            self.day.set(now.month)
+            self.day.set(now.day)
         else:
             self.weeklyRepeat.set(meeting.date == None)
             self.weekDay.set(weekDays[meeting.weekDay] if meeting.date == None and meeting.weekDay != None else weekDays[now.weekday()])

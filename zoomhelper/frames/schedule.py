@@ -28,6 +28,8 @@ class Schedule(ttk.Frame):
             self.columnconfigure(i, weight=1)
 
     def initGrid(self):
+        self.changes = False
+
         grid = [[] for i in range(7)]
 
         for m in sorted(self.meetings, key=lambda x: (x.date.weekday() if x.date != None else x.weekDay, x.time)):
@@ -62,9 +64,11 @@ class Schedule(ttk.Frame):
 
         def meetingColor(meeting: Meeting):
             if meeting.markForDelete:
+                self.changes = True
                 return MeetingColor.DELETE
 
             if meeting.jsonSerialize() not in self.jsonData:
+                self.changes = True
                 return MeetingColor.UPDATE
 
             return MeetingColor.SAME

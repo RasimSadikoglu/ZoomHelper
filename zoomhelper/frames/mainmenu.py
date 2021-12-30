@@ -96,11 +96,21 @@ class MainMenu(ttk.Frame):
         ttk.Button(self, text='Revert', padding=5, command=lambda: self.revert()).grid(row=self.row - 1, column=7, padx=5, pady=5, sticky='se')
         ttk.Button(self, text='Add', padding=5, command=self.meetingInfo).grid(row=self.row - 2, column=7, padx=5, pady=5, sticky='se')
 
+        self.unSavedLabel = ttk.Label(self, text='There are unsaved changes! Please revert or save before exit!', foreground='red', anchor='center')
+
         ttk.Button(self, text='Settings', padding=5).grid(row=0, column=7, padx=5, pady=5, sticky='ne')
+
+    def exitCheck(self):
+        if not self.schedule.changes:
+            return True
+
+        self.unSavedLabel.grid(row=self.row + 4, column=0, columnspan=8, pady=10)
 
     def revert(self):
         data.readDataFile(self.meetings)
         self.schedule.update()
+
+        self.unSavedLabel.grid_forget()
 
     def save(self):
         data.saveDataFile(self.meetings)
@@ -111,6 +121,9 @@ class MainMenu(ttk.Frame):
             self.jsonData.append(m.jsonSerialize())
 
         self.schedule.update()
+
+        self.unSavedLabel.grid_forget()
+
 
     def meetingInfo(self, meeting=None):
         self.master.meetingInfo(meeting)
