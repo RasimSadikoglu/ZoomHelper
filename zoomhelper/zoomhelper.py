@@ -1,4 +1,5 @@
 import data
+from interface import Interface
 
 def run():
 
@@ -10,4 +11,5 @@ def run():
     meetings[0].open()
 
 if __name__ == '__main__':
-    run()
+    gui = Interface()
+    gui.mainloop()
