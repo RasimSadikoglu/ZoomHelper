@@ -29,7 +29,7 @@ class MeetingInfo(ttk.Frame):
         }).grid(row=0, column=0, columnspan=3, sticky='ew', pady=10)
 
         self.infoFrame = InfoFrame(self, self.meeting)
-        self.infoFrame.grid(row=1, column=0, rowspan=4, sticky='news', padx=10, pady=10)
+        self.infoFrame.grid(row=1, column=0, rowspan=4, sticky='nes', padx=10, pady=10)
 
         self.dateFrame = DateFrame(self, self.meeting)
         self.dateFrame.grid(row=1, column=1, rowspan=4, sticky='news', padx=10, pady=10)
@@ -83,12 +83,12 @@ class InfoFrame(ttk.Frame):
 
         self.initFrame()
 
-        column, row = self.grid_size()
+        # column, row = self.grid_size()
 
-        self.columnconfigure(1, weight=1)
+        # self.columnconfigure(1, weight=1)
 
-        for i in range(row):
-            self.rowconfigure(i, weight=1)
+        # for i in range(row):
+        #     self.rowconfigure(i, weight=1)
 
     def initFrame(self):
         # Info Label
@@ -139,18 +139,18 @@ class DateFrame(ttk.Frame):
 
         self.initFrame()
 
-        column, row = self.grid_size()
+        # column, row = self.grid_size()
 
-        for i in range(column):
-            self.columnconfigure(i, weight=1)
+        # for i in range(column):
+        #     self.columnconfigure(i, weight=1)
 
-        for i in range(row):
-            self.rowconfigure(i, weight=1)
+        # for i in range(row):
+        #     self.rowconfigure(i, weight=1)
 
     def initFrame(self):
-        ttk.Label(self, text='Meeting Date').grid(row=0, column=0, columnspan=4)
+        ttk.Label(self, text='Meeting Date').grid(row=0, column=0, columnspan=4, pady=10)
 
-        ttk.Label(self, text='Date', anchor='w').grid(row=1, column=0, columnspan=2, sticky='w')
+        ttk.Label(self, text='Date', anchor='w').grid(row=1, column=0, columnspan=2, padx=5, pady=10, sticky='w')
         ttk.Checkbutton(self, text='Repeat Weekly', variable=self.weeklyRepeat, command=self.update).grid(row=1, column=2, columnspan=2)
 
         self.weekDayMenu = ttk.Combobox(self, textvariable=self.weekDay, values=weekDays, width=10)
@@ -161,19 +161,19 @@ class DateFrame(ttk.Frame):
         self.dayMenu = ttk.Combobox(self, textvariable=self.day, width=5)
         self.updateDayMenu()
 
-        ttk.Label(self, text='Start Time', anchor='w').grid(row=3, column=0, columnspan=2, sticky='w')
-        ttk.Label(self, text='End Time', anchor='w').grid(row=3, column=2, columnspan=2, sticky='w')
+        ttk.Label(self, text='Start Time', anchor='w').grid(row=3, column=0, columnspan=2, padx=5, pady=10, sticky='w')
+        ttk.Label(self, text='End Time', anchor='w').grid(row=3, column=2, columnspan=2, padx=5, pady=10, sticky='w')
 
-        ttk.Combobox(self, textvariable=self.startHour, values=list(range(24)), width=5).grid(row=4, column=0)
-        ttk.Combobox(self, textvariable=self.startMinute, values=list(range(60)), width=5).grid(row=4, column=1)
-        ttk.Combobox(self, textvariable=self.endHour, values=list(range(24)), width=5).grid(row=4, column=2)
-        ttk.Combobox(self, textvariable=self.endMinute, values=list(range(60)), width=5).grid(row=4, column=3)
+        ttk.Combobox(self, textvariable=self.startHour, values=list(range(24)), width=5).grid(row=4, column=0, padx=5, pady=5, sticky='w')
+        ttk.Combobox(self, textvariable=self.startMinute, values=list(range(60)), width=5).grid(row=4, column=1, padx=5, pady=5, sticky='we')
+        ttk.Combobox(self, textvariable=self.endHour, values=list(range(24)), width=5).grid(row=4, column=2, padx=5, pady=5, sticky='we')
+        ttk.Combobox(self, textvariable=self.endMinute, values=list(range(60)), width=5).grid(row=4, column=3, padx=5, pady=5, sticky='e')
 
         self.update()
 
     def update(self):
         if self.weeklyRepeat.get():
-            self.weekDayMenu.grid(row=2, column=0, columnspan=2)
+            self.weekDayMenu.grid(row=2, column=0, columnspan=2, sticky='w')
 
             self.yearMenu.grid_remove()
             self.monthMenu.grid_remove()
