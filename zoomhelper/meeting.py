@@ -43,6 +43,9 @@ class Meeting:
 
         return now >= startTime and now <= endTime
 
+    def __str__(self) -> str:
+        return f'{self.name}\n{self.time}'
+
     def jsonSerialize(self) -> dict:
         return self.__dict__
 

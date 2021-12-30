@@ -6,7 +6,7 @@
         "date": null,
         "weekDay": 0,
         "isFree": false,
-        "time": "9.30-11.20"
+        "time": "09.30-11.20"
     },
     {
         "name": "CSE3033",
@@ -24,7 +24,7 @@
         "date": null,
         "weekDay": 1,
         "isFree": false,
-        "time": "9.30-10.20"
+        "time": "09.30-10.20"
     },
     {
         "name": "CSE3015",
@@ -51,7 +51,7 @@
         "date": null,
         "weekDay": 2,
         "isFree": false,
-        "time": "14.0-15.50"
+        "time": "14.00-15.50"
     },
     {
         "name": "CSE3015.1",
@@ -60,7 +60,7 @@
         "date": null,
         "weekDay": 2,
         "isFree": false,
-        "time": "16.0-17.50"
+        "time": "16.00-17.50"
     },
     {
         "name": "CSE3015",
@@ -69,7 +69,7 @@
         "date": null,
         "weekDay": 3,
         "isFree": false,
-        "time": "9.30-10.20"
+        "time": "09.30-10.20"
     },
     {
         "name": "IE3081",
@@ -87,7 +87,7 @@
         "date": null,
         "weekDay": 3,
         "isFree": false,
-        "time": "16.0-17.50"
+        "time": "16.00-17.50"
     },
     {
         "name": "IE3081",
@@ -96,7 +96,7 @@
         "date": null,
         "weekDay": 4,
         "isFree": false,
-        "time": "9.30-10.20"
+        "time": "09.30-10.20"
     },
     {
         "name": "CSE3033",
@@ -114,7 +114,7 @@
         "date": null,
         "weekDay": 4,
         "isFree": false,
-        "time": "15.0-15.50"
+        "time": "15.00-15.50"
     },
     {
         "name": "CSE3033.1",
@@ -123,7 +123,7 @@
         "date": null,
         "weekDay": 1,
         "isFree": false,
-        "time": "14.0-15.50"
+        "time": "14.00-15.50"
     },
     {
         "name": "CSE3055.1",
@@ -132,7 +132,7 @@
         "date": null,
         "weekDay": 1,
         "isFree": false,
-        "time": "16.0-17.50"
+        "time": "16.00-17.50"
     },
     {
         "name": "CSE3015.2",
@@ -141,6 +141,6 @@
         "date": null,
         "weekDay": 3,
         "isFree": false,
-        "time": "14.0-15.50"
+        "time": "14.00-15.50"
     }
 ]

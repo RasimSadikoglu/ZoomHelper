@@ -1,4 +1,4 @@
-import data
+import data, sys
 from interface import Interface
 
 def run():
@@ -11,5 +11,9 @@ def run():
     meetings[0].open()
 
 if __name__ == '__main__':
-    gui = Interface()
-    gui.mainloop()
+
+    if len(sys.argv) == 1:
+        run()
+    elif sys.argv[1] == '-c' or sys.argv[1] == '--config':
+        gui = Interface()
+        gui.mainloop()

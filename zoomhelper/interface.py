@@ -5,7 +5,7 @@
 # from tkinter.font import Font
 
 from tkinter import Tk
-from frames.schedule import Schedule
+from frames.mainmenu import MainMenu
 import data
 
 class Interface(Tk):
@@ -19,7 +19,13 @@ class Interface(Tk):
         (self.jsonData, self.meetings) = data.readDataFile()
         self.config = data.readConfigFile()
 
-        self.scheduleFrame = Schedule(self, self.meetings)
+        self.meetings = sorted(self.meetings, key=lambda x: (x.date.weekday() if x.date != None else x.weekDay, x.time))
+
+        self.mainMenu = MainMenu(self, self.meetings)
+        self.mainMenu.grid(sticky='news')
+
+        self.rowconfigure(0, weight=1)
+        self.columnconfigure(0, weight=1)
 
     def check(self):
         self.destroy()
