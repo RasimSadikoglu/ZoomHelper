@@ -8,7 +8,6 @@ class Interface(Tk):
 
     def __init__(self):
         super().__init__()
-        self.geometry('1000x500')
 
         self.title('ZoomHelper')
         self.protocol('WM_DELETE_WINDOW', lambda: self.check())
@@ -23,6 +22,8 @@ class Interface(Tk):
 
         self.rowconfigure(0, weight=1)
         self.columnconfigure(0, weight=1)
+
+        self.geometry(f'{self.mainMenu.row * 200}x500')
 
     def check(self):
         self.destroy()
