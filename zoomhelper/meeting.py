@@ -38,6 +38,12 @@ class Meeting:
         elif platform == 'darwin':
             url = f'open /Applications/zoom.us.app "--url=zoommtg://zoom.us/join?action=join&confno={self.id}&pwd={self.password}"'
         elif platform in ['linux', 'linux2']:
+            zoomProcess = len(list(filter(lambda p: p.name() == 'zoom', psutil.process_iter())))
+
+            if zoomProcess == 0:
+                subprocess.Popen(['zoom'])
+                time.sleep(5)
+
             url = f'xdg-open "zoommtg://zoom.us/join?action=join&confno={self.id}&pwd={self.password}"'
         else:
             url = f'https://zoom.us/j/{self.id}?pwd={self.password}'
