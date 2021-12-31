@@ -46,7 +46,7 @@ class Schedule(ttk.Frame):
     def placeGrid(self, grid: list[list[Meeting]]):
         today = self.timeWindow['begin']
 
-        for w, i in zip(weekDays, range(len(weekDays))):
+        for i, w in enumerate(weekDays):
             ttk.Label(self, **{
                 'text': f'{w}\n{str(today)}',
                 'padding': 5,
@@ -75,8 +75,8 @@ class Schedule(ttk.Frame):
 
             return MeetingColor.SAME
 
-        for day, column in zip(grid, range(len(grid))):
-            for meeting, row in zip(day, range(1, len(day) + 1)):
+        for column, day in enumerate(grid):
+            for row, meeting in enumerate(day, 1):
 
                 meetingLabel = ttk.Label(self, **{
                     'text': str(meeting),

@@ -50,7 +50,7 @@ def run():
     else:
         print('There are multiple meetings at the moment.')
 
-        for m, i in zip(currentMeetings, range(len(currentMeetings))):
+        for i, m in enumerate(currentMeetings):
             print(f'{i + 1:2}. {m.name:10} - {m.time if not m.isFree else "Free"}')
         
         while True:
