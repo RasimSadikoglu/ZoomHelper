@@ -2,6 +2,7 @@ from os import system, getenv
 from sys import platform
 from datetime import datetime
 import subprocess, time, psutil
+import webbrowser
 
 class Meeting:
 
@@ -25,8 +26,8 @@ class Meeting:
         self.isFree = isFree
         self.time = time
 
-    def open(self) -> None:
-        if platform == "win32":
+    def open(self):
+        if platform in ['win32', 'cygwin', 'msys']:
             zoomProcess = len(list(filter(lambda p: p.name() == 'Zoom.exe', psutil.process_iter())))
 
             if zoomProcess == 0:
@@ -36,8 +37,12 @@ class Meeting:
             url = f'{getenv("APPDATA") + "/Zoom/bin/Zoom.exe"} "-url=zoommtg://zoom.us/join?action=join&confno={self.id}&pwd={self.password}"'
         elif platform == "darwin":
             url = f'open /Applications/zoom.us.app "--url=zoommtg://zoom.us/join?action=join&confno={self.id}&pwd={self.password}"'
-        else:
+        elif platform in ['linux', 'linux2']:
             url = f'xdg-open "zoommtg://zoom.us/join?action=join&confno={self.id}&pwd={self.password}"'
+        else:
+            url = f'https://zoom.us/j/{self.id}?pwd={self.password}'
+            webbrowser.open(url)
+            return
             
         system(url)
 
