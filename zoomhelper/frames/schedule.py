@@ -53,7 +53,8 @@ class Schedule(ttk.Frame):
                 'relief': 'solid',
                 'width': 15,
                 'anchor': 'n',
-                'background': '#69E7FF' if today == datetime.now().date() else 'white'
+                'background': '#235c82' if today == datetime.now().date() else '#70a7cc',
+                'foreground': 'white' if today == datetime.now().date() else 'black'
             }).grid(**{
                 'row': 0,
                 'column': i,
