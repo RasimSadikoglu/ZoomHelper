@@ -106,11 +106,11 @@ class MainMenu(ttk.Frame):
 
         self.unSavedLabel.grid(row=self.row + 4, column=0, columnspan=8, pady=10)
 
+        self.after(5000, self.unSavedLabel.grid_remove)
+
     def revert(self):
         data.readDataFile(self.meetings)
         self.schedule.update()
-
-        self.unSavedLabel.grid_forget()
 
     def save(self):
         data.saveDataFile(self.meetings)
@@ -121,9 +121,6 @@ class MainMenu(ttk.Frame):
             self.jsonData.append(m.jsonSerialize())
 
         self.schedule.update()
-
-        self.unSavedLabel.grid_forget()
-
 
     def meetingInfo(self, meeting=None):
         self.master.meetingInfo(meeting)

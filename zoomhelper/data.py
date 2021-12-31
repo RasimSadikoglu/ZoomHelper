@@ -6,8 +6,12 @@ def readDataFile(meetings: list=None) -> list[Meeting]:
         with open(f'{sys.path[0]}/../files/data.json', "r") as dataFile:
             jsonData = json.load(dataFile)
     except:
-        print('No JSON file found!')
-        return ([], [])
+        if meetings != None:
+            meetings.clear()
+            return
+        else:
+            print('No JSON file found!')
+            return ([], [])
 
     if meetings != None:
         meetings.clear()
@@ -23,9 +27,13 @@ def saveDataFile(meetings: list[Meeting]) -> None:
 
     jsonData = []
 
-    for i in range(len(meetings)):
+    filteredMeetings = list(filter(lambda m: not m.markForDelete, meetings))
+    meetings.clear()
+    meetings.extend(filteredMeetings)
 
-        jsonData.append(meetings[i].jsonSerialize())
+    for m in meetings:
+
+        jsonData.append(m.jsonSerialize())
 
     with open(f'{sys.path[0]}/../files/data.json', "w") as dataFile:
         json.dump(jsonData, dataFile, indent=4)
