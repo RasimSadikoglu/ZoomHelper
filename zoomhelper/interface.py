@@ -36,8 +36,14 @@ class Interface(Tk):
         self.mainMenu.schedule.update()
         self.mainMenu.grid()
         self.currentFrame = self.mainMenu
+
+        self.geometry("")
+        self.update()
         
     def meetingInfo(self, meeting: Meeting):
+        self.geometry(self.winfo_geometry())
+        self.update()
+
         self.currentFrame.grid_remove()
 
         self.currentFrame = MeetingInfo(self, meeting)

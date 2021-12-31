@@ -153,9 +153,9 @@ class DateFrame(ttk.Frame):
         ttk.Label(self, text='Date', anchor='w').grid(row=1, column=0, columnspan=2, padx=5, pady=10, sticky='w')
         ttk.Checkbutton(self, text='Repeat Weekly', variable=self.weeklyRepeat, command=self.update).grid(row=1, column=2, columnspan=2)
 
-        self.weekDayMenu = ttk.Combobox(self, textvariable=self.weekDay, values=weekDays, width=10)
+        self.weekDayMenu = ttk.Combobox(self, textvariable=self.weekDay, values=weekDays, width=15)
         self.yearMenu = ttk.Combobox(self, textvariable=self.year, values=list(range(2022, 2032)), width=5)
-        self.monthMenu = ttk.Combobox(self, textvariable=self.month, values=months, width=10)
+        self.monthMenu = ttk.Combobox(self, textvariable=self.month, values=months, width=13)
         self.monthMenu.bind('<<ComboboxSelected>>', lambda e: self.updateDayMenu())
 
         self.dayMenu = ttk.Combobox(self, textvariable=self.day, width=5)
@@ -173,15 +173,15 @@ class DateFrame(ttk.Frame):
 
     def update(self):
         if self.weeklyRepeat.get():
-            self.weekDayMenu.grid(row=2, column=0, columnspan=2, sticky='w')
+            self.weekDayMenu.grid(row=2, column=0, padx=5, pady=5, columnspan=2, sticky='w')
 
             self.yearMenu.grid_remove()
             self.monthMenu.grid_remove()
             self.dayMenu.grid_remove()
         else:
-            self.yearMenu.grid(row=2, column=0)
-            self.monthMenu.grid(row=2, column=1, columnspan=2)
-            self.dayMenu.grid(row=2, column=3)
+            self.yearMenu.grid(row=2, padx=5, pady=5, column=0)
+            self.monthMenu.grid(row=2, padx=5, pady=5, column=1, columnspan=2)
+            self.dayMenu.grid(row=2, padx=5, pady=5, column=3)
 
             self.weekDayMenu.grid_remove()
 
