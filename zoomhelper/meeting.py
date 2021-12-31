@@ -35,7 +35,7 @@ class Meeting:
                 time.sleep(5)
 
             url = f'{getenv("APPDATA") + "/Zoom/bin/Zoom.exe"} "-url=zoommtg://zoom.us/join?action=join&confno={self.id}&pwd={self.password}"'
-        elif platform == "darwin":
+        elif platform == 'darwin':
             url = f'open /Applications/zoom.us.app "--url=zoommtg://zoom.us/join?action=join&confno={self.id}&pwd={self.password}"'
         elif platform in ['linux', 'linux2']:
             url = f'xdg-open "zoommtg://zoom.us/join?action=join&confno={self.id}&pwd={self.password}"'

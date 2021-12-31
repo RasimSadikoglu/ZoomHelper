@@ -1,6 +1,6 @@
 from datetime import datetime
 from tkinter import Tk, ttk
-import tkinter
+import tkinter, re
 from meeting import Meeting
 from frames.schedule import weekDays
 
@@ -103,7 +103,7 @@ class InfoFrame(ttk.Frame):
         # Link Parser
         ttk.Label(self, text='Meeting Link', anchor='e', padding=5).grid(row=1, column=0, padx=5, pady=5, sticky='news')
         ttk.Entry(self, textvariable=self.link).grid(row=1, column=1, padx=5, pady=5, sticky='news')
-        ttk.Button(self, text='Parse').grid(row=1, column=2, pady=5, sticky='news')
+        ttk.Button(self, text='Parse', command=lambda: self.linkParser()).grid(row=1, column=2, padx=5, pady=5, sticky='news')
 
         # Meeting Name
         ttk.Label(self, text='Meeting Name', anchor='e', padding=5).grid(row=2, column=0, padx=5, pady=5, sticky='news')
@@ -116,6 +116,18 @@ class InfoFrame(ttk.Frame):
         # Meeting Password
         ttk.Label(self, text='Meeting Password', anchor='e', padding=5).grid(row=4, column=0, padx=5, pady=5, sticky='news')
         ttk.Entry(self, textvariable=self.password).grid(row=4, column=1, columnspan=2, padx=5, pady=5, sticky='news')
+
+    def linkParser(self):
+        text = self.link.get()
+
+        id = re.findall('zoom.us/[jw]/(\d+)', text)
+        password = re.findall('pwd=(\w+)', text)
+
+        if len(id) != 1 or len(password) != 1:
+            return
+
+        self.id.set(id[0])
+        self.password.set(password[0])
 
     def getValues(self):
         return {
