@@ -154,7 +154,7 @@ class DateFrame(ttk.Frame):
         ttk.Checkbutton(self, text='Repeat Weekly', variable=self.weeklyRepeat, command=self.update).grid(row=1, column=2, columnspan=2)
 
         self.weekDayMenu = ttk.Combobox(self, textvariable=self.weekDay, values=weekDays, width=10)
-        self.yearMenu = ttk.Combobox(self, textvariable=self.year, values=list(range(2021, 2026)), width=5)
+        self.yearMenu = ttk.Combobox(self, textvariable=self.year, values=list(range(2022, 2032)), width=5)
         self.monthMenu = ttk.Combobox(self, textvariable=self.month, values=months, width=10)
         self.monthMenu.bind('<<ComboboxSelected>>', lambda e: self.updateDayMenu())
 
