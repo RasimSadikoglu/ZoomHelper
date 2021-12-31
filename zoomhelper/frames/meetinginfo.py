@@ -48,6 +48,12 @@ class MeetingInfo(ttk.Frame):
 
         if self.meeting != None:
             ttk.Button(self, **{
+                'text': 'Open',
+                'command': self.meeting.open,
+                'padding': 10
+            }).grid(row=1, column=2, padx=10, pady=15, sticky='s')
+
+            ttk.Button(self, **{
                 'text': 'Delete',
                 'command': self.deleteMeeting,
                 'padding': 10
