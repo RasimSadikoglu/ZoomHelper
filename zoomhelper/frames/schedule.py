@@ -1,3 +1,4 @@
+from sys import platform
 from tkinter import ttk
 from meeting import Meeting
 from datetime import datetime, timedelta
@@ -95,7 +96,10 @@ class Schedule(ttk.Frame):
                 })
 
                 meetingLabel.bind('<Button-1>', lambda e, m=meeting: self.master.meetingInfo(m))
-                meetingLabel.bind('<Button-3>', lambda e, m=meeting: self.deleteMeeting(m))
+                if platform == "darwin":
+                    meetingLabel.bind('<Button-2>', lambda e, m=meeting: self.deleteMeeting(m))
+                else:
+                    meetingLabel.bind('<Button-3>', lambda e, m=meeting: self.deleteMeeting(m))
 
     def deleteMeeting(self, meeting: Meeting):
         meeting.markForDelete ^= True
