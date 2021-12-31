@@ -6,8 +6,12 @@ def readDataFile(meetings: list=None) -> list[Meeting]:
         with open(f'{sys.path[0]}/../files/data.json', "r") as dataFile:
             jsonData = json.load(dataFile)
     except:
-        print('No JSON file found!')
-        return ([], [])
+        if meetings != None:
+            meetings.clear()
+            return
+        else:
+            print('No JSON file found!')
+            return ([], [])
 
     if meetings != None:
         meetings.clear()

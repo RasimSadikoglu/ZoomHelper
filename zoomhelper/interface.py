@@ -23,8 +23,6 @@ class Interface(Tk):
         self.rowconfigure(0, weight=1)
         self.columnconfigure(0, weight=1)
 
-        self.geometry(f'{self.mainMenu.row * 200}x500')
-
     def exitCheck(self):
         if self.mainMenu.exitCheck():
             self.destroy()

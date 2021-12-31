@@ -21,7 +21,7 @@ class Schedule(ttk.Frame):
         
         column, row = self.grid_size()
 
-        for i in range(row):
+        for i in range(1, row):
             self.rowconfigure(i, weight=1)
 
         for i in range(column):
@@ -50,14 +50,15 @@ class Schedule(ttk.Frame):
                 'text': f'{w}\n{str(today)}',
                 'padding': 5,
                 'relief': 'solid',
-                'anchor': 'center',
+                'width': 15,
+                'anchor': 'n',
                 'background': '#69E7FF' if today == datetime.now().date() else 'white'
             }).grid(**{
                 'row': 0,
                 'column': i,
                 'padx': 5,
                 'pady': 5,
-                'sticky': 'news'
+                'sticky': 'ew'
             })
 
             today += timedelta(days=1)
