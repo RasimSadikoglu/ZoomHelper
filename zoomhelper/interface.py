@@ -24,6 +24,8 @@ class Interface(Tk):
         self.columnconfigure(0, weight=1)
 
     def exitCheck(self):
+        self.showMainMenu()
+
         if self.mainMenu.exitCheck():
             self.destroy()
 

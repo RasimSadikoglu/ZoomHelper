@@ -171,9 +171,9 @@ class DateFrame(ttk.Frame):
         ttk.Label(self, text='Date', anchor='w').grid(row=1, column=0, columnspan=2, padx=5, pady=10, sticky='w')
         ttk.Checkbutton(self, text='Repeat Weekly', variable=self.weeklyRepeat, command=self.update).grid(row=1, column=2, columnspan=2)
 
-        self.weekDayMenu = ttk.Combobox(self, textvariable=self.weekDay, values=weekDays, width=15)
-        self.yearMenu = ttk.Combobox(self, textvariable=self.year, values=list(range(2022, 2032)), width=5)
-        self.monthMenu = ttk.Combobox(self, textvariable=self.month, values=months, width=13)
+        self.weekDayMenu = ttk.Combobox(self, textvariable=self.weekDay, state='readonly', values=weekDays, width=15)
+        self.yearMenu = ttk.Combobox(self, textvariable=self.year, state='readonly', values=list(range(2022, 2032)), width=5)
+        self.monthMenu = ttk.Combobox(self, textvariable=self.month, state='readonly', values=months, width=13)
         self.monthMenu.bind('<<ComboboxSelected>>', lambda e: self.updateDayMenu())
 
         self.dayMenu = ttk.Combobox(self, textvariable=self.day, width=5)
@@ -182,10 +182,10 @@ class DateFrame(ttk.Frame):
         ttk.Label(self, text='Start Time', anchor='w').grid(row=3, column=0, columnspan=2, padx=5, pady=10, sticky='w')
         ttk.Label(self, text='End Time', anchor='w').grid(row=3, column=2, columnspan=2, padx=5, pady=10, sticky='w')
 
-        ttk.Combobox(self, textvariable=self.startHour, values=list(range(24)), width=5).grid(row=4, column=0, padx=5, pady=5, sticky='w')
-        ttk.Combobox(self, textvariable=self.startMinute, values=list(range(60)), width=5).grid(row=4, column=1, padx=5, pady=5, sticky='we')
-        ttk.Combobox(self, textvariable=self.endHour, values=list(range(24)), width=5).grid(row=4, column=2, padx=5, pady=5, sticky='we')
-        ttk.Combobox(self, textvariable=self.endMinute, values=list(range(60)), width=5).grid(row=4, column=3, padx=5, pady=5, sticky='e')
+        ttk.Combobox(self, textvariable=self.startHour, state='readonly', values=list(range(24)), width=5).grid(row=4, column=0, padx=5, pady=5, sticky='w')
+        ttk.Combobox(self, textvariable=self.startMinute, state='readonly', values=list(range(60)), width=5).grid(row=4, column=1, padx=5, pady=5, sticky='we')
+        ttk.Combobox(self, textvariable=self.endHour, state='readonly', values=list(range(24)), width=5).grid(row=4, column=2, padx=5, pady=5, sticky='we')
+        ttk.Combobox(self, textvariable=self.endMinute, state='readonly', values=list(range(60)), width=5).grid(row=4, column=3, padx=5, pady=5, sticky='e')
 
         self.update()
 
