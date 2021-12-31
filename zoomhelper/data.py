@@ -27,9 +27,13 @@ def saveDataFile(meetings: list[Meeting]) -> None:
 
     jsonData = []
 
-    for i in range(len(meetings)):
+    filteredMeetings = list(filter(lambda m: not m.markForDelete, meetings))
+    meetings.clear()
+    meetings.extend(filteredMeetings)
 
-        jsonData.append(meetings[i].jsonSerialize())
+    for m in meetings:
+
+        jsonData.append(m.jsonSerialize())
 
     with open(f'{sys.path[0]}/../files/data.json', "w") as dataFile:
         json.dump(jsonData, dataFile, indent=4)
