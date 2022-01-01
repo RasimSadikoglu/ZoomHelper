@@ -1,5 +1,5 @@
 import json, sys
-from meeting import Meeting
+from meeting.meeting import Meeting
 
 def readDataFile(meetings: list=None) -> list[Meeting]:
     try:

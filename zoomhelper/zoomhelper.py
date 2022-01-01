@@ -1,34 +1,5 @@
-import data, sys, time, itertools, os, json, subprocess
-from interface import Interface
-
-def decrypt():
-    if not os.path.exists(f'{sys.path[0]}/../files/cdata') or os.path.exists(f'{sys.path[0]}/../files/data.json'):
-        return
-    
-    with open(f'{sys.path[0]}/../files/cdata', 'rb') as inputF:
-        data = inputF.read()
-    inputF.close()
-
-    password = input('Encryted data file found please enter the password: ')
-    
-    password = bytes(password, 'utf-8')
-
-    data = bytes([(int(d) - int(p) + 256) % 256 for p, d in zip(itertools.cycle(password), data)])
-
-    try:
-        data = data.decode()
-        json.dumps(data)
-
-        with open(f'{sys.path[0]}/../files/data.json', 'w') as out:
-            out.write(data)
-    except KeyboardInterrupt:
-        raise KeyboardInterrupt()
-    except:
-        print('Wrong password!')
-    else:
-        print('Data file decrypted!')
-    finally:
-        os.remove(f'{sys.path[0]}/../files/cdata')
+import sys, time, subprocess
+from dataio import data, crypt
 
 def run():
     config = data.readConfigFile()
@@ -70,11 +41,10 @@ def run():
             currentMeetings[meetingIndex - 1].open()
 
 def runGUI():
-    gui = Interface()
-    gui.mainloop()
+    subprocess.Popen(['pythonw', f'{sys.path[0]}/gui/interface.pyw'])
 
 if __name__ == '__main__':
-    decrypt()
+    crypt.decrypt()
 
     if len(sys.argv) == 1:
         run()

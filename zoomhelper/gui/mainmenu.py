@@ -1,8 +1,8 @@
 from tkinter import ttk
-from frames.schedule import Schedule
 from datetime import datetime, timedelta
-from meeting import Meeting
-import data
+from schedule import Schedule
+from meeting.meeting import Meeting
+from dataio import data
 
 class MainMenu(ttk.Frame):
 

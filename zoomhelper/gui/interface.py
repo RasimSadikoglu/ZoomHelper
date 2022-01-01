@@ -1,8 +1,8 @@
 from tkinter import Tk
-from frames.mainmenu import MainMenu
-from frames.meetinginfo import MeetingInfo
-import data
-from meeting import Meeting
+from zoomhelper.dataio import data
+from mainmenu import MainMenu
+from meetinginfo import MeetingInfo
+from meeting.meeting import Meeting
 
 class Interface(Tk):
 
@@ -22,6 +22,10 @@ class Interface(Tk):
 
         self.rowconfigure(0, weight=1)
         self.columnconfigure(0, weight=1)
+
+        self.update()
+
+        self.minsize(self.winfo_width(), self.winfo_height())
 
     def exitCheck(self):
         self.showMainMenu()
@@ -50,3 +54,8 @@ class Interface(Tk):
 
         self.currentFrame = MeetingInfo(self, meeting)
         self.currentFrame.grid(row=0, column=0, sticky='news')
+
+if __name__ == '__main__':
+
+    gui = Interface()
+    gui.mainloop()
