@@ -1,4 +1,4 @@
-import sys, time, os, subprocess
+import sys, time, subprocess, interface, os, glob
 from dataio import data, crypt
 
 def run():
@@ -41,7 +41,18 @@ def run():
             currentMeetings[meetingIndex - 1].open()
 
 def runGUI():
-    subprocess.Popen(['pythonw', f'{sys.path[0]}/interface.pyw'])
+    pythonw = False
+
+    for p in os.getenv('PATH').split(';'):
+
+        if len(glob.glob(p + '/pythonw*')) != 0:
+            pythonw = True
+            break
+
+    if pythonw:
+        subprocess.Popen(['pythonw', f'{sys.path[0]}/interface.py'])
+    else:
+        interface.main()
 
 if __name__ == '__main__':
     if len(sys.argv) == 1:

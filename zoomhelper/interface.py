@@ -55,6 +55,9 @@ class Interface(Tk):
         self.currentFrame = MeetingInfo(self, meeting)
         self.currentFrame.grid(row=0, column=0, sticky='news')
 
-if __name__ == '__main__':
+def main():
     gui = Interface()
     gui.mainloop()
+
+if __name__ == '__main__':
+    main()
