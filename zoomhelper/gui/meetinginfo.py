@@ -176,7 +176,7 @@ class DateFrame(ttk.Frame):
         self.monthMenu = ttk.Combobox(self, textvariable=self.month, state='readonly', values=months, width=13)
         self.monthMenu.bind('<<ComboboxSelected>>', lambda e: self.updateDayMenu())
 
-        self.dayMenu = ttk.Combobox(self, textvariable=self.day, width=5)
+        self.dayMenu = ttk.Combobox(self, textvariable=self.day, state='readonly', width=5)
         self.updateDayMenu()
 
         ttk.Label(self, text='Start Time', anchor='w').grid(row=3, column=0, columnspan=2, padx=5, pady=10, sticky='w')
