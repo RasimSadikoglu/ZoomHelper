@@ -1,6 +1,6 @@
 from tkinter import ttk
 from datetime import datetime, timedelta
-from schedule import Schedule
+from .schedule import Schedule
 from meeting.meeting import Meeting
 from dataio import data
 

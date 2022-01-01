@@ -2,7 +2,7 @@ from datetime import datetime
 from tkinter import Tk, ttk
 import tkinter, re
 from meeting.meeting import Meeting
-from schedule import weekDays
+from .schedule import weekDays
 
 months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 numberOfDaysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]

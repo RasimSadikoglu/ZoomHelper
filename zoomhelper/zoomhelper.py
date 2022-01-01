@@ -1,5 +1,6 @@
-import sys, time, subprocess
+import sys, time
 from dataio import data, crypt
+from gui.interface import Interface
 
 def run():
     config = data.readConfigFile()
@@ -41,12 +42,15 @@ def run():
             currentMeetings[meetingIndex - 1].open()
 
 def runGUI():
-    subprocess.Popen(['pythonw', f'{sys.path[0]}/gui/interface.pyw'])
+    gui = Interface()
+    gui.mainloop()
 
 if __name__ == '__main__':
-    crypt.decrypt()
-
     if len(sys.argv) == 1:
         run()
     elif sys.argv[1] in ['-c', '--config']:
         runGUI()
+    elif sys.argv[1] in ['-e', '--encrypt'] and len(sys.argv) == 3:
+        crypt.encrypt(sys.argv[2])
+    elif sys.argv[1] in ['-d', '--decrypt'] and len(sys.argv) == 3:
+        crypt.decrypt(sys.argv[2])

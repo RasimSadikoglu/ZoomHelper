@@ -1,7 +1,7 @@
 from tkinter import Tk
-from zoomhelper.dataio import data
-from mainmenu import MainMenu
-from meetinginfo import MeetingInfo
+from dataio import data
+from .mainmenu import MainMenu
+from .meetinginfo import MeetingInfo
 from meeting.meeting import Meeting
 
 class Interface(Tk):
@@ -54,8 +54,3 @@ class Interface(Tk):
 
         self.currentFrame = MeetingInfo(self, meeting)
         self.currentFrame.grid(row=0, column=0, sticky='news')
-
-if __name__ == '__main__':
-
-    gui = Interface()
-    gui.mainloop()
