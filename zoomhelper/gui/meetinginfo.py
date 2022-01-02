@@ -142,7 +142,7 @@ class InfoFrame(ttk.Frame):
         else:
             copyStatus = ttk.Label(self, text='Id and password have to be filled!', anchor='center', foreground='red', padding=5)
             copyStatus.grid(row=5, column=0, columnspan=2, padx=5, pady=5, sticky='e')
-            self.after(3000, copyStatus.destroy)          
+            self.after(3000, copyStatus.destroy)
 
     def getValues(self):
         return {
