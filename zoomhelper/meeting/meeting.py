@@ -26,6 +26,8 @@ class Meeting:
         self.isFree = isFree
         self.time = time
 
+        self.markForDelete = False
+
     def open(self):
         if platform in ['win32', 'cygwin', 'msys']:
             zoomProcess = len(list(filter(lambda p: p.name() == 'Zoom.exe', psutil.process_iter())))

@@ -41,10 +41,10 @@ class MeetingInfo(ttk.Frame):
         }).grid(row=2, column=2, padx=10, pady=15, sticky='sn')
 
         ttk.Button(self, **{
-            'text': 'Cancel',
+            'text': '<',
             'command': self.master.showMainMenu,
             'padding': 10
-        }).grid(row=4, column=2, padx=10, pady=15, sticky='sn')
+        }).grid(row=0, column=0, padx=10, pady=15, sticky='wn')
 
         if self.meeting != None:
             ttk.Button(self, **{
@@ -54,7 +54,7 @@ class MeetingInfo(ttk.Frame):
             }).grid(row=1, column=2, padx=10, pady=15, sticky='s')
 
             ttk.Button(self, **{
-                'text': 'Delete',
+                'text': 'Undo Delete' if self.meeting.markForDelete else 'Delete',
                 'command': self.deleteMeeting,
                 'padding': 10
             }).grid(row=3, column=2, padx=10, pady=15, sticky='sn')
@@ -71,7 +71,7 @@ class MeetingInfo(ttk.Frame):
         self.master.showMainMenu()
 
     def deleteMeeting(self):
-        self.meeting.markForDelete = True
+        self.meeting.markForDelete ^= True
         self.master.showMainMenu()
 
 class InfoFrame(ttk.Frame):
