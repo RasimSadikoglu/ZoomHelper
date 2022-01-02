@@ -1,19 +1,22 @@
 from tkinter import Tk
-from dataio import data
 from gui.mainmenu import MainMenu
 from gui.meetinginfo import MeetingInfo
 from meeting.meeting import Meeting
+from dataio import data
+import atexit
 
 class Interface(Tk):
 
-    def __init__(self):
+    def __init__(self, meetings: list[Meeting], jsonData: list[dict], config: dict):
         super().__init__()
 
         self.title('ZoomHelper')
         self.protocol('WM_DELETE_WINDOW', lambda: self.exitCheck())
 
-        (self.jsonData, self.meetings) = data.readDataFile()
-        self.config = data.readConfigFile()
+        (self.jsonData, self.meetings) = jsonData, meetings
+        self.config = config
+
+        atexit.register(data.saveDataFile, meetings)
 
         self.mainMenu = MainMenu(self, self.meetings, self.jsonData)
         self.mainMenu.grid(row=0, column=0, sticky='news')
@@ -55,9 +58,12 @@ class Interface(Tk):
         self.currentFrame = MeetingInfo(self, meeting)
         self.currentFrame.grid(row=0, column=0, sticky='news')
 
-def main():
-    gui = Interface()
+def main(meetings: list[Meeting], jsonData: list[dict], config: dict):
+    gui = Interface(meetings, jsonData, config)
     gui.mainloop()
 
 if __name__ == '__main__':
-    main()
+    jsonData, meetings = data.readDataFile()
+    config = data.readConfigFile()
+
+    main(meetings, jsonData, config)

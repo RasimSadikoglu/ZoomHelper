@@ -24,7 +24,6 @@ def readDataFile(meetings: list=None) -> list[Meeting]:
     return (jsonData, meetings)
 
 def saveDataFile(meetings: list[Meeting]) -> None:
-
     jsonData = []
 
     filteredMeetings = list(filter(lambda m: not m.markForDelete, meetings))
@@ -37,7 +36,6 @@ def saveDataFile(meetings: list[Meeting]) -> None:
 
     with open(f'{sys.path[0]}/../files/data.json', "w") as dataFile:
         json.dump(jsonData, dataFile, indent=4)
-
 
 def readConfigFile() -> dict:
     try:

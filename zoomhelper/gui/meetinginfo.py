@@ -36,26 +36,26 @@ class MeetingInfo(ttk.Frame):
 
         ttk.Button(self, **{
             'text': 'Update' if self.meeting != None else 'Create',
-            'command': self.updateMeeting,
+            'command': lambda: self.updateMeeting(),
             'padding': 10
         }).grid(row=2, column=2, padx=10, pady=15, sticky='sn')
 
         ttk.Button(self, **{
             'text': '<',
-            'command': self.master.showMainMenu,
+            'command': lambda: self.master.showMainMenu(),
             'padding': 10
         }).grid(row=0, column=0, padx=10, pady=15, sticky='wn')
 
         if self.meeting != None:
             ttk.Button(self, **{
                 'text': 'Open',
-                'command': self.meeting.open,
+                'command': lambda: self.meeting.open(),
                 'padding': 10
             }).grid(row=1, column=2, padx=10, pady=15, sticky='s')
 
             ttk.Button(self, **{
                 'text': 'Undo Delete' if self.meeting.markForDelete else 'Delete',
-                'command': self.deleteMeeting,
+                'command': lambda: self.deleteMeeting(),
                 'padding': 10
             }).grid(row=3, column=2, padx=10, pady=15, sticky='sn')
 
@@ -230,9 +230,11 @@ class DateFrame(ttk.Frame):
 
     def getValues(self):
         return {
-            'date': datetime(year=self.year.get(), 
-                    month=months.index(self.month.get()) + 1, 
-                    day=self.day.get()).date() if not self.weeklyRepeat.get() else None,
+            'date': {
+                        'year': self.year.get(), 
+                        'month': months.index(self.month.get()) + 1, 
+                        'day': self.day.get()
+                    } if not self.weeklyRepeat.get() else None,
             'weekDay': weekDays.index(self.weekDay.get()) if self.weeklyRepeat.get() else None,
             'isFree': False,
             'time': f'{self.startHour.get():02}.{self.startMinute.get():02}-{self.endHour.get():02}.{self.endMinute.get():02}'

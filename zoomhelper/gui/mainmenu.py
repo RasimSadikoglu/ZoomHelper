@@ -2,7 +2,6 @@ from tkinter import ttk
 from datetime import datetime, timedelta
 from .schedule import Schedule
 from meeting.meeting import Meeting
-from dataio import data
 
 class MainMenu(ttk.Frame):
 
@@ -109,16 +108,24 @@ class MainMenu(ttk.Frame):
         self.after(5000, self.unSavedLabel.grid_remove)
 
     def revert(self):
-        data.readDataFile(self.meetings)
+        self.meetings.clear()
+
+        for m in self.jsonData:
+            self.meetings.append(Meeting.jsonDeserialize(m))
+
         self.schedule.update()
 
     def save(self):
-        data.saveDataFile(self.meetings)
-
         self.jsonData.clear()
 
         for m in self.meetings:
-            self.jsonData.append(m.jsonSerialize())
+            if not m.markForDelete:
+                self.jsonData.append(m.jsonSerialize())
+
+        self.meetings.clear()
+
+        for jd in self.jsonData:
+            self.meetings.append(Meeting.jsonDeserialize(jd))
 
         self.schedule.update()
 

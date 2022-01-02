@@ -4,6 +4,11 @@ from datetime import datetime
 import subprocess, time, psutil
 import webbrowser
 
+class Status(enumerate):
+    OLD = 0
+    READY = 1
+    NOTYET = 2
+
 class Meeting:
 
     def __init__(self, name: str, id: str, password: str, date: dict, weekDay: int, time: str, isFree: bool):
@@ -21,7 +26,7 @@ class Meeting:
         self.name = name
         self.id = id
         self.password = password
-        self.date = date
+        self.date = datetime(**date).date() if date != None else None
         self.weekDay = weekDay
         self.isFree = isFree
         self.time = time
@@ -54,17 +59,17 @@ class Meeting:
             
         system(url)
 
-    def check(self, startTimeOffset, endTimeOffset) -> bool:
+    def check(self, startTimeOffset, endTimeOffset) -> Status:
         now = datetime.now()
 
         if self.isFree:
-            return True
+            return Status.READY
         
         if self.weekDay != None and self.weekDay != now.weekday():
-            return False
+            return Status.NOTYET
 
         if self.date != None and self.date != now.date():
-            return False
+            return Status.OLD if self.date <= now.date() else Status.NOTYET
 
         startTime, endTime = self.time.split('-')
         startTime, endTime = startTime.split('.'), endTime.split('.')
@@ -74,7 +79,10 @@ class Meeting:
 
         now = now.hour * 60 + now.minute
 
-        return now >= startTime and now <= endTime
+        if self.date != None and now > endTime:
+            return Status.OLD
+
+        return Status.READY if now >= startTime and now <= endTime else Status.NOTYET
 
     def __str__(self) -> str:
         return f'{self.name}\n{self.time}'
@@ -84,11 +92,15 @@ class Meeting:
             'name': self.name,
             'id': self.id,
             'password': self.password,
-            'date': self.date,
+            'date': None if self.date == None else {
+                'year': self.date.year,
+                'month': self.date.month,
+                'day': self.date.day
+            },
             'weekDay': self.weekDay,
             'isFree': self.isFree,
             'time': self.time
         }
 
-    def jsonDeserialize(meeting) -> object:
+    def jsonDeserialize(meeting: dict) -> object:
         return Meeting(**meeting)

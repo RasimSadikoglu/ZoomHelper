@@ -1,6 +1,7 @@
 {
     "startTimeOffset": -15,
     "endTimeOffset": -15,
-    "autoDelete": true,
-    "firstSetup": false
+    "autoDelete": false,
+    "firstSetup": false,
+    "hideTerminal": false
 }
