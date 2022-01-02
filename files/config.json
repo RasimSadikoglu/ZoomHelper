@@ -2,5 +2,5 @@
     "startTimeOffset": -15,
     "endTimeOffset": -15,
     "autoDelete": true,
-    "copyURL": true
+    "firstSetup": false
 }

@@ -117,6 +117,9 @@ class InfoFrame(ttk.Frame):
         ttk.Label(self, text='Meeting Password', anchor='e', padding=5).grid(row=4, column=0, padx=5, pady=5, sticky='news')
         ttk.Entry(self, textvariable=self.password).grid(row=4, column=1, columnspan=2, padx=5, pady=5, sticky='news')
 
+        # CopyURl
+        ttk.Button(self, text='Copy Invite URL', command=lambda: self.copyURL(), padding=5).grid(row=5, column=2, padx=5, pady=5, sticky='news')
+
     def linkParser(self):
         text = self.link.get()
 
@@ -128,6 +131,18 @@ class InfoFrame(ttk.Frame):
 
         self.id.set(id[0])
         self.password.set(password[0])
+
+    def copyURL(self):
+        if self.id.get() != '' and self.password.get() != '':
+            self.clipboard_clear()
+            self.clipboard_append(f'zoom.us/j/{self.id.get()}?pwd={self.password.get()}')
+            copyStatus = ttk.Label(self, text='Invite url copied!', anchor='center', foreground='red', padding=5)
+            copyStatus.grid(row=5, column=0, columnspan=2, padx=5, pady=5, sticky='e')
+            self.after(3000, copyStatus.destroy)
+        else:
+            copyStatus = ttk.Label(self, text='Id and password have to be filled!', anchor='center', foreground='red', padding=5)
+            copyStatus.grid(row=5, column=0, columnspan=2, padx=5, pady=5, sticky='e')
+            self.after(3000, copyStatus.destroy)          
 
     def getValues(self):
         return {
