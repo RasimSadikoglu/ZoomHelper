@@ -186,7 +186,7 @@ class DateFrame(ttk.Frame):
         ttk.Label(self, text='Date', anchor='w').grid(row=1, column=0, columnspan=2, padx=5, pady=10, sticky='w')
         ttk.Checkbutton(self, text='Repeat Weekly', variable=self.weeklyRepeat, command=self.update).grid(row=1, column=2, columnspan=2)
 
-        self.weekDayMenu = ttk.Combobox(self, textvariable=self.weekDay, state='readonly', values=weekDays, width=15)
+        self.weekDayMenu = ttk.Combobox(self, textvariable=self.weekDay, state='readonly', values=weekDays, width=13)
         self.yearMenu = ttk.Combobox(self, textvariable=self.year, state='readonly', values=list(range(2022, 2032)), width=5)
         self.monthMenu = ttk.Combobox(self, textvariable=self.month, state='readonly', values=months, width=13)
         self.monthMenu.bind('<<ComboboxSelected>>', lambda e: self.updateDayMenu())
@@ -230,11 +230,11 @@ class DateFrame(ttk.Frame):
 
     def getValues(self):
         return {
-            'date': {
-                        'year': self.year.get(), 
-                        'month': months.index(self.month.get()) + 1, 
-                        'day': self.day.get()
-                    } if not self.weeklyRepeat.get() else None,
+            'date': None if not self.weeklyRepeat.get() else {
+                'year': self.year.get(), 
+                'month': months.index(self.month.get()) + 1, 
+                'day': self.day.get()
+            },
             'weekDay': weekDays.index(self.weekDay.get()) if self.weeklyRepeat.get() else None,
             'isFree': False,
             'time': f'{self.startHour.get():02}.{self.startMinute.get():02}-{self.endHour.get():02}.{self.endMinute.get():02}'
