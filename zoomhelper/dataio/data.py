@@ -1,4 +1,4 @@
-import json, sys
+import json, sys, os, shutil
 from meeting.meeting import Meeting
 
 def readDataFile(meetings: list=None) -> list[Meeting]:
@@ -38,11 +38,21 @@ def saveDataFile(meetings: list[Meeting]) -> None:
         json.dump(jsonData, dataFile, indent=4)
 
 def readConfigFile() -> dict:
+    if not os.path.exists(f'{sys.path[0]}/../files/config.json'):
+        shutil.copy(f'{sys.path[0]}/../files/default_config.json', f'{sys.path[0]}/../files/config.json')
+
     try:
+        config = {}
+        
+        with open(f'{sys.path[0]}/../files/default_config.json', "r") as dfc:
+            config = json.load(dfc)
+
         with open(f'{sys.path[0]}/../files/config.json', "r") as configFile:
-            return json.load(configFile)
+            config.update(**json.load(configFile))
+
+        return config
     except FileNotFoundError:
-        raise FileNotFoundError(f'Config file is missing!\n{sys.path[0]}../files/config.json')
+        raise FileNotFoundError(f'Config file is missing!\n{sys.path[0]}../files/default_config.json')
 
 def saveConfigFile(config: dict):
 
