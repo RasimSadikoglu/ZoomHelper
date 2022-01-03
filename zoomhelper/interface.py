@@ -1,10 +1,17 @@
-from tkinter import Tk
-from gui.mainmenu import MainMenu
-from gui.meetinginfo import MeetingInfo
-from gui.settings import Settings
-from meeting.meeting import Meeting
-from dataio import data
-import atexit
+from os import execlp
+
+
+try:
+    from tkinter import Tk
+    from gui.mainmenu import MainMenu
+    from gui.meetinginfo import MeetingInfo
+    from gui.settings import Settings
+    from meeting.meeting import Meeting
+    from dataio import data
+    import atexit
+except:
+    import reqirements
+    reqirements.install()
 
 class Interface(Tk):
 
