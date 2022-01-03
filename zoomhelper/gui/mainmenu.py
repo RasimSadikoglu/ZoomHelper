@@ -97,7 +97,7 @@ class MainMenu(ttk.Frame):
 
         self.unSavedLabel = ttk.Label(self, text='There are unsaved changes! Please revert or save before exit!', foreground='red', anchor='center')
 
-        ttk.Button(self, text='Settings', padding=5).grid(row=0, column=7, padx=5, pady=5, sticky='ne')
+        ttk.Button(self, text='Settings', padding=5, command=self.master.settings).grid(row=0, column=7, padx=5, pady=5, sticky='ne')
 
     def exitCheck(self):
         if not self.schedule.changes:

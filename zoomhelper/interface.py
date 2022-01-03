@@ -1,6 +1,7 @@
 from tkinter import Tk
 from gui.mainmenu import MainMenu
 from gui.meetinginfo import MeetingInfo
+from gui.settings import Settings
 from meeting.meeting import Meeting
 from dataio import data
 import atexit
@@ -17,6 +18,7 @@ class Interface(Tk):
         self.config = config
 
         atexit.register(data.saveDataFile, meetings)
+        atexit.register(data.saveConfigFile, config)
 
         self.mainMenu = MainMenu(self, self.meetings, self.jsonData)
         self.mainMenu.grid(row=0, column=0, sticky='news')
@@ -56,6 +58,15 @@ class Interface(Tk):
         self.currentFrame.grid_remove()
 
         self.currentFrame = MeetingInfo(self, meeting)
+        self.currentFrame.grid(row=0, column=0, sticky='news')
+
+    def settings(self):
+        self.geometry(self.winfo_geometry())
+        self.update()
+
+        self.currentFrame.grid_remove()
+
+        self.currentFrame = Settings(self, self.config)
         self.currentFrame.grid(row=0, column=0, sticky='news')
 
 def main(meetings: list[Meeting], jsonData: list[dict], config: dict):
