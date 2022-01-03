@@ -1,5 +1,7 @@
 from sys import platform
-from tkinter import ttk
+from tkinter import Tk, ttk
+from tkinter.font import Font
+import tkinter
 from meeting.meeting import Meeting
 from datetime import datetime, timedelta
 
@@ -47,14 +49,30 @@ class Schedule(ttk.Frame):
         today = self.timeWindow['begin']
 
         for i, w in enumerate(weekDays):
+            if today == datetime.now().date():
+                font = Font(self, slant='italic', weight='bold')
+            else:
+                font = None
+
+            if platform == "darwin":
+                bg = None
+                fg = None
+            elif today == datetime.now().date():
+                bg = '#235c82'
+                fg = 'white'
+            else:
+                bg = '#70a7cc'
+                fg = 'black'
+
             ttk.Label(self, **{
                 'text': f'{w}\n{str(today)}',
                 'padding': 5,
                 'relief': 'solid',
                 'width': 15,
                 'anchor': 'n',
-                'background': '#235c82' if today == datetime.now().date() else '#70a7cc',
-                'foreground': 'white' if today == datetime.now().date() else 'black'
+                'background': bg,
+                'foreground': fg,
+                'font': font
             }).grid(**{
                 'row': 0,
                 'column': i,
@@ -78,13 +96,20 @@ class Schedule(ttk.Frame):
 
         for column, day in enumerate(grid):
             for row, meeting in enumerate(day, 1):
+                f = ''
+                bg = meetingColor(meeting)
+                if bg == MeetingColor.DELETE:
+                    f = Font(overstrike=1)
+                elif bg == MeetingColor.UPDATE:
+                    f = Font(weight='bold', slant='italic')
 
                 meetingLabel = ttk.Label(self, **{
                     'text': str(meeting),
                     'padding': 5,
                     'relief': 'solid',
                     'anchor': 'center',
-                    'background': meetingColor(meeting),
+                    'background': bg,
+                    'font': f,
                     'cursor': 'hand2'
                 })
 
