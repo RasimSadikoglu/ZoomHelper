@@ -1,5 +1,8 @@
-import reqirements, updater
+import reqirements
 reqirements.install()
+
+import updater
+updater.update()
 
 import sys, time, subprocess, interface, os, glob
 from dataio import data, crypt
@@ -84,7 +87,5 @@ class ZoomHelper:
         self.jsonData, self.meetings = data.readDataFile()
 
 if __name__ == '__main__':
-    # zh = ZoomHelper()
-    # zh.setup()
-
-    updater.update()
+    zh = ZoomHelper()
+    zh.setup()

@@ -1,6 +1,17 @@
-import requests, sys, os, zipfile, shutil
+import requests, sys, os, zipfile, shutil, datetime
+from dataio import data
 
 def update():
+
+    config = data.readConfigFile()
+
+    if not config['autoUpdate']:
+        return
+
+    today = datetime.datetime.now().day
+
+    if config['lastUpdateCheck'] == today:
+        return
 
     localVersion = getLocalVersion()
     remoteVersion = getRemoteVersion()
@@ -12,6 +23,8 @@ def update():
         extract()
         updateFiles()
         clean()
+
+    config['lastUpdateCheck'] = today
 
 def getLocalVersion():
     try:
