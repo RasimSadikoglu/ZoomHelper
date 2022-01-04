@@ -2,7 +2,7 @@ import subprocess, sys, pkg_resources
 
 def install():
 
-    required = {'psutil'}
+    required = {'psutil', 'requests'}
     installed = {pkg.key for pkg in pkg_resources.working_set}
     missing = required - installed
 
