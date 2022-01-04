@@ -42,15 +42,12 @@ def getRemoteVersion():
     return version.text
 
 def reporthook(blocknum, blocksize, totalsize):
+    barLength = 20
     bytesread = blocknum * blocksize
     if totalsize > 0:
-        percent = bytesread * 1e2 / totalsize
-        s = "\r%5.1f%% (%*d / %d bytes)" % (percent, len(str(totalsize)), bytesread, totalsize)
-        sys.stderr.write(s)
-        if bytesread >= totalsize:
-            sys.stderr.write("\n")
-    else:
-        sys.stderr.write("read %d\n" % (bytesread,))
+        percent = min(bytesread * barLength // totalsize, barLength)
+        s = f'\r[{"#" * percent}{"-" * (barLength - percent)}]'
+        print(s, end='')
 
 def download():
     print('(1/4) Downloading new version.')
@@ -63,7 +60,7 @@ def download():
     urlretrieve(url, f'{sys.path[0]}/../.update/update_package.zip', reporthook)
 
 def extract():
-    print('(2/4) Extracting downloaded package.')
+    print('\n(2/4) Extracting downloaded package.')
 
     with zipfile.ZipFile(f'{sys.path[0]}/../.update/update_package.zip', 'r') as updPkg:
         updPkg.extractall(f'{sys.path[0]}/../.update/')

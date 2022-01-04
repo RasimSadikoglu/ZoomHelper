@@ -1,9 +1,6 @@
 import reqirements
 reqirements.install()
 
-import updater
-updater.update()
-
 from tkinter import Tk
 from gui.mainmenu import MainMenu
 from gui.meetinginfo import MeetingInfo
