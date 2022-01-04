@@ -50,6 +50,8 @@ def readConfigFile() -> dict:
         with open(f'{sys.path[0]}/../files/config.json', "r") as configFile:
             config.update(**json.load(configFile))
 
+        saveConfigFile(config)
+
         return config
     except FileNotFoundError:
         raise FileNotFoundError(f'Config file is missing!\n{sys.path[0]}../files/default_config.json')

@@ -1,6 +1,9 @@
 import reqirements
 reqirements.install()
 
+import updater
+updater.update()
+
 import sys, time, subprocess, interface, os, glob
 from dataio import data, crypt
 from meeting.meeting import Status

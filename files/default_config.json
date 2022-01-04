@@ -3,5 +3,7 @@
     "endTimeOffset": -15,
     "autoDelete": false,
     "hideTerminal": false,
-    "firstSetup": true
+    "firstSetup": true,
+    "autoUpdate": true,
+    "lastUpdateCheck": null
 }
