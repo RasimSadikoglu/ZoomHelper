@@ -1,10 +1,9 @@
-try:
-    import sys, time, subprocess, interface, os, glob
-    from dataio import data, crypt
-    from meeting.meeting import Status
-except ModuleNotFoundError:
-    import reqirements
-    reqirements.install()
+import reqirements, updater
+reqirements.install()
+
+import sys, time, subprocess, interface, os, glob
+from dataio import data, crypt
+from meeting.meeting import Status
 
 class ZoomHelper:
 
@@ -85,5 +84,7 @@ class ZoomHelper:
         self.jsonData, self.meetings = data.readDataFile()
 
 if __name__ == '__main__':
-    zh = ZoomHelper()
-    zh.setup()
+    # zh = ZoomHelper()
+    # zh.setup()
+
+    updater.update()

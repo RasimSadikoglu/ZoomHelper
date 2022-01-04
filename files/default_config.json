@@ -1,7 +1,9 @@
 {
+    "version": "0.1.0",
     "startTimeOffset": -15,
     "endTimeOffset": -15,
     "autoDelete": false,
     "hideTerminal": false,
-    "firstSetup": true
+    "firstSetup": true,
+    "autoUpdate": true
 }
