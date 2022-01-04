@@ -1,10 +1,9 @@
-try:
-    import sys, time, subprocess, interface, os, glob
-    from dataio import data, crypt
-    from meeting.meeting import Status
-except ModuleNotFoundError:
-    import reqirements
-    reqirements.install()
+import reqirements
+reqirements.install()
+
+import sys, time, subprocess, interface, os, glob
+from dataio import data, crypt
+from meeting.meeting import Status
 
 class ZoomHelper:
 

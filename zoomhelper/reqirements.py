@@ -1,8 +1,10 @@
-import subprocess, sys, time
+import subprocess, sys, pkg_resources
 
 def install():
 
-    subprocess.check_call([sys.executable, '-m', 'pip', 'install', '-r', f'{sys.path[0]}/requirements.txt'])
-    print('Please restart the program!')
-    time.sleep(3)
-    exit(0)
+    required = {'psutil'}
+    installed = {pkg.key for pkg in pkg_resources.working_set}
+    missing = required - installed
+
+    if len(missing) != 0:
+        subprocess.check_call([sys.executable, '-m', 'pip', 'install', *missing])
