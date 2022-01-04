@@ -27,6 +27,8 @@ def update():
 
     config['lastUpdateCheck'] = today
 
+    data.saveConfigFile(config)
+
 def getLocalVersion():
     try:
         with open(f'{sys.path[0]}/../files/.version', "r") as vFile:
