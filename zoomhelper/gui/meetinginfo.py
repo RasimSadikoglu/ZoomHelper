@@ -135,7 +135,7 @@ class InfoFrame(ttk.Frame):
     def copyURL(self):
         if self.id.get() != '' and self.password.get() != '':
             self.clipboard_clear()
-            self.clipboard_append(f'zoom.us/j/{self.id.get()}?pwd={self.password.get()}')
+            self.clipboard_append(f'https://zoom.us/j/{self.id.get()}?pwd={self.password.get()}')
             copyStatus = ttk.Label(self, text='Invite url copied!', anchor='center', foreground='red', padding=5)
             copyStatus.grid(row=5, column=0, columnspan=2, padx=5, pady=5, sticky='e')
             self.after(3000, copyStatus.destroy)
