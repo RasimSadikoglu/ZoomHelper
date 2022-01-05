@@ -2,7 +2,7 @@ import reqirements
 reqirements.install()
 
 import updater
-updater.update()
+updater.checkForUpdate()
 
 import sys, time, subprocess, interface, os, glob
 from dataio import data, crypt

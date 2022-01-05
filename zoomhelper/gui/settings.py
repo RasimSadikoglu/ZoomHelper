@@ -1,5 +1,5 @@
 from tkinter import ttk
-import tkinter
+import tkinter, updater
 from dataio import data
 
 class Settings(ttk.Frame):
@@ -19,16 +19,18 @@ class Settings(ttk.Frame):
 
         self.initSettings()
 
-        self.rowconfigure(1, weight=1)
-        self.columnconfigure(1, weight=1)
+        column, row = self.grid_size()
 
-        self.rowconfigure(6, weight=1)
-        self.columnconfigure(4, weight=1)
+        self.rowconfigure(0, weight=1)
+        self.columnconfigure(0, weight=1)
+        
+        self.rowconfigure(row, weight=1)
+        self.columnconfigure(column, weight=1)
 
     def initSettings(self):
 
-        ttk.Button(self, text='<', padding=5, command=self.master.showMainMenu).grid(row=0, column=0, padx=5, pady=5, sticky='nw')
-        ttk.Button(self, text='Save', padding=5, command=self.save).grid(row=7, column=5, padx=5, pady=5, sticky='se')
+        ttk.Button(self, text='<', padding=5, command=self.master.showMainMenu).grid(row=1, column=1, padx=5, pady=5, sticky='nw')
+        ttk.Button(self, text='Save', padding=5, command=self.save).grid(row=7, column=4, padx=5, pady=5, sticky='swe')
 
         ttk.Label(self, text='Start Time Offset', anchor='e', padding=5).grid(row=2, column=2, padx=5, pady=5, sticky='we')
         ttk.Entry(self, textvariable=self.startTimeOffset).grid(row=2, column=3, padx=5, pady=5, sticky='we')
@@ -41,6 +43,8 @@ class Settings(ttk.Frame):
 
         ttk.Label(self, text='Hide Terminal', anchor='e', padding=5).grid(row=5, column=2, padx=5, pady=5, sticky='we')
         ttk.Checkbutton(self, variable=self.hideTerminal, text='(Restart is required!)').grid(row=5, column=3, padx=5, pady=5, sticky='w')
+
+        ttk.Button(self, text='Check For Updates', padding=5, command=self.checkForUpdate).grid(row=6, column=4, padx=5, pady=5, sticky='swe')
 
     def setValues(self):
 
@@ -59,9 +63,28 @@ class Settings(ttk.Frame):
 
     def save(self):
         saved = ttk.Label(self, text='Saved!', padding=5, anchor='e', foreground='red')
-        saved.grid(row=7, column=4, padx=5, pady=5, sticky='e')
+        saved.grid(row=7, column=3, padx=5, pady=5, sticky='e')
 
         self.config.update(**self.getValues())
         data.saveConfigFile(self.config)
 
         self.after(2000, saved.destroy)
+
+    def checkForUpdate(self):
+        
+        localVersion = updater.getLocalVersion()
+        remoteVersion = updater.getRemoteVersion()
+
+        if localVersion >= remoteVersion:
+            label = ttk.Label(self, text='You are using the latest version.', foreground='red', padding=5, anchor='e')
+            label.grid(row=6, column=1, columnspan=3, padx=5, pady=5, sticky='e')
+
+            self.after(5000, label.destroy)
+        else:
+            label = ttk.Label(self, text='New version is available. It will be installed on the next run.', foreground='red', padding=5, anchor='e')
+            label.grid(row=6, column=1, columnspan=3, padx=5, pady=5, sticky='e')
+
+            self.config['forceUpdate'] = True
+            data.saveConfigFile(self.config)
+
+            self.after(5000, label.destroy)
