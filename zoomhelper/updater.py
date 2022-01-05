@@ -2,9 +2,15 @@ import requests, sys, os, zipfile, shutil, datetime
 from dataio import data
 from urllib.request import urlretrieve
 
-def update():
+def checkForUpdate():
 
     config = data.readConfigFile()
+
+    if config['forceUpdate']:
+        update()
+        config['forceUpdate'] = False
+        data.saveConfigFile(config)
+        return
 
     if not config['autoUpdate']:
         return
@@ -19,37 +25,41 @@ def update():
 
     if localVersion < remoteVersion:
         print('New version is found. Attempting to update.')
-
-        download()
-        extract()
-        updateFiles()
-        clean()
+        update()
 
     config['lastUpdateCheck'] = today
 
     data.saveConfigFile(config)
 
+def update():
+    download()
+    extract()
+    updateFiles()
+    clean()
+
 def getLocalVersion():
     try:
         with open(f'{sys.path[0]}/../files/.version', "r") as vFile:
-            return vFile.read()
+            return vFile.read()[1:].split('.')
     except:
-        return 'v0.0.0'
+        return [0, 0, 0]
 
 def getRemoteVersion():
     versionUrl = 'https://raw.githubusercontent.com/RasimSadikoglu/ZoomHelper/release/files/.version'
 
     version = requests.get(versionUrl)
 
-    return version.text
+    return version.text[1:].split('.')
 
 def reporthook(blocknum, blocksize, totalsize):
+    totalsize = max(totalsize, 1)
+
     barLength = 20
     bytesread = blocknum * blocksize
-    if totalsize > 0:
-        percent = min(bytesread * barLength // totalsize, barLength)
-        s = f'\r[{"#" * percent}{"-" * (barLength - percent)}]'
-        print(s, end='')
+
+    percent = min(bytesread * barLength // totalsize, barLength)
+    s = f'\r[{"#" * percent}{"-" * (barLength - percent)}]'
+    print(s, end='')
 
 def download():
     print('(1/4) Downloading new version.')
