@@ -7,9 +7,9 @@ def checkForUpdate():
     config = data.readConfigFile()
 
     if config['forceUpdate']:
-        update()
         config['forceUpdate'] = False
         data.saveConfigFile(config)
+        update()
         return
 
     if not config['autoUpdate']:
