@@ -26,10 +26,6 @@ def readDataFile(meetings: list=None) -> list[Meeting]:
 def saveDataFile(meetings: list[Meeting]) -> None:
     jsonData = []
 
-    filteredMeetings = list(filter(lambda m: not m.markForDelete, meetings))
-    meetings.clear()
-    meetings.extend(filteredMeetings)
-
     for m in meetings:
 
         jsonData.append(m.jsonSerialize())

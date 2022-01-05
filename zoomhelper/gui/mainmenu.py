@@ -2,6 +2,8 @@ from tkinter import ttk
 from datetime import datetime, timedelta
 from .schedule import Schedule
 from meeting.meeting import Meeting
+from dataio import data
+from updater import getLocalVersion
 
 class MainMenu(ttk.Frame):
 
@@ -90,6 +92,7 @@ class MainMenu(ttk.Frame):
 
         ttk.Button(self, text='Other Meetings', padding=5).grid(row=self.row + 2, column=0, padx= 10, pady=10, sticky='e')
         ttk.Label(self, text='Left Click for Edit, Right Click for Delete', anchor='center').grid(row=self.row + 3, column=0, columnspan=8, pady=10)
+        ttk.Label(self, text=getLocalVersion(), anchor='w').grid(row=self.row + 3, column=7, pady=10, padx=5, sticky='e')
 
         ttk.Button(self, text='Save', padding=5, command=lambda: self.save()).grid(row=self.row, column=7, padx=5, pady=5, sticky='se')
         ttk.Button(self, text='Revert', padding=5, command=lambda: self.revert()).grid(row=self.row - 1, column=7, padx=5, pady=5, sticky='se')
@@ -126,6 +129,8 @@ class MainMenu(ttk.Frame):
 
         for jd in self.jsonData:
             self.meetings.append(Meeting.jsonDeserialize(jd))
+
+        data.saveDataFile(self.meetings)
 
         self.schedule.update()
 

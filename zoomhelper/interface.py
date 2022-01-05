@@ -7,7 +7,6 @@ from gui.meetinginfo import MeetingInfo
 from gui.settings import Settings
 from meeting.meeting import Meeting
 from dataio import data
-import atexit
 
 class Interface(Tk):
 
@@ -19,9 +18,6 @@ class Interface(Tk):
 
         (self.jsonData, self.meetings) = jsonData, meetings
         self.config = config
-
-        atexit.register(data.saveDataFile, meetings)
-        atexit.register(data.saveConfigFile, config)
 
         self.mainMenu = MainMenu(self, self.meetings, self.jsonData)
         self.mainMenu.grid(row=0, column=0, sticky='news')

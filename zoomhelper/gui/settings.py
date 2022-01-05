@@ -1,5 +1,6 @@
 from tkinter import ttk
 import tkinter
+from dataio import data
 
 class Settings(ttk.Frame):
 
@@ -61,5 +62,6 @@ class Settings(ttk.Frame):
         saved.grid(row=7, column=4, padx=5, pady=5, sticky='e')
 
         self.config.update(**self.getValues())
+        data.saveConfigFile(self.config)
 
         self.after(2000, saved.destroy)
