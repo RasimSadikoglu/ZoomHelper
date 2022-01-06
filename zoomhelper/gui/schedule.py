@@ -70,13 +70,14 @@ class Schedule(ttk.Frame):
         elif self.verticalIndex > self.length - 7:
             self.verticalIndex = max(0, self.length - 7)
 
-        scr = ttk.Scrollbar(self)
-        scr.grid(row=1, column=7, rowspan=min(self.length, 7), sticky='ns')
+        if self.length != 0:
+            scr = ttk.Scrollbar(self)
+            scr.grid(row=1, column=7, rowspan=min(self.length, 7), sticky='ns')
 
-        interval = 1 / self.length
-        low = interval * self.verticalIndex
-        high = interval * (self.verticalIndex + min(self.length, 7)) 
-        scr.set(low, high)
+            interval = 1 / self.length
+            low = interval * self.verticalIndex
+            high = interval * (self.verticalIndex + min(self.length, 7)) 
+            scr.set(low, high)
 
         today = self.timeWindow['begin']
 
@@ -178,13 +179,14 @@ class Schedule(ttk.Frame):
         elif self.verticalIndex > self.length - 7:
             self.verticalIndex = max(0, self.length - 7)
 
-        scr = ttk.Scrollbar(self)
-        scr.grid(row=1, column=7, rowspan=min(self.length, 7), sticky='ns')
+        if self.length != 0:
+            scr = ttk.Scrollbar(self)
+            scr.grid(row=1, column=7, rowspan=min(self.length, 7), sticky='ns')
 
-        interval = 1 / self.length
-        low = interval * self.verticalIndex
-        high = interval * (self.verticalIndex + min(self.length, 7)) 
-        scr.set(low, high)
+            interval = 1 / self.length
+            low = interval * self.verticalIndex
+            high = interval * (self.verticalIndex + min(self.length, 7)) 
+            scr.set(low, high)
 
         for i, (date, meetings) in enumerate(grid):
             dateObject = None
