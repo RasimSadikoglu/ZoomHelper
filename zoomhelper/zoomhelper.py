@@ -35,7 +35,7 @@ class ZoomHelper:
             self.runGUI()
             return
 
-        currentMeetings = [m for m in self.meetings if m.check(startTimeOffset, endTimeOffset) == Status.READY]
+        currentMeetings = [m for m in self.meetings if m.check(startTimeOffset, endTimeOffset, self.config['openFreeMeetings']) == Status.READY]
 
         if len(currentMeetings) == 0:
             print('There are no meetings at the moment!')
