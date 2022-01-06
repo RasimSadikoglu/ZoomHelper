@@ -59,11 +59,11 @@ class Meeting:
             
         system(url)
 
-    def check(self, startTimeOffset, endTimeOffset) -> Status:
+    def check(self, startTimeOffset, endTimeOffset, openFreeMeetings) -> Status:
         now = datetime.now()
 
         if self.isFree:
-            return Status.READY
+            return Status.READY if openFreeMeetings else Status.NOTYET
         
         if self.weekDay != None and self.weekDay != now.weekday():
             return Status.NOTYET
