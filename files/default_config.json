@@ -6,5 +6,6 @@
     "firstSetup": true,
     "autoUpdate": "Daily",
     "forceUpdate": false,
-    "lastUpdateCheck": null
+    "lastUpdateCheck": null,
+    "openFreeMeetings": false
 }

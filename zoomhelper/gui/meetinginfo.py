@@ -32,7 +32,9 @@ class MeetingInfo(ttk.Frame):
         self.infoFrame.grid(row=1, column=0, rowspan=4, sticky='nes', padx=10, pady=10)
 
         self.dateFrame = DateFrame(self, self.meeting)
-        self.dateFrame.grid(row=1, column=1, rowspan=4, sticky='news', padx=10, pady=10)
+
+        if self.meeting == None or not self.meeting.isFree:
+            self.dateFrame.grid(row=1, column=1, rowspan=4, sticky='nws', padx=10, pady=10)
 
         ttk.Button(self, **{
             'text': 'Update' if self.meeting != None else 'Create',
@@ -74,6 +76,12 @@ class MeetingInfo(ttk.Frame):
         self.meeting.markForDelete ^= True
         self.master.showMainMenu()
 
+    def freeMeeting(self, isFree: bool):
+        if isFree:
+            self.dateFrame.grid_remove()
+        else:
+            self.dateFrame.grid(row=1, column=1, rowspan=4, sticky='nws', padx=10, pady=10)
+
 class InfoFrame(ttk.Frame):
 
     def __init__(self, master: ttk.Frame, meeting: Meeting=None):
@@ -83,6 +91,7 @@ class InfoFrame(ttk.Frame):
         self.id = tkinter.StringVar()
         self.password = tkinter.StringVar()
         self.link = tkinter.StringVar()
+        self.isFree = tkinter.BooleanVar()
 
         if meeting != None:
             self.setValues(meeting)
@@ -117,8 +126,12 @@ class InfoFrame(ttk.Frame):
         ttk.Label(self, text='Meeting Password', anchor='e', padding=5).grid(row=4, column=0, padx=5, pady=5, sticky='news')
         ttk.Entry(self, textvariable=self.password).grid(row=4, column=1, columnspan=2, padx=5, pady=5, sticky='news')
 
+        # Free Meeting
+        ttk.Label(self, text='Free Meeting', anchor='e', padding=5).grid(row=5, column=0, padx=5, pady=5, sticky='news')
+        ttk.Checkbutton(self, text='(Always available, no specific date.)', variable=self.isFree, command=lambda: self.master.freeMeeting(self.isFree.get()), padding=5).grid(row=5, column=1, columnspan=2, sticky='w')
+
         # CopyURl
-        ttk.Button(self, text='Copy Invite URL', command=lambda: self.copyURL(), padding=5).grid(row=5, column=2, padx=5, pady=5, sticky='news')
+        ttk.Button(self, text='Copy Invite URL', command=lambda: self.copyURL(), padding=5).grid(row=6, column=2, padx=5, pady=5, sticky='news')
 
     def linkParser(self):
         text = self.link.get()
@@ -148,13 +161,15 @@ class InfoFrame(ttk.Frame):
         return {
             'name': self.name.get(),
             'id': self.id.get(),
-            'password': self.password.get()
+            'password': self.password.get(),
+            'isFree': self.isFree.get()
         }
 
     def setValues(self, meeting: Meeting):
         self.name.set(meeting.name)
         self.id.set(meeting.id)
         self.password.set(meeting.password)
+        self.isFree.set(meeting.isFree)
 
 class DateFrame(ttk.Frame):
 
@@ -237,7 +252,6 @@ class DateFrame(ttk.Frame):
                         'day': self.day.get()
                     } if not self.weeklyRepeat.get() else None,
             'weekDay': weekDays.index(self.weekDay.get()) if self.weeklyRepeat.get() else None,
-            'isFree': False,
             'time': f'{self.startHour.get():02}.{self.startMinute.get():02}-{self.endHour.get():02}.{self.endMinute.get():02}'
         }
 
