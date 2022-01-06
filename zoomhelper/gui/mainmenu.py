@@ -98,7 +98,7 @@ class MainMenu(ttk.Frame):
 
         self.otherMeetingsButton = ttk.Button(self, text='Other Meetings', padding=5 ,command=self.otherMeetings)
         self.otherMeetingsButton.grid(row=self.row + 2, column=0, padx= 10, pady=10, sticky='e')
-        ttk.Label(self, text='Left Click for Edit, Right Click for Delete', anchor='center').grid(row=self.row + 3, column=0, columnspan=8, pady=10)
+        ttk.Label(self, text='Left Click for Edit, Right Click for Delete', anchor='center').grid(row=self.row + 3, column=0, columnspan=9, pady=10)
         
         version = getLocalVersion()
         version = 'v' + '.'.join(version)
@@ -116,7 +116,7 @@ class MainMenu(ttk.Frame):
         if not self.schedule.changes:
             return True
 
-        self.unSavedLabel.grid(row=self.row + 4, column=0, columnspan=8, pady=10)
+        self.unSavedLabel.grid(row=self.row + 4, column=0, columnspan=9, pady=10)
 
         self.after(5000, self.unSavedLabel.grid_remove)
 
