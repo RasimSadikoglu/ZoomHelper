@@ -80,7 +80,7 @@ class ZoomHelper:
 
     def autoDelete(self):
         
-        meetings = [m for m in self.meetings if m.check(self.config['startTimeOffset'], self.config['endTimeOffset']) != Status.OLD]
+        meetings = [m for m in self.meetings if m.check(self.config['startTimeOffset'], self.config['endTimeOffset'], self.config['openFreeMeetings']) != Status.OLD]
 
         data.saveDataFile(meetings)
 
