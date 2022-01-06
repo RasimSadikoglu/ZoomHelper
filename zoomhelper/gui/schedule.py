@@ -40,6 +40,8 @@ class Schedule(ttk.Frame):
 
             if m.isFree or m.date != None:
                 otherMeetings.append(m)
+            
+            if m.isFree:
                 continue
 
             if m.date != None and not (m.date >= self.timeWindow['begin'] and m.date <= self.timeWindow['end']):
