@@ -190,6 +190,7 @@ class DateFrame(ttk.Frame):
         self.yearMenu = ttk.Combobox(self, textvariable=self.year, state='readonly', values=list(range(2022, 2032)), width=5)
         self.monthMenu = ttk.Combobox(self, textvariable=self.month, state='readonly', values=months, width=13)
         self.monthMenu.bind('<<ComboboxSelected>>', lambda e: self.updateDayMenu())
+        self.yearMenu.bind('<<ComboboxSelected>>', lambda e: self.updateDayMenu())
 
         self.dayMenu = ttk.Combobox(self, textvariable=self.day, state='readonly', width=5)
         self.updateDayMenu()

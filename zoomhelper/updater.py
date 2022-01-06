@@ -3,7 +3,6 @@ from dataio import data
 from urllib.request import urlretrieve
 
 def checkForUpdate():
-
     config = data.readConfigFile()
 
     if config['forceUpdate']:
@@ -12,20 +11,29 @@ def checkForUpdate():
         data.saveConfigFile(config)
         return
 
-    if not config['autoUpdate']:
+    if config['autoUpdate'] == 'Never':
         return
 
     today = datetime.datetime.now().day
 
-    if config['lastUpdateCheck'] == today:
+    if config['autoUpdate'] == 'Daily' and config['lastUpdateCheck'] == today:
         return
+
+    print('Checking for updates...')
 
     localVersion = getLocalVersion()
     remoteVersion = getRemoteVersion()
 
     if localVersion < remoteVersion:
-        print('New version is found. Attempting to update.')
+        # d = input('New version is found. Do you want to download (y/n): ')
+
+        # if d not in ['y', 'Y']:
+        #     return
+
+        print('Update in progress...')
         update()
+    else:
+        print('There is no new version available.')
 
     config['lastUpdateCheck'] = today
 

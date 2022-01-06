@@ -4,7 +4,7 @@
     "autoDelete": true,
     "hideTerminal": true,
     "firstSetup": true,
-    "autoUpdate": true,
+    "autoUpdate": "Daily",
     "forceUpdate": false,
     "lastUpdateCheck": null
 }
