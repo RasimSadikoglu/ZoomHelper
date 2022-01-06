@@ -14,6 +14,7 @@ class Settings(ttk.Frame):
         self.endTimeOffset = tkinter.IntVar()
         self.autoDelete = tkinter.BooleanVar()
         self.hideTerminal = tkinter.BooleanVar()
+        self.autoUpdate = tkinter.StringVar()
 
         self.setValues()
 
@@ -44,6 +45,8 @@ class Settings(ttk.Frame):
         ttk.Label(self, text='Hide Terminal', anchor='e', padding=5).grid(row=5, column=2, padx=5, pady=5, sticky='we')
         ttk.Checkbutton(self, variable=self.hideTerminal, text='(Restart is required!)').grid(row=5, column=3, padx=5, pady=5, sticky='w')
 
+        ttk.Label(self, text='Check For Updates', anchor='e', padding=5).grid(row=6, column=2, padx=5, pady=5, sticky='we')
+        ttk.Combobox(self, textvariable=self.autoUpdate, state='readonly', values=['Never', 'Everytime', 'Daily'], width=13).grid(row=6, column=3, padx=5, pady=5, sticky='we')
         ttk.Button(self, text='Check For Updates', padding=5, command=self.checkForUpdate).grid(row=6, column=4, padx=5, pady=5, sticky='swe')
 
     def setValues(self):
@@ -52,18 +55,20 @@ class Settings(ttk.Frame):
         self.endTimeOffset.set(self.config['endTimeOffset'])
         self.autoDelete.set(self.config['autoDelete'])
         self.hideTerminal.set(self.config['hideTerminal'])
+        self.autoUpdate.set(self.config['autoUpdate'])
 
     def getValues(self):
         return {
             'startTimeOffset': self.startTimeOffset.get(),
             'endTimeOffset': self.endTimeOffset.get(),
             'autoDelete': self.autoDelete.get(),
-            'hideTerminal': self.hideTerminal.get()
+            'hideTerminal': self.hideTerminal.get(),
+            'autoUpdate': self.autoUpdate.get()
         }
 
     def save(self):
         saved = ttk.Label(self, text='Saved!', padding=5, anchor='e', foreground='red')
-        saved.grid(row=7, column=3, padx=5, pady=5, sticky='e')
+        saved.grid(row=7, column=1, columnspan=3, padx=5, pady=5, sticky='e')
 
         self.config.update(**self.getValues())
         data.saveConfigFile(self.config)
@@ -77,12 +82,12 @@ class Settings(ttk.Frame):
 
         if localVersion >= remoteVersion:
             label = ttk.Label(self, text='You are using the latest version.', foreground='red', padding=5, anchor='e')
-            label.grid(row=6, column=1, columnspan=3, padx=5, pady=5, sticky='e')
+            label.grid(row=7, column=1, columnspan=3, padx=5, pady=5, sticky='e')
 
             self.after(5000, label.destroy)
         else:
             label = ttk.Label(self, text='New version is available. It will be installed on the next run.', foreground='red', padding=5, anchor='e')
-            label.grid(row=6, column=1, columnspan=3, padx=5, pady=5, sticky='e')
+            label.grid(row=7, column=1, columnspan=3, padx=5, pady=5, sticky='e')
 
             self.config['forceUpdate'] = True
             data.saveConfigFile(self.config)
