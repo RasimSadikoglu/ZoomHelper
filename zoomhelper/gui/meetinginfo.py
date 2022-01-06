@@ -150,11 +150,11 @@ class InfoFrame(ttk.Frame):
             self.clipboard_clear()
             self.clipboard_append(f'https://zoom.us/j/{self.id.get()}?pwd={self.password.get()}')
             copyStatus = ttk.Label(self, text='Invite url copied!', anchor='center', foreground='red', padding=5)
-            copyStatus.grid(row=5, column=0, columnspan=2, padx=5, pady=5, sticky='e')
+            copyStatus.grid(row=6, column=0, columnspan=2, padx=5, pady=5, sticky='e')
             self.after(3000, copyStatus.destroy)
         else:
             copyStatus = ttk.Label(self, text='Id and password have to be filled!', anchor='center', foreground='red', padding=5)
-            copyStatus.grid(row=5, column=0, columnspan=2, padx=5, pady=5, sticky='e')
+            copyStatus.grid(row=6, column=0, columnspan=2, padx=5, pady=5, sticky='e')
             self.after(3000, copyStatus.destroy)
 
     def getValues(self):

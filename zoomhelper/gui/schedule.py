@@ -17,11 +17,14 @@ class Schedule(ttk.Frame):
 
         self.meetings, self.jsonData = meetings, jsonData
         self.timeWindow = timeWindow
+        self.verticalIndex = 0
+        self.length = 0
+
         self.otherMeetingsIndex = 0
         self.otherMeetings = False
 
         self.initGrid()
-        
+
         column, row = self.grid_size()
 
         for i in range(1, row):
@@ -56,6 +59,25 @@ class Schedule(ttk.Frame):
             self.placeGrid(grid)
 
     def placeGrid(self, grid: list[list[Meeting]]):
+        
+        if len(grid) != 0:
+            self.length = len(max(grid, key=lambda l: len(l)))
+        else:
+            self.length = 0
+
+        if self.verticalIndex < 0:
+            self.verticalIndex = 0
+        elif self.verticalIndex > self.length - 7:
+            self.verticalIndex = max(0, self.length - 7)
+
+        scr = ttk.Scrollbar(self)
+        scr.grid(row=1, column=7, rowspan=min(self.length, 7), sticky='ns')
+
+        interval = 1 / self.length
+        low = interval * self.verticalIndex
+        high = interval * (self.verticalIndex + min(self.length, 7)) 
+        scr.set(low, high)
+
         today = self.timeWindow['begin']
 
         for i, w in enumerate(weekDays):
@@ -78,7 +100,7 @@ class Schedule(ttk.Frame):
             today += timedelta(days=1)
 
         for column, day in enumerate(grid):
-            for row, meeting in enumerate(day, 1):
+            for row, meeting in enumerate(day[self.verticalIndex:self.verticalIndex + 7], 1):
 
                 meetingLabel = ttk.Label(self, **{
                     'text': str(meeting),
@@ -146,6 +168,24 @@ class Schedule(ttk.Frame):
 
         grid = grid[:7]
 
+        if len(grid) != 0:
+            self.length = len(max(grid, key=lambda l: len(l[1]))[1])
+        else:
+            self.length = 0
+
+        if self.verticalIndex < 0:
+            self.verticalIndex = 0
+        elif self.verticalIndex > self.length - 7:
+            self.verticalIndex = max(0, self.length - 7)
+
+        scr = ttk.Scrollbar(self)
+        scr.grid(row=1, column=7, rowspan=min(self.length, 7), sticky='ns')
+
+        interval = 1 / self.length
+        low = interval * self.verticalIndex
+        high = interval * (self.verticalIndex + min(self.length, 7)) 
+        scr.set(low, high)
+
         for i, (date, meetings) in enumerate(grid):
             dateObject = None
             
@@ -174,7 +214,7 @@ class Schedule(ttk.Frame):
                 'sticky': 'ew'
             })
 
-            for j, meeting in enumerate(meetings, 1):
+            for j, meeting in enumerate(meetings[self.verticalIndex:self.verticalIndex + 7], 1):
                 meetingLabel = ttk.Label(self, **{
                     'text': str(meeting),
                     'padding': 5,
@@ -232,3 +272,15 @@ class Schedule(ttk.Frame):
 
         for i in range(column):
             self.columnconfigure(i, weight=1)
+
+    def mouseWheelEvent(self, event):
+        self.verticalIndex += -1 if event.delta > 0 else 1
+
+        if self.verticalIndex < 0:
+            self.verticalIndex = 0
+            return
+        elif self.verticalIndex > self.length - 7:
+            self.verticalIndex = max(0, self.length - 7)
+            return
+
+        self.update()

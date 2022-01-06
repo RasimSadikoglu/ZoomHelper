@@ -102,15 +102,15 @@ class MainMenu(ttk.Frame):
         
         version = getLocalVersion()
         version = 'v' + '.'.join(version)
-        ttk.Label(self, text=version, anchor='w').grid(row=self.row + 3, column=7, pady=10, padx=5, sticky='e')
+        ttk.Label(self, text=version, anchor='w').grid(row=self.row + 3, column=8, pady=10, padx=5, sticky='e')
 
-        ttk.Button(self, text='Save', padding=5, command=lambda: self.save()).grid(row=self.row, column=7, padx=5, pady=5, sticky='se')
-        ttk.Button(self, text='Revert', padding=5, command=lambda: self.revert()).grid(row=self.row - 1, column=7, padx=5, pady=5, sticky='se')
-        ttk.Button(self, text='Add', padding=5, command=self.meetingInfo).grid(row=self.row - 2, column=7, padx=5, pady=5, sticky='se')
+        ttk.Button(self, text='Save', padding=5, command=lambda: self.save()).grid(row=self.row, column=8, padx=5, pady=5, sticky='se')
+        ttk.Button(self, text='Revert', padding=5, command=lambda: self.revert()).grid(row=self.row - 1, column=8, padx=5, pady=5, sticky='se')
+        ttk.Button(self, text='Add', padding=5, command=self.meetingInfo).grid(row=self.row - 2, column=8, padx=5, pady=5, sticky='se')
 
         self.unSavedLabel = ttk.Label(self, text='There are unsaved changes! Please revert or save before exit!', foreground='red', anchor='center')
 
-        ttk.Button(self, text='Settings', padding=5, command=self.master.settings).grid(row=0, column=7, padx=5, pady=5, sticky='ne')
+        ttk.Button(self, text='Settings', padding=5, command=self.master.settings).grid(row=0, column=8, padx=5, pady=5, sticky='ne')
 
     def exitCheck(self):
         if not self.schedule.changes:
@@ -151,3 +151,6 @@ class MainMenu(ttk.Frame):
         self.schedule.otherMeetings ^= True
         self.otherMeetingsButton.configure(text='Weekly Calendar' if self.schedule.otherMeetings else 'Other Meetings')
         self.schedule.update()
+
+    def mouseWheelEvent(self, event):
+        self.schedule.mouseWheelEvent(event)
