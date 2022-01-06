@@ -135,7 +135,7 @@ class Schedule(ttk.Frame):
         
         otherMeetings = sorted(otherMeetings.items())
 
-        if self.otherMeetingsIndex > len(otherMeetings):
+        if self.otherMeetingsIndex >= len(otherMeetings):
             self.otherMeetingsIndex -= 7
         if self.otherMeetingsIndex < 0:
             self.otherMeetingsIndex = 0
@@ -196,7 +196,7 @@ class Schedule(ttk.Frame):
                 else:
                     meetingLabel.bind('<Button-3>', lambda e, m=meeting: self.deleteMeeting(m))
 
-        for i in range(len(grid),6):
+        for i in range(len(grid),7):
             ttk.Label(self, **{
                 'text': 'XXXX\nXXXX',
                 'padding': 5,
