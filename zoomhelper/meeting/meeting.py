@@ -85,7 +85,10 @@ class Meeting:
         return Status.READY if now >= startTime and now <= endTime else Status.NOTYET
 
     def __str__(self) -> str:
-        return f'{self.name[:20]}\n{self.time}'
+        if self.isFree:
+            return self.name[:20]
+        else:
+            return f'{self.name[:20]}\n{self.time}'
 
     def jsonSerialize(self) -> dict:
         return {

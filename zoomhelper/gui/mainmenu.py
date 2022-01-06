@@ -12,6 +12,7 @@ class MainMenu(ttk.Frame):
 
         self.meetings, self.jsonData = meetings, jsonData
 
+        self.schedule = None
         self.timeWindow = self.setTimeWindow(0)
 
         self.schedule = Schedule(self, meetings, jsonData, self.timeWindow)
@@ -25,6 +26,11 @@ class MainMenu(ttk.Frame):
         self.initMainMenu()
 
     def setTimeWindow(self, offset: int, timeWindow=None) -> dict:
+        if self.schedule != None and self.schedule.otherMeetings:
+            self.schedule.otherMeetingsIndex += offset
+            self.schedule.update()
+            return timeWindow
+
         now = datetime.now().date()
         weekDay = now.weekday()
         
@@ -90,7 +96,8 @@ class MainMenu(ttk.Frame):
             'sticky': 'e'
         })
 
-        ttk.Button(self, text='Other Meetings', padding=5).grid(row=self.row + 2, column=0, padx= 10, pady=10, sticky='e')
+        self.otherMeetingsButton = ttk.Button(self, text='Other Meetings', padding=5 ,command=self.otherMeetings)
+        self.otherMeetingsButton.grid(row=self.row + 2, column=0, padx= 10, pady=10, sticky='e')
         ttk.Label(self, text='Left Click for Edit, Right Click for Delete', anchor='center').grid(row=self.row + 3, column=0, columnspan=8, pady=10)
         
         version = getLocalVersion()
@@ -139,3 +146,8 @@ class MainMenu(ttk.Frame):
 
     def meetingInfo(self, meeting=None):
         self.master.meetingInfo(meeting)
+
+    def otherMeetings(self):
+        self.schedule.otherMeetings ^= True
+        self.otherMeetingsButton.configure(text='Weekly Calendar' if self.schedule.otherMeetings else 'Other Meetings')
+        self.schedule.update()
