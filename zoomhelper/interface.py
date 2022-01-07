@@ -16,6 +16,8 @@ class Interface(Tk):
         self.title('ZoomHelper')
         self.protocol('WM_DELETE_WINDOW', lambda: self.exitCheck())
         self.bind('<MouseWheel>', lambda e: self.mouseWheelEvent(e))
+        self.bind('<Button-4>', lambda e: self.mouseWheelEvent(e))
+        self.bind('<Button-5>', lambda e: self.mouseWheelEvent(e))
 
         (self.jsonData, self.meetings) = jsonData, meetings
         self.config = config
@@ -70,6 +72,8 @@ class Interface(Tk):
         self.currentFrame.grid(row=0, column=0, sticky='news')
 
     def mouseWheelEvent(self, event):
+        print(event)
+
         if self.currentFrame == self.mainMenu:
             self.mainMenu.mouseWheelEvent(event)
 

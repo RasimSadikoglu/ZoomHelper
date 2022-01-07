@@ -276,7 +276,10 @@ class Schedule(ttk.Frame):
             self.columnconfigure(i, weight=1)
 
     def mouseWheelEvent(self, event):
-        self.verticalIndex += -1 if event.delta > 0 else 1
+        if platform in ['win32', 'cygwin', 'msys']:
+            self.verticalIndex += -1 if event.delta > 0 else 1
+        else:
+            self.verticalIndex += -1 if event.num == 4 else 1
 
         if self.verticalIndex < 0:
             self.verticalIndex = 0
@@ -284,5 +287,5 @@ class Schedule(ttk.Frame):
         elif self.verticalIndex > self.length - 7:
             self.verticalIndex = max(0, self.length - 7)
             return
-
+        
         self.update()
