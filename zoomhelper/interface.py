@@ -72,8 +72,6 @@ class Interface(Tk):
         self.currentFrame.grid(row=0, column=0, sticky='news')
 
     def mouseWheelEvent(self, event):
-        print(event)
-
         if self.currentFrame == self.mainMenu:
             self.mainMenu.mouseWheelEvent(event)
 
