@@ -1,0 +1,14 @@
+{
+  "name": "meetinghelper",
+  "version": "0.0.1",
+  "description": "join a meeting with a single click (double).",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "Rasim Sadıkoğlu",
+  "license": "MIT",
+  "dependencies": {
+    "electron": "^16.0.7"
+  }
+}

@@ -1,0 +1,146 @@
+[
+    {
+        "name": "CSE3063",
+        "id": "96958566696",
+        "password": "975426",
+        "date": null,
+        "weekDay": 0,
+        "isFree": false,
+        "time": "09.30-11.20"
+    },
+    {
+        "name": "CSE3033",
+        "id": "95139331787",
+        "password": "590176",
+        "date": null,
+        "weekDay": 0,
+        "isFree": false,
+        "time": "11.30-12.20"
+    },
+    {
+        "name": "CSE3063",
+        "id": "97152901094",
+        "password": "085528",
+        "date": null,
+        "weekDay": 1,
+        "isFree": false,
+        "time": "09.30-10.20"
+    },
+    {
+        "name": "CSE3015",
+        "id": "98540412668",
+        "password": "707039",
+        "date": null,
+        "weekDay": 1,
+        "isFree": false,
+        "time": "10.30-12.20"
+    },
+    {
+        "name": "CSE3055",
+        "id": "2319763386",
+        "password": "453461",
+        "date": null,
+        "weekDay": 2,
+        "isFree": false,
+        "time": "10.30-12.20"
+    },
+    {
+        "name": "CSE3033.2",
+        "id": "96371001006",
+        "password": "879007",
+        "date": null,
+        "weekDay": 2,
+        "isFree": false,
+        "time": "14.00-15.50"
+    },
+    {
+        "name": "CSE3015.1",
+        "id": "95384959605",
+        "password": "349145",
+        "date": null,
+        "weekDay": 2,
+        "isFree": false,
+        "time": "16.00-17.50"
+    },
+    {
+        "name": "CSE3015",
+        "id": "96068761202",
+        "password": "840997",
+        "date": null,
+        "weekDay": 3,
+        "isFree": false,
+        "time": "09.30-10.20"
+    },
+    {
+        "name": "IE3081",
+        "id": "91740880571",
+        "password": "308121",
+        "date": null,
+        "weekDay": 3,
+        "isFree": false,
+        "time": "10.30-12.20"
+    },
+    {
+        "name": "CSE3055.2",
+        "id": "92153915749",
+        "password": "007604",
+        "date": null,
+        "weekDay": 3,
+        "isFree": false,
+        "time": "16.00-17.50"
+    },
+    {
+        "name": "IE3081",
+        "id": "93742155765",
+        "password": "308121",
+        "date": null,
+        "weekDay": 4,
+        "isFree": false,
+        "time": "09.30-10.20"
+    },
+    {
+        "name": "CSE3033",
+        "id": "98077656088",
+        "password": "892716",
+        "date": null,
+        "weekDay": 4,
+        "isFree": false,
+        "time": "10.30-12.20"
+    },
+    {
+        "name": "CSE3055",
+        "id": "2319763386",
+        "password": "453461",
+        "date": null,
+        "weekDay": 4,
+        "isFree": false,
+        "time": "15.00-15.50"
+    },
+    {
+        "name": "CSE3033.1",
+        "id": "96371001006",
+        "password": "879007",
+        "date": null,
+        "weekDay": 1,
+        "isFree": false,
+        "time": "14.00-15.50"
+    },
+    {
+        "name": "CSE3055.1",
+        "id": "98088215701",
+        "password": "918630",
+        "date": null,
+        "weekDay": 1,
+        "isFree": false,
+        "time": "16.00-17.50"
+    },
+    {
+        "name": "CSE3015.2",
+        "id": "92531823926",
+        "password": "849712",
+        "date": null,
+        "weekDay": 3,
+        "isFree": false,
+        "time": "14.00-15.50"
+    }
+]
