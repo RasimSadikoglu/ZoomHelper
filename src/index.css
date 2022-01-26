@@ -1,0 +1,28 @@
+body {
+    background-color: darkgray;
+}
+
+h2 {
+    text-align: center;
+    column-gap: 10px;
+}
+
+.grid-container {
+    display: grid;
+    gap: 20px 20px;
+}
+
+.grid-item {
+    border: 1px solid white;
+    background-color: aqua;
+    text-align: center;
+}
+
+#meeting {
+    background-color: white;
+}
+
+#meeting:hover {
+    background-color: burlywood;
+    cursor: pointer;
+}
