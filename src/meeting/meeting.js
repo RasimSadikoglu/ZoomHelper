@@ -5,14 +5,12 @@ class Meeting {
         this.password = password;
         this.date = date;
     }
+  
+    openMeeting() {}
     
-    // Abstract
-    openMeeting() {
-    }
-    
-    checkTime() {
-        this.date.checkTime();
-    }
+    isTime(startOffset, endOffset) { return this.date.isTime(); }
+
+    isShow(timeWindow) { return this.date.isShow(timeWindow); }
 }
 
 module.exports = Meeting;

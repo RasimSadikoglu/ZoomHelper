@@ -10,7 +10,13 @@ class RepetitiveDate extends MeetingDate {
         this.time = time;
     }
     
-    checkTime() {}
+    isTime(startOffset, endOffset) { return false; }
+
+    isShow(timeWindow) {
+        let currentDay = timeWindow.getDay();
+
+        return this.weekDay === currentDay;
+    }
 }
 
 module.exports = RepetitiveDate;

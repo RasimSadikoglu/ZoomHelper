@@ -1,6 +1,7 @@
 class MeetingDate {
     constructor() {}
-    checkTime() {}
+    isTime(startOffset, endOffset) {}
+    isShow(timeWindow) {}
 }
 
 module.exports = MeetingDate;

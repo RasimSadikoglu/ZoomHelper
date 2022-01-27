@@ -1,18 +1,18 @@
 const MeetingDate = require('./meeting_date.js');
 
 class SingleDate extends MeetingDate {
-    constructor(year, month, day, time) {
+    constructor(date, time) {
         super();
 
         this.type = 'Single';
         
-        this.year = year;
-        this.month = month;
-        this.day = day;
+        this.date = date;
         this.time = time;
     }
     
-    checkTime() {}
+    isTime(startOffset, endOffset) { return false; }
+
+    isShow(timeWindow) { return false; }
 }
 
 module.exports = SingleDate;

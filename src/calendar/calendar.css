@@ -12,17 +12,15 @@ h2 {
     gap: 20px 20px;
 }
 
-.grid-item {
-    border: 1px solid white;
+#date {
     background-color: aqua;
-    text-align: center;
 }
 
-#meeting {
+#saved {
     background-color: white;
 }
 
-#meeting:hover {
-    background-color: burlywood;
+#saved:hover {
+    background-color: bisque;
     cursor: pointer;
 }
