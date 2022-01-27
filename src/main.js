@@ -13,7 +13,7 @@ app.on('ready', () => {
         }
     });
 
-    mainWindow.loadFile(path.join(__dirname, 'index.html'));
+    mainWindow.loadFile(path.join(__dirname, 'calendar/calendar.html'));
 
     mainWindow.webContents.toggleDevTools();
 });
