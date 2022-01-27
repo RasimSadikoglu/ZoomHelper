@@ -1,26 +1,44 @@
 body {
-    background-color: darkgray;
+	background-color: #313236;
+	font-family: 'Nunito', sans-serif;
+}
+
+:root {
+	--header-bg-color: #4c51b3;
+	--meetings-bg-color: white;
 }
 
 h2 {
-    text-align: center;
-    column-gap: 10px;
+	text-align: center;
+	column-gap: 10px;
 }
 
 .grid-container {
-    display: grid;
-    gap: 20px 20px;
+	display: grid;
+	gap: 20px 20px;
 }
 
 #date {
-    background-color: aqua;
+	background-color: var(--header-bg-color);
+	border-radius: 0.3rem;
+	padding: 0.1rem;
+	text-align: center;
+}
+
+#time {
+	color: white;
+	font-weight: 400;
+	margin-bottom: 0;
 }
 
 #saved {
-    background-color: white;
+	padding: 0.1rem;
+	text-align: center;
+	border-radius: 0.3rem;
+	background-color: var(--meetings-bg-color);
 }
 
 #saved:hover {
-    background-color: bisque;
-    cursor: pointer;
+	background-color: bisque;
+	cursor: pointer;
 }
