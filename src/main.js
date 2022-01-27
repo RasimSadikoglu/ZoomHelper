@@ -1,25 +1,17 @@
+module.exports = start;
+
 const path = require('path');
-const {app, BrowserWindow} = require('electron');
+const fs = require('fs');
 
-app.on('ready', () => {
+const dataPath = path.join(__dirname, '../config/data.json');
+const buildType = "dev";
 
-    const mainWindow = new BrowserWindow({
-        width: 1000,
-        height: 600,
-        title: 'Meeting Helper',
-        webPreferences: {
-            nodeIntegration: true,
-            contextIsolation: false
-        }
-    });
+function start(mainWindow) {
+    mainWindow.loadURL(path.join(__dirname, 'calendar/calendar.html'));
 
-    mainWindow.loadFile(path.join(__dirname, 'calendar/calendar.html'));
+    if (buildType === 'dev') mainWindow.webContents.toggleDevTools();
 
-    mainWindow.webContents.toggleDevTools();
-});
+    let meetings = buildMeetings(JSON.parse(fs.readFileSync(dataPath)));
+}
 
-app.on('window-all-closed', () => {
-    if (process.platform !== 'darwin') {
-      app.quit()
-    }
-});
+function buildMeetings(jsonMeetings) {}
