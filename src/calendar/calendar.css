@@ -51,6 +51,18 @@ h2 {
 	cursor: pointer;
 }
 
+#delete {
+	padding: 0.1rem;
+	text-align: center;
+	border-radius: 0.3rem;
+	background-color: red;
+}
+
+#delete:hover {
+	background-color: rgb(136, 1, 1);
+	cursor: pointer;
+}
+
 #back, #next {
 	display: inline-block;
 }

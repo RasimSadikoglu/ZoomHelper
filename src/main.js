@@ -5,7 +5,6 @@ const fs = require('fs');
 const {ipcMain} = require('electron');
 
 const createMeeting = require('./meeting/factory');
-const { time } = require('console');
 
 const dataPath = path.join(__dirname, '../config/data.json');
 const calendarPath = path.join(__dirname, 'calendar/calendar.html');
@@ -23,6 +22,7 @@ const buildType = "dev";
 let mainWindow = undefined;
 let timeWindow = undefined;
 let meetings = [];
+let actionHistory = [];
 
 let isLoaded = false;
 
@@ -31,7 +31,7 @@ function start(__mainWindow) {
 
     mainWindow.loadURL(calendarPath);
 
-    if (buildType === 'dev') mainWindow.webContents.toggleDevTools();
+    // if (buildType === 'dev') mainWindow.webContents.toggleDevTools();
 
     buildMeetings(JSON.parse(fs.readFileSync(dataPath)));
 
@@ -44,7 +44,15 @@ function start(__mainWindow) {
 
 function buildMeetings(jsonMeetings) {
     for (let i = 0; i < jsonMeetings.length; i++) {
-        meetings.push(createMeeting(jsonMeetings[i]));
+
+        const meeting = createMeeting(jsonMeetings[i]);
+
+        meetings.push({
+            referance: meeting,
+            name: `${meeting.name}\n${meeting.date.time}`,
+            initial: JSON.stringify(meeting),
+            state: 'saved'
+        });
     }
 }
 
@@ -58,25 +66,19 @@ function drawCalendar() {
 
     for (let i = 0; i < 7; i++) {
         
-        let filteredMeetings = meetings.filter(meeting => meeting.isShow(currentDate));
+        let filteredMeetings = meetings.filter(meeting => meeting.referance.isShow(currentDate));
 
-        filteredMeetings.sort((m1, m2) => m1.date.time > m2.date.time);
+        filteredMeetings.sort((m1, m2) => m1.referance.date.time > m2.referance.date.time);
 
         let labels = [];
 
         labels.push({
             reference: undefined,
             name: getDateString(currentDate),
-            type: currentDate.toDateString() === dateOfToday.toDateString() ? 'today' : 'date'
+            state: currentDate.toDateString() === dateOfToday.toDateString() ? 'today' : 'date'
         });
 
-        filteredMeetings.forEach(meeting => {
-            labels.push({
-                reference: meeting,
-                name: `${meeting.name}\n${meeting.date.time}`,
-                type: 'saved'
-            });
-        });
+        labels.push(...filteredMeetings);
 
         grid.push(labels);
 
@@ -101,7 +103,7 @@ function getDateString(date) {
 function sendMessage(event, message) {
     
     if (!isLoaded) {
-        mainWindow.webContents.once('did-finish-load', () => {
+        mainWindow.webContents.on('did-finish-load', () => {
             mainWindow.webContents.send(event, message);
             isLoaded = true;
         });
@@ -115,6 +117,21 @@ ipcMain.on('calendar:timeWindow', (event, args) => {
 
     } else {
         timeWindow.setUTCDate(timeWindow.getUTCDate() + args);
+    }
+
+    drawCalendar();
+});
+
+ipcMain.on('calendar:click', (event, args) => {
+    if (args.button === 'right') {
+        
+        const meeting = meetings.find(meeting => JSON.stringify(meeting.referance) === JSON.stringify(args.meeting));
+        
+        if (meeting.state !== 'delete') {
+            meeting.state = 'delete';
+        } else {
+            meeting.state = JSON.stringify(meeting.referance) === meeting.initial ? 'saved' : 'updated';
+        }
     }
 
     drawCalendar();

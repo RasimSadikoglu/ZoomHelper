@@ -20,6 +20,8 @@ ipcRenderer.on('calendar:draw', (event, args) => {
 
     const gridHTML = document.getElementById('grid');
 
+    gridHTML.innerHTML = '';
+
     for (let column = 0; column < args.grid.length; column++) {
         let day = args.grid[column];
 
@@ -31,7 +33,19 @@ ipcRenderer.on('calendar:draw', (event, args) => {
             gridItem.innerText = label.name;
             gridItem.style.gridRow = `${row + 1} / ${row + 1}`;
             gridItem.style.gridColumn = `${column + 1} / ${column + 1}`;
-            gridItem.id = label.type;
+            gridItem.id = label.state;
+
+            if (label.state !== 'date' && label.state !== 'today') {
+                gridItem.addEventListener('click', (event) => {
+                    ipcRenderer.send('calendar:click', { button: 'left', meeting: label.referance });
+                });
+            }
+
+            if (label.state !== 'date' && label.state !== 'today') {
+                gridItem.addEventListener('contextmenu', (event) => {
+                    ipcRenderer.send('calendar:click', { button: 'right', meeting: label.referance });
+                });
+            }
             
             gridHTML.appendChild(gridItem);
         }
