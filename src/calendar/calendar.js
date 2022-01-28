@@ -10,6 +10,10 @@ function initialize() {
     document.getElementById('next').addEventListener('click', () => {
         ipcRenderer.send('calendar:timeWindow', 7);
     });
+
+    document.getElementById('time').addEventListener('click', () => {
+        ipcRenderer.send('calendar:timeWindow', 0);
+    });
 }
 
 ipcRenderer.on('calendar:draw', (event, args) => {

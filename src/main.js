@@ -11,14 +11,6 @@ const calendarPath = path.join(__dirname, 'calendar/calendar.html');
 
 const buildType = "dev";
 
-// const numberOfDaysPerMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-// const nameOfTheDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-// const nameOfTheMonths = [
-//     'January', 'February', 'March', 'April',
-//     'May', 'June', 'July', 'August',
-//     'September', 'October', 'November', 'December'
-// ];
-
 let mainWindow = undefined;
 let timeWindow = undefined;
 let meetings = [];
@@ -114,7 +106,9 @@ function sendMessage(event, message) {
 
 ipcMain.on('calendar:timeWindow', (event, args) => {
     if (args === 0) {
-
+        timeWindow = new Date();
+        timeWindow.setUTCDate(timeWindow.getUTCDate() - timeWindow.getUTCDay() + 1);
+        timeWindow.setUTCHours(0, 0, 0, 0);
     } else {
         timeWindow.setUTCDate(timeWindow.getUTCDate() + args);
     }

@@ -39,6 +39,11 @@ h2 {
 	margin-bottom: 0;
 }
 
+#time:hover {
+	cursor: pointer;
+	color: bisque;
+}
+
 #saved {
 	padding: 0.1rem;
 	text-align: center;
