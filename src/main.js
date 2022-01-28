@@ -5,6 +5,7 @@ const fs = require('fs');
 const {ipcMain} = require('electron');
 
 const createMeeting = require('./meeting/factory');
+const { time } = require('console');
 
 const dataPath = path.join(__dirname, '../config/data.json');
 const calendarPath = path.join(__dirname, 'calendar/calendar.html');
@@ -23,6 +24,8 @@ let mainWindow = undefined;
 let timeWindow = undefined;
 let meetings = [];
 
+let isLoaded = false;
+
 function start(__mainWindow) {
     mainWindow = __mainWindow;
 
@@ -33,7 +36,7 @@ function start(__mainWindow) {
     buildMeetings(JSON.parse(fs.readFileSync(dataPath)));
 
     timeWindow = new Date();
-    timeWindow.setDate(timeWindow.getDate() - timeWindow.getDay() + 1);
+    timeWindow.setUTCDate(timeWindow.getUTCDate() - timeWindow.getUTCDay() + 1);
     timeWindow.setUTCHours(0, 0, 0, 0);
 
     drawCalendar();
@@ -50,6 +53,9 @@ function drawCalendar() {
     let grid = [];
     let currentDate = new Date(timeWindow.valueOf());
 
+    dateOfToday = new Date();
+    dateOfToday.setUTCHours(0, 0, 0, 0);
+
     for (let i = 0; i < 7; i++) {
         
         let filteredMeetings = meetings.filter(meeting => meeting.isShow(currentDate));
@@ -61,7 +67,7 @@ function drawCalendar() {
         labels.push({
             reference: undefined,
             name: getDateString(currentDate),
-            type: 'date'
+            type: currentDate.toDateString() === dateOfToday.toDateString() ? 'today' : 'date'
         });
 
         filteredMeetings.forEach(meeting => {
@@ -93,9 +99,23 @@ function getDateString(date) {
 }
 
 function sendMessage(event, message) {
-
-    mainWindow.webContents.on('did-finish-load', () => {
+    
+    if (!isLoaded) {
+        mainWindow.webContents.once('did-finish-load', () => {
+            mainWindow.webContents.send(event, message);
+            isLoaded = true;
+        });
+    } else {
         mainWindow.webContents.send(event, message);
-    });
-
+    }
 }
+
+ipcMain.on('calendar:timeWindow', (event, args) => {
+    if (args === 0) {
+
+    } else {
+        timeWindow.setUTCDate(timeWindow.getUTCDate() + args);
+    }
+
+    drawCalendar();
+});

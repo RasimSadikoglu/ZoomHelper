@@ -1,6 +1,20 @@
 const {ipcRenderer} = require('electron');
 
+initialize();
+
+function initialize() {
+    document.getElementById('back').addEventListener('click', () => {
+        ipcRenderer.send('calendar:timeWindow', -7);
+    });
+
+    document.getElementById('next').addEventListener('click', () => {
+        ipcRenderer.send('calendar:timeWindow', 7);
+    });
+}
+
 ipcRenderer.on('calendar:draw', (event, args) => {
+
+    console.log(args.date);
     
     document.getElementById('time').innerHTML = args.date;
 

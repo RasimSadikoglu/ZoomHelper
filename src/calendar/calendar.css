@@ -5,6 +5,7 @@ body {
 
 :root {
 	--header-bg-color: #4c51b3;
+	--today-bg-color: #0d77ce;
 	--meetings-bg-color: white;
 }
 
@@ -20,6 +21,13 @@ h2 {
 
 #date {
 	background-color: var(--header-bg-color);
+	border-radius: 0.3rem;
+	padding: 0.1rem;
+	text-align: center;
+}
+
+#today {
+	background-color: var(--today-bg-color);
 	border-radius: 0.3rem;
 	padding: 0.1rem;
 	text-align: center;
@@ -41,4 +49,16 @@ h2 {
 #saved:hover {
 	background-color: bisque;
 	cursor: pointer;
+}
+
+#back, #next {
+	display: inline-block;
+}
+
+#back {
+	float: left;
+}
+
+#next {
+	float: right;
 }
