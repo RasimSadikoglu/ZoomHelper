@@ -8,6 +8,7 @@ const createMeeting = require('./meeting/factory');
 
 const dataPath = path.join(__dirname, '../config/data.json');
 const calendarPath = path.join(__dirname, 'calendar/calendar.html');
+const editMeetingPath = path.join(__dirname, 'edit_meeting/edit_meeting.html');
 
 const buildType = "dev";
 
@@ -126,6 +127,14 @@ ipcMain.on('calendar:click', (event, args) => {
         } else {
             meeting.state = JSON.stringify(meeting.referance) === meeting.initial ? 'saved' : 'updated';
         }
+    } else if (args.button === 'left') {
+        mainWindow.loadURL(editMeetingPath);
+
+        const meeting = meetings.find(meeting => JSON.stringify(meeting.referance) === JSON.stringify(args.meeting));
+
+        isLoaded = false;
+
+        sendMessage('edit:meeting', meeting);
     }
 
     drawCalendar();

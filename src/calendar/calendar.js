@@ -14,6 +14,10 @@ function initialize() {
     document.getElementById('time').addEventListener('click', () => {
         ipcRenderer.send('calendar:timeWindow', 0);
     });
+
+    document.getElementById('add').addEventListener('click', () => {
+        ipcRenderer.send('calendar:click', { button: 'left', meeting: null });
+    });
 }
 
 ipcRenderer.on('calendar:draw', (event, args) => {
