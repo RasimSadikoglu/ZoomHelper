@@ -1,0 +1,11 @@
+{
+    "startTimeOffset": -15,
+    "endTimeOffset": -15,
+    "autoDelete": true,
+    "hideTerminal": true,
+    "firstSetup": true,
+    "autoUpdate": "Daily",
+    "forceUpdate": false,
+    "lastUpdateCheck": null,
+    "openFreeMeetings": false
+}
