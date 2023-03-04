@@ -4,13 +4,14 @@ from datetime import datetime
 import subprocess, time, psutil
 import webbrowser
 
+
 class Status(enumerate):
     OLD = 0
     READY = 1
     NOTYET = 2
 
-class Meeting:
 
+class Meeting:
     def __init__(self, name: str, id: str, password: str, date: dict, weekDay: int, time: str, isFree: bool):
         self.name = name
         self.id = id
@@ -34,29 +35,29 @@ class Meeting:
         self.markForDelete = False
 
     def open(self):
-        if platform in ['win32', 'cygwin', 'msys']:
-            zoomProcess = len(list(filter(lambda p: p.name() == 'Zoom.exe', psutil.process_iter())))
+        if platform in ["win32", "cygwin", "msys"]:
+            zoomProcess = len(list(filter(lambda p: p.name() == "Zoom.exe", psutil.process_iter())))
 
             if zoomProcess == 0:
-                subprocess.Popen([getenv('APPDATA') + '/Zoom/bin/Zoom.exe'])
+                subprocess.Popen([getenv("APPDATA") + "/Zoom/bin/Zoom.exe"])
                 time.sleep(5)
 
             url = f'{getenv("APPDATA") + "/Zoom/bin/Zoom.exe"} "-url=zoommtg://zoom.us/join?action=join&confno={self.id}&pwd={self.password}"'
-        elif platform == 'darwin':
+        elif platform == "darwin":
             url = f'open /Applications/zoom.us.app "--url=zoommtg://zoom.us/join?action=join&confno={self.id}&pwd={self.password}"'
-        elif platform in ['linux', 'linux2']:
-            zoomProcess = len(list(filter(lambda p: p.name() == 'zoom', psutil.process_iter())))
+        elif platform in ["linux", "linux2"]:
+            zoomProcess = len(list(filter(lambda p: p.name() == "zoom", psutil.process_iter())))
 
             if zoomProcess == 0:
-                subprocess.Popen(['zoom'])
+                subprocess.Popen(["zoom"])
                 time.sleep(5)
 
             url = f'xdg-open "zoommtg://zoom.us/join?action=join&confno={self.id}&pwd={self.password}"'
         else:
-            url = f'https://zoom.us/j/{self.id}?pwd={self.password}'
+            url = f"https://zoom.us/j/{self.id}?pwd={self.password}"
             webbrowser.open(url)
             return
-            
+
         system(url)
 
     def check(self, startTimeOffset, endTimeOffset, openFreeMeetings) -> Status:
@@ -64,15 +65,15 @@ class Meeting:
 
         if self.isFree:
             return Status.READY if openFreeMeetings else Status.NOTYET
-        
+
         if self.weekDay != None and self.weekDay != now.weekday():
             return Status.NOTYET
 
         if self.date != None and self.date != now.date():
             return Status.OLD if self.date <= now.date() else Status.NOTYET
 
-        startTime, endTime = self.time.split('-')
-        startTime, endTime = startTime.split('.'), endTime.split('.')
+        startTime, endTime = self.time.split("-")
+        startTime, endTime = startTime.split("."), endTime.split(".")
 
         startTime = int(startTime[0]) * 60 + int(startTime[1]) + startTimeOffset
         endTime = int(endTime[0]) * 60 + int(endTime[1]) + endTimeOffset
@@ -88,21 +89,19 @@ class Meeting:
         if self.isFree:
             return self.name[:20]
         else:
-            return f'{self.name[:20]}\n{self.time}'
+            return f"{self.name[:20]}\n{self.time}"
 
     def jsonSerialize(self) -> dict:
         return {
-            'name': self.name,
-            'id': self.id,
-            'password': self.password,
-            'date': None if self.date == None else {
-                'year': self.date.year,
-                'month': self.date.month,
-                'day': self.date.day
-            },
-            'weekDay': self.weekDay,
-            'isFree': self.isFree,
-            'time': self.time
+            "name": self.name,
+            "id": self.id,
+            "password": self.password,
+            "date": None
+            if self.date == None
+            else {"year": self.date.year, "month": self.date.month, "day": self.date.day},
+            "weekDay": self.weekDay,
+            "isFree": self.isFree,
+            "time": self.time,
         }
 
     def jsonDeserialize(meeting: dict) -> object:
