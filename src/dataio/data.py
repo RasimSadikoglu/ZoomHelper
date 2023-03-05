@@ -1,5 +1,5 @@
 import json, sys, os, shutil
-from meeting.meeting import Meeting
+from models.meeting import Meeting
 
 
 def readDataFile(meetings: list = None) -> list[Meeting]:

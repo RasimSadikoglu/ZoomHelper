@@ -1,0 +1,11 @@
+{
+    "start_time_offset": -15,
+    "end_time_offset": -15,
+    "auto_delete": true,
+    "hide_terminal": true,
+    "first_setup": true,
+    "auto_update": 2,
+    "force_update": false,
+    "last_update_check": 5,
+    "open_free_meetings": false
+}

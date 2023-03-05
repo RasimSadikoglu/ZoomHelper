@@ -1,7 +1,7 @@
 from datetime import datetime
 from tkinter import Tk, ttk
 import tkinter, re
-from meeting.meeting import Meeting
+from models.meeting import Meeting
 from .schedule import weekDays
 
 months = [

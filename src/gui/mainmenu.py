@@ -1,9 +1,9 @@
 from tkinter import ttk
 from datetime import datetime, timedelta
 from .schedule import Schedule
-from meeting.meeting import Meeting
+from models.meeting import Meeting
 from dataio import data
-from updater import getLocalVersion
+from base.updater import getLocalVersion
 
 
 class MainMenu(ttk.Frame):

@@ -1,4 +1,4 @@
-import reqirements
+from base import reqirements
 
 reqirements.install()
 
@@ -6,7 +6,7 @@ from tkinter import Tk
 from gui.mainmenu import MainMenu
 from gui.meetinginfo import MeetingInfo
 from gui.settings import Settings
-from meeting.meeting import Meeting
+from models.meeting import Meeting
 from dataio import data
 
 

@@ -1,14 +1,15 @@
-import reqirements
+from base import reqirements
 
 reqirements.install()
 
-import updater
+from base import updater
 
 updater.checkForUpdate()
 
-import sys, time, subprocess, interface, os, glob
+import sys, time, subprocess, os, glob
 from dataio import data
-from meeting.meeting import Status
+from models.meeting import Status
+from gui import interface
 
 
 class ZoomHelper:

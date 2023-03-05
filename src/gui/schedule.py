@@ -1,6 +1,6 @@
 from sys import platform
 from tkinter import ttk
-from meeting.meeting import Meeting
+from models.meeting import Meeting
 from datetime import datetime, timedelta
 
 weekDays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]

@@ -1,6 +1,7 @@
 from tkinter import ttk
-import tkinter, updater
+import tkinter
 from dataio import data
+from base import updater
 
 
 class Settings(ttk.Frame):
