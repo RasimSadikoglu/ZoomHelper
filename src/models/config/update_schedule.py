@@ -2,6 +2,6 @@ from enum import Enum, auto
 
 
 class UpdateSchedule(Enum):
-    MANUEL = auto()
-    DAILY = auto()
-    ALWAYS = auto()
+    MANUEL = "Manuel"
+    DAILY = "Daily"
+    ALWAYS = "Always"

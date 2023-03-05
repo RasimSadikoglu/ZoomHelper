@@ -26,3 +26,8 @@ class Config:
     @property
     def config(self) -> ConfigModel:
         return deepcopy(self.__config_model)
+
+    @config.setter
+    def config(self, value: ConfigModel) -> None:
+        self.__config_model = value
+        self.__save()

@@ -11,7 +11,7 @@ from dataio import data
 
 
 class Interface(Tk):
-    def __init__(self, meetings: list[Meeting], jsonData: list[dict], config: dict):
+    def __init__(self, meetings: list[Meeting], jsonData: list[dict]):
         super().__init__()
 
         self.title("ZoomHelper")
@@ -21,7 +21,6 @@ class Interface(Tk):
         self.bind("<Button-5>", lambda e: self.mouseWheelEvent(e))
 
         (self.jsonData, self.meetings) = jsonData, meetings
-        self.config = config
 
         self.mainMenu = MainMenu(self, self.meetings, self.jsonData)
         self.mainMenu.grid(row=0, column=0, sticky="news")
@@ -69,7 +68,7 @@ class Interface(Tk):
 
         self.currentFrame.grid_remove()
 
-        self.currentFrame = Settings(self, self.config)
+        self.currentFrame = Settings(self)
         self.currentFrame.grid(row=0, column=0, sticky="news")
 
     def mouseWheelEvent(self, event):
@@ -77,8 +76,8 @@ class Interface(Tk):
             self.mainMenu.mouseWheelEvent(event)
 
 
-def main(meetings: list[Meeting], jsonData: list[dict], config: dict):
-    gui = Interface(meetings, jsonData, config)
+def main(meetings: list[Meeting], jsonData: list[dict]):
+    gui = Interface(meetings, jsonData)
     gui.mainloop()
 
 
@@ -86,4 +85,4 @@ if __name__ == "__main__":
     jsonData, meetings = data.readDataFile()
     config = data.readConfigFile()
 
-    main(meetings, jsonData, config)
+    main(meetings, jsonData)

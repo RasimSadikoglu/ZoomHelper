@@ -1,4 +1,5 @@
 from base import reqirements
+from base.config import Config
 
 reqirements.install()
 
@@ -16,10 +17,10 @@ class ZoomHelper:
     def __init__(self):
         self.jsonData, self.meetings = data.readDataFile()
 
-        self.config = data.readConfigFile()
+        self.config = Config().config
 
     def setup(self):
-        if self.config["autoDelete"]:
+        if self.config.auto_delete:
             self.autoDelete()
 
         if len(sys.argv) == 1:
@@ -28,7 +29,7 @@ class ZoomHelper:
             self.runGUI()
 
     def run(self):
-        startTimeOffset, endTimeOffset = self.config["startTimeOffset"], self.config["endTimeOffset"]
+        startTimeOffset, endTimeOffset = self.config.start_time_offset, self.config.end_time_offset
 
         if len(self.meetings) == 0:
             self.runGUI()
@@ -37,7 +38,7 @@ class ZoomHelper:
         currentMeetings = [
             m
             for m in self.meetings
-            if m.check(startTimeOffset, endTimeOffset, self.config["openFreeMeetings"]) == Status.READY
+            if m.check(startTimeOffset, endTimeOffset, self.config.open_free_meetings) == Status.READY
         ]
 
         if len(currentMeetings) == 0:
@@ -76,17 +77,17 @@ class ZoomHelper:
                 pythonw = True
                 break
 
-        if pythonw and self.config["hideTerminal"]:
+        if pythonw and self.config.hide_terminal:
             subprocess.Popen(["pythonw", f"{sys.path[0]}/interface.py"])
         else:
-            interface.main(self.meetings, self.jsonData, self.config)
+            interface.main(self.meetings, self.jsonData)
 
     def autoDelete(self):
 
         meetings = [
             m
             for m in self.meetings
-            if m.check(self.config["startTimeOffset"], self.config["endTimeOffset"], self.config["openFreeMeetings"])
+            if m.check(self.config.start_time_offset, self.config.end_time_offset, self.config.open_free_meetings)
             != Status.OLD
         ]
 

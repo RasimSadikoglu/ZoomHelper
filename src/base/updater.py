@@ -1,23 +1,26 @@
 import requests, sys, os, zipfile, shutil, datetime
-from dataio import data
+from base.config import Config
 from urllib.request import urlretrieve
+
+from models.config.update_schedule import UpdateSchedule
+from models.time.weekday import WeekDay
 
 
 def checkForUpdate():
-    config = data.readConfigFile()
+    config = Config().config
 
-    if config["forceUpdate"]:
-        config["forceUpdate"] = False
-        data.saveConfigFile(config)
+    if config.force_update:
+        config.force_update = False
+        Config().config = config
         update()
         return
 
-    if config["autoUpdate"] == "Never":
+    if config.auto_update == UpdateSchedule.MANUEL:
         return
 
-    today = datetime.datetime.now().day
+    today = WeekDay(datetime.datetime.now().day)
 
-    if config["autoUpdate"] == "Daily" and config["lastUpdateCheck"] == today:
+    if config.auto_update == UpdateSchedule.DAILY and config.last_update_check == today:
         return
 
     print("Checking for updates...")
@@ -36,9 +39,8 @@ def checkForUpdate():
     else:
         print("There is no new version available.")
 
-    config["lastUpdateCheck"] = today
-
-    data.saveConfigFile(config)
+    config.last_update_check = today
+    Config().config = config
 
 
 def update():

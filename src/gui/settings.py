@@ -1,15 +1,17 @@
 from tkinter import ttk
 import tkinter
+from base.config import Config
 from dataio import data
 from base import updater
+from models.config.update_schedule import UpdateSchedule
 
 
 class Settings(ttk.Frame):
-    def __init__(self, master, config: dict):
+    def __init__(self, master):
 
         super().__init__(master)
 
-        self.config = config
+        self.config = Config().config
 
         self.startTimeOffset = tkinter.IntVar()
         self.endTimeOffset = tkinter.IntVar()
@@ -59,7 +61,7 @@ class Settings(ttk.Frame):
             row=2, column=4, padx=5, pady=5, sticky="we"
         )
         ttk.Combobox(
-            self, textvariable=self.autoUpdate, state="readonly", values=["Never", "Everytime", "Daily"], width=13
+            self, textvariable=self.autoUpdate, state="readonly", values=["Manuel", "Daily", "Always"], width=13
         ).grid(row=2, column=5, padx=5, pady=5, sticky="we")
 
         ttk.Label(self, text="Open Free Meetings", anchor="e", padding=5).grid(
@@ -73,29 +75,27 @@ class Settings(ttk.Frame):
 
     def setValues(self):
 
-        self.startTimeOffset.set(self.config["startTimeOffset"])
-        self.endTimeOffset.set(self.config["endTimeOffset"])
-        self.autoDelete.set(self.config["autoDelete"])
-        self.hideTerminal.set(self.config["hideTerminal"])
-        self.autoUpdate.set(self.config["autoUpdate"])
-        self.openFreeMeetings.set(self.config["openFreeMeetings"])
+        self.startTimeOffset.set(self.config.start_time_offset)
+        self.endTimeOffset.set(self.config.end_time_offset)
+        self.autoDelete.set(self.config.auto_delete)
+        self.hideTerminal.set(self.config.hide_terminal)
+        self.autoUpdate.set(self.config.auto_update.value)
+        self.openFreeMeetings.set(self.config.open_free_meetings)
 
     def getValues(self):
-        return {
-            "startTimeOffset": self.startTimeOffset.get(),
-            "endTimeOffset": self.endTimeOffset.get(),
-            "autoDelete": self.autoDelete.get(),
-            "hideTerminal": self.hideTerminal.get(),
-            "autoUpdate": self.autoUpdate.get(),
-            "openFreeMeetings": self.openFreeMeetings.get(),
-        }
+        self.config.start_time_offset = self.startTimeOffset.get()
+        self.config.end_time_offset = self.endTimeOffset.get()
+        self.config.auto_delete = self.autoDelete.get()
+        self.config.hide_terminal = self.hideTerminal.get()
+        self.config.auto_update = UpdateSchedule(self.autoUpdate.get())
+        self.config.open_free_meetings = self.openFreeMeetings.get()
 
     def save(self):
         saved = ttk.Label(self, text="Saved!", padding=5, anchor="e", foreground="red")
         saved.grid(row=7, column=1, columnspan=5, padx=5, pady=5, sticky="e")
 
-        self.config.update(**self.getValues())
-        data.saveConfigFile(self.config)
+        self.getValues()
+        Config().config = self.config
 
         self.after(2000, saved.destroy)
 
@@ -119,7 +119,7 @@ class Settings(ttk.Frame):
             )
             label.grid(row=6, column=1, columnspan=5, padx=5, pady=5, sticky="e")
 
-            self.config["forceUpdate"] = True
-            data.saveConfigFile(self.config)
+            self.config.force_update = True
+            Config().config = self.config
 
             self.after(5000, label.destroy)

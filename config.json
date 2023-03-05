@@ -4,7 +4,7 @@
     "auto_delete": true,
     "hide_terminal": true,
     "first_setup": true,
-    "auto_update": 2,
+    "auto_update": "Daily",
     "force_update": false,
     "last_update_check": 5,
     "open_free_meetings": false
