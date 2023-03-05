@@ -1,4 +1,5 @@
-from datetime import datetime
+from datetime import datetime, timedelta
+from base.config import Config
 from helper.helper import get_current_datetime, get_current_time
 from models.meeting.meeting_status import MeetingStatus
 from models.time.base_time import BaseTime
@@ -17,13 +18,11 @@ class WeeklyRepeat(BaseTime):
 
     @property
     def __offsetted_start_time(self) -> datetime:
-        # TODO: check config for offsets
-        return self.__start_time
+        return self.__start_time + timedelta(minutes=Config().config.start_time_offset)
 
     @property
     def __offsetted_end_time(self) -> datetime:
-        # TODO: check config for offsets
-        return self.__end_time
+        return self.__end_time + timedelta(minutes=Config().config.end_time_offset)
 
     def check_time(self) -> MeetingStatus:
         now = get_current_datetime()
